@@ -12,133 +12,80 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="pause"
-            android:layout_alignParentRight="true"/>
+            android:layout_width="@dimen/pause_button_size"
+            android:layout_height="@dimen/pause_button_size"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_pause_button"/>
     </RelativeLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="140dp" />
-
-    <TextView
-        android:id="@+id/palavraProposta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="T"
-        android:textAlignment="center"
-        android:textColor="@android:color/background_dark"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <Space
-
-        android:layout_width="match_parent"
-        android:layout_height="160dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
-
-        <Chronometer
-            android:id="@+id/chronometro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/braille_button_1x1"
-            android:layout_marginEnd="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_toLeftOf="@+id/braille_button_2x1"
-            android:layout_toStartOf="@+id/braille_button_2x1"
-            android:textSize="30sp" />
-
-        <Button
-            android:id="@+id/check_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="check" />
-
-        <Space
-            android:id="@+id/middle_space"
-            android:layout_width="2dp"
-            android:layout_height="150dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <RadioButton
-            android:id="@+id/braille_button_1x1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/braille_button_2x1"
-            android:layout_alignStart="@+id/braille_button_2x1"
-            android:layout_alignTop="@+id/middle_space" />
-
-        <RadioButton
-            android:id="@+id/braille_button_2x1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/braille_button_1x1"
-            android:layout_toLeftOf="@+id/middle_space"
-            android:layout_toStartOf="@+id/middle_space"
-            android:buttonTint="@color/colorPrimary"
-            android:checked="false" />
-
-        <RadioButton
-            android:id="@+id/braille_button_3x1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/braille_button_2x1"
-            android:layout_toLeftOf="@+id/middle_space"
-            android:layout_toStartOf="@+id/middle_space"
-            android:buttonTint="@color/colorPrimary"
-            android:checked="false" />
-
-        <RadioButton
-            android:id="@+id/braille_button_1x2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/middle_space"
-            android:layout_toEndOf="@+id/middle_space"
-            android:layout_toRightOf="@+id/middle_space"
-            android:buttonTint="@color/colorPrimary"
-            android:checked="true" />
-
-        <RadioButton
-            android:id="@+id/braille_button_2x2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/braille_button_1x2"
-            android:layout_toEndOf="@+id/middle_space"
-            android:layout_toRightOf="@+id/middle_space"
-            android:buttonTint="@color/colorPrimary"
-            android:checked="false" />
-
-        <RadioButton
-            android:id="@+id/braille_button_3x2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/braille_button_2x2"
-            android:layout_toEndOf="@+id/middle_space"
-            android:layout_toRightOf="@+id/middle_space" />
-
+        android:layout_height="0dp"
+        android:layout_weight="2">
         <TextView
-            android:id="@+id/score_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="123"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:id="@+id/palavraProposta"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="T"
+            android:textColor="@android:color/background_dark"
             android:textSize="30sp"
             android:textStyle="bold" />
 
-
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <Chronometer
+                android:id="@+id/chronometro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/teclado_braile"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/check_button"
+                android:layout_width="@dimen/check_button_size"
+                android:layout_height="@dimen/check_button_size"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/check_button"
+                android:text="check" />
+
+
+            <TextView
+                android:id="@+id/score_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:text="123"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

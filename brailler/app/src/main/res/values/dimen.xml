@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pause_button_size">50dp</dimen>
+    <dimen name="check_button_size">75dp</dimen>
+    <dimen name="braille_keyboard_circle_size">45dp</dimen>
+    <dimen name="braille_keyboard_margin">5dp</dimen>
+</resources>
