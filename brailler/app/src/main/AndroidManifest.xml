@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TecladoComTela"></activity>
+        <activity android:name=".TecladoComTela" />
+        <activity android:name=".Tradutor"></activity>
     </application>
 
 </manifest>
