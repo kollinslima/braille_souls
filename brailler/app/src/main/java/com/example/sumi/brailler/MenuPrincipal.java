@@ -6,13 +6,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MenuPrincipal extends AppCompatActivity {
 
     public static final String DATABASE_TAG = "DatabaseTest";
     public static final HashMap<String, String> text_to_braille = new HashMap<String, String>();
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.menu_principal);
 
         inicializaTradutor();
 

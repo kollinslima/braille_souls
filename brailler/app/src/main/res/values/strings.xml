@@ -7,4 +7,7 @@
     <string name="start">Braille On !!!</string>
     <string name="exit">Exit</string>
     <string name="dictionaty">Dictionary</string>
+    <string name="continua_jogo">Continuar</string>
+    <string name="menu_principal">Menu Principal</string>
+    <string name="menu_pause">Pause</string>
 </resources>

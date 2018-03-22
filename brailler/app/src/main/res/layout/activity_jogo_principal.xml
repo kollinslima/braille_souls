@@ -12,10 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/botaoPause"
             android:layout_width="@dimen/pause_button_size"
             android:layout_height="@dimen/pause_button_size"
             android:layout_alignParentRight="true"
-            android:background="@drawable/ic_pause_button"/>
+            android:onClick="onPauseClick"
+            android:background="@drawable/ic_botao_pause"/>
     </RelativeLayout>
 
 
@@ -69,7 +71,7 @@
                 android:layout_height="@dimen/check_button_size"
                 android:layout_centerVertical="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/check_button"
+                android:background="@drawable/botao_checar"
                 android:text="check" />
 
 
