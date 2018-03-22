@@ -1,5 +1,6 @@
 package com.example.sumi.brailler;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickStartButton(View view) {
-        return;
+        Intent intent = new Intent(this, TecladoComTela.class);
+        startActivity(intent);
     }
 
     public void onClickDictionatyButton(View view) {
