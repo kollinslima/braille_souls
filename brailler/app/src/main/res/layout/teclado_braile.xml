@@ -5,42 +5,53 @@
     android:layout_height="wrap_content"
     android:columnCount="2">
 
-        <Button
+        <ToggleButton
             android:id="@+id/braille_button_1x1"
             android:layout_width="@dimen/braille_keyboard_circle_size"
             android:layout_height="@dimen/braille_keyboard_circle_size"
-            android:background="@drawable/braille_keyboard"
-            android:layout_margin="@dimen/braille_keyboard_margin"/>
-        <Button
+            android:background="@drawable/braille_keyboard_normal_mode"
+            android:layout_margin="@dimen/braille_keyboard_margin"
+            android:textOn=""
+            android:textOff=""/>
+        <ToggleButton
             android:id="@+id/braille_button_1x2"
             android:layout_width="@dimen/braille_keyboard_circle_size"
             android:layout_height="@dimen/braille_keyboard_circle_size"
-            android:background="@drawable/braille_keyboard"
-            android:layout_margin="@dimen/braille_keyboard_margin"/>
-        <Button
+            android:background="@drawable/braille_keyboard_normal_mode"
+            android:layout_margin="@dimen/braille_keyboard_margin"
+            android:textOn=""
+            android:textOff=""/>
+        <ToggleButton
             android:id="@+id/braille_button_2x1"
             android:layout_width="@dimen/braille_keyboard_circle_size"
             android:layout_height="@dimen/braille_keyboard_circle_size"
-            android:background="@drawable/braille_keyboard"
-            android:layout_margin="@dimen/braille_keyboard_margin"/>
-        <Button
+            android:background="@drawable/braille_keyboard_normal_mode"
+            android:layout_margin="@dimen/braille_keyboard_margin"
+            android:textOn=""
+            android:textOff=""/>
+        <ToggleButton
             android:id="@+id/braille_button_2x2"
             android:layout_width="@dimen/braille_keyboard_circle_size"
             android:layout_height="@dimen/braille_keyboard_circle_size"
-            android:background="@drawable/braille_keyboard"
-            android:layout_margin="@dimen/braille_keyboard_margin"/>
-        <Button
+            android:background="@drawable/braille_keyboard_normal_mode"
+            android:layout_margin="@dimen/braille_keyboard_margin"
+            android:textOn=""
+            android:textOff=""/>
+        <ToggleButton
             android:id="@+id/braille_button_3x1"
             android:layout_width="@dimen/braille_keyboard_circle_size"
             android:layout_height="@dimen/braille_keyboard_circle_size"
-            android:background="@drawable/braille_keyboard"
-            android:layout_margin="@dimen/braille_keyboard_margin"/>
-
-        <Button
+            android:background="@drawable/braille_keyboard_normal_mode"
+            android:layout_margin="@dimen/braille_keyboard_margin"
+            android:textOn=""
+            android:textOff=""/>
+        <ToggleButton
             android:id="@+id/braille_button_3x2"
             android:layout_width="@dimen/braille_keyboard_circle_size"
             android:layout_height="@dimen/braille_keyboard_circle_size"
-            android:background="@drawable/braille_keyboard"
-            android:layout_margin="@dimen/braille_keyboard_margin"/>
+            android:background="@drawable/braille_keyboard_normal_mode"
+            android:layout_margin="@dimen/braille_keyboard_margin"
+            android:textOn=""
+            android:textOff=""/>
 
 </GridLayout>
