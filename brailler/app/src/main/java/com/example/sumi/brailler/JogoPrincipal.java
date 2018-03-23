@@ -13,16 +13,19 @@ import android.widget.ToggleButton;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class JogoPrincipal extends AppCompatActivity implements PauseFragment.onDismissListener {
 
     public static final String GAME_TAG_LOG = "gameLog";
 
     //10 segundos
-    private final long TEMPO_CRONOMETRO = (long) (10 * Math.pow(10, 3));
+    private final int TEMPO_CRONOMETRO = 10;
+    private final int INTERVALO_TEMPO = 1000;   //ms
 
-    private TimerJogo temporizador;
-    private long tempoBackup;
+    private Timer temporizador;
+    private long tempoRestante = TEMPO_CRONOMETRO;
 
     private String palavraSorteada;
 
@@ -45,7 +48,6 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         brailleKeyboard[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
 
         cronometro = (TextView) findViewById(R.id.cronometro);
-        cronometro.setText(TEMPO_CRONOMETRO / 1000 + " s");
 
         palavra = (TextView) findViewById(R.id.palavraProposta);
 
@@ -64,17 +66,20 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     }
 
     private void reiniciaJogo() {
-        temporizador = new TimerJogo(TEMPO_CRONOMETRO, 1000);
         palavraSorteada = sorteiaPalavra();
         palavra.setText(palavraSorteada);
-        temporizador.start();
+
+        cronometro.setText(String.valueOf(TEMPO_CRONOMETRO));
+
+        temporizador = new Timer();
+        temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
     }
 
-    private void verificaResposta(){
+    private void verificaResposta() {
         String resposta = "";
 
-        for (ToggleButton button : brailleKeyboard){
-            if (button.isChecked()){
+        for (ToggleButton button : brailleKeyboard) {
+            if (button.isChecked()) {
                 resposta = resposta.concat("1");
             } else {
                 resposta = resposta.concat("0");
@@ -89,10 +94,11 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
             } else {
                 Toast.makeText(this, "Errado", Toast.LENGTH_SHORT).show();
             }
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             Toast.makeText(this, "Errado", Toast.LENGTH_SHORT).show();
         }
 
+        temporizador.cancel();
         reiniciaJogo();
     }
 
@@ -121,39 +127,47 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     @Override
     public void continuarJogo() {
-        temporizador = new TimerJogo(tempoBackup, 1000);
-        temporizador.start();
+        temporizador = new Timer();
+        temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
     }
 
     @Override
     public void voltarMenuPrincipal() {
+        temporizador.cancel();
+
         Intent intent = new Intent(this, MenuPrincipal.class);
         startActivity(intent);
     }
 
+    public void onCheckClick(View view) {
+        verificaResposta();
+    }
 
-    public class TimerJogo extends CountDownTimer {
-        /**
-         * @param millisInFuture    The number of millis in the future from the call
-         *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
-         *                          is called.
-         * @param countDownInterval The interval along the way to receive
-         *                          {@link #onTick(long)} callbacks.
-         */
-        public TimerJogo(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
+    public class TempoJogo extends TimerTask {
 
         @Override
-        public void onTick(long millisUntilFinished) {
-            tempoBackup = millisUntilFinished;
-            cronometro.setText(millisUntilFinished / 1000 + " s");
-        }
+        public void run() {
 
-        @Override
-        public void onFinish() {
-            cronometro.setText(0 + " s");
-            verificaResposta();
+            tempoRestante -= 1;
+
+            if (tempoRestante <= 0) {
+                tempoRestante = TEMPO_CRONOMETRO;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        verificaResposta();
+                    }
+                });
+
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cronometro.setText(String.valueOf(tempoRestante));
+                    }
+                });
+            }
         }
     }
+    
 }
