@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sumi.brailler.Tradutor">
+    tools:context="com.example.sumi.brailler.Tradutor"
+    android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/texto1_troca_direcao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/troca_direcao"
+            android:layout_toStartOf="@+id/troca_direcao"
+            android:text="Braille"
+            android:textSize="30dp" />
+        <Button
+            android:id="@+id/troca_direcao"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="onTrocaClick"
+            android:background="@drawable/ic_trocar_direcao"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/testo2_troca_direcao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/troca_direcao"
+            android:layout_toRightOf="@+id/troca_direcao"
+            android:text="Português"
+            android:textSize="30dp" />
+    </RelativeLayout>
+
+
+</LinearLayout>
