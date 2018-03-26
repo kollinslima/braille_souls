@@ -4,14 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class Tradutor extends AppCompatActivity {
+public class TradutorParaBraille extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tradutor);
+        setContentView(R.layout.activity_tradutor_para_braille);
     }
 
-    public void onTrocaClick(View view) {
+    public void onClickMudarDoBraille(View view) {
     }
 }

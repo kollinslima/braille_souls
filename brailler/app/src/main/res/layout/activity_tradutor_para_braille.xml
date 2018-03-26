@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sumi.brailler.TradutorParaBraille">
+
+    <TextView
+        android:id="@+id/tradutorInfoDir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Traduzindo para braille"
+        android:textColor="@color/braille_keyboard_black_ring"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/botaoMudarDirecao"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_forward_black_24dp" />
+
+    <Space
+        android:id="@+id/tradutorParaBrailleEspaco1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/botaoMudarDirecao"/>
+
+    <EditText
+        android:id="@+id/tradutorCampoParaBraille"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tradutorParaBrailleEspaco1"
+        android:hint="Digite aqui" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
+
+</RelativeLayout>
