@@ -47,6 +47,8 @@
         android:background="@android:color/background_light"
         android:text="Traduzir" />
     <ListView
+        android:id="@+id/tradutorListView"
+        android:layout_below="@id/buttonTraduzir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
