@@ -16,6 +16,16 @@ import java.util.TimerTask;
 
 public class JogoPrincipal extends AppCompatActivity implements PauseFragment.onDismissListener {
 
+    public static final String SELETOR_DIFICULDADE = "seletor_dificuldade";
+    public static final String DIFICULDADE_PROGRESSIVA = "dificuldade_progressiva";
+
+    public static final String FACIL = "facil";
+    public static final String MEDIO = "medio";
+    public static final String DIFICIL = "dificil";
+
+    private final int ACERTOS_TROCA_NIVEL = 10;
+    private final int ERROS_TROCA_NIVEL = 5;
+
     public static final String GAME_TAG_LOG = "gameLog";
 
     //10 segundos
@@ -29,25 +39,55 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     private TextView cronometro, palavra;
 
-    private ToggleButton[] brailleKeyboard = new ToggleButton[6];
+    private ToggleButton[] tecladoBraile = new ToggleButton[6];
 
     private Button botaoPause;
+
+    private boolean ativaResposta, ativaTempo, dificuldadeProgressiva;
+
+    private TextView txtAcertos, txtErros;
+    int acertos, erros, acertosConsecutivos, errosConsecutivos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogo_principal);
 
-        brailleKeyboard[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
-        brailleKeyboard[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
-        brailleKeyboard[2] = (ToggleButton) findViewById(R.id.braille_button_2x1);
-        brailleKeyboard[3] = (ToggleButton) findViewById(R.id.braille_button_2x2);
-        brailleKeyboard[4] = (ToggleButton) findViewById(R.id.braille_button_3x1);
-        brailleKeyboard[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
+        tecladoBraile[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
+        tecladoBraile[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
+        tecladoBraile[2] = (ToggleButton) findViewById(R.id.braille_button_2x1);
+        tecladoBraile[3] = (ToggleButton) findViewById(R.id.braille_button_2x2);
+        tecladoBraile[4] = (ToggleButton) findViewById(R.id.braille_button_3x1);
+        tecladoBraile[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
+
+        errosConsecutivos = 0;
+        acertosConsecutivos = 0;
+        acertos = 0;
+        erros = 0;
+
+        txtAcertos = (TextView) findViewById(R.id.pontos_acertos);
+        txtAcertos.setText(String.valueOf(acertos));
+        txtErros = (TextView) findViewById(R.id.pontos_erros);
+        txtErros.setText(String.valueOf(erros));
 
         cronometro = (TextView) findViewById(R.id.cronometro);
 
         palavra = (TextView) findViewById(R.id.palavraProposta);
+
+        String dificuldade = getIntent().getExtras().getString(SELETOR_DIFICULDADE);
+
+        if (dificuldade.equals(FACIL)) {
+            ativaTempo = false;
+            ativaResposta = true;
+        } else if (dificuldade.equals(MEDIO)) {
+            ativaTempo = false;
+            ativaResposta = false;
+        } else {
+            ativaTempo = true;
+            ativaResposta = false;
+        }
+
+        dificuldadeProgressiva = getIntent().getExtras().getBoolean(DIFICULDADE_PROGRESSIVA);
 
     }
 
@@ -60,23 +100,88 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     @Override
     protected void onPause() {
         super.onPause();
-        temporizador.cancel();
+        if (ativaTempo) {
+            temporizador.cancel();
+        }
     }
 
     private void reiniciaJogo() {
+        if (dificuldadeProgressiva) {
+            trocaNivel();
+        }
+
         palavraSorteada = sorteiaPalavra();
         palavra.setText(palavraSorteada);
 
-        cronometro.setText(String.valueOf(TEMPO_CRONOMETRO));
+        if (ativaResposta) {
+            marcaResposta();
+        }
 
-        temporizador = new Timer();
-        temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
+        if (ativaTempo) {
+            cronometro.setText(String.valueOf(TEMPO_CRONOMETRO));
+
+            tempoRestante = TEMPO_CRONOMETRO;
+            temporizador = new Timer();
+            temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
+        }
+    }
+
+    private void trocaNivel(){
+        //Aumenta dificuldade
+        if (acertosConsecutivos >= ACERTOS_TROCA_NIVEL) {
+            if (ativaResposta) {
+                Toast.makeText(this, "Dificuldade média", Toast.LENGTH_SHORT).show();
+                acertosConsecutivos = 0;
+                errosConsecutivos = 0;
+                ativaResposta = false;
+
+                for (ToggleButton button : tecladoBraile) {
+                    button.setBackgroundDrawable(getResources().getDrawable(R.drawable.teclado_braile_normal));
+                }
+
+            } else {
+                Toast.makeText(this, "Dificuldade difícil", Toast.LENGTH_SHORT).show();
+                acertosConsecutivos = 0;
+                errosConsecutivos = 0;
+                ativaTempo = true;
+            }
+        }
+        //Diminui dificuldade
+        else if (errosConsecutivos >= ERROS_TROCA_NIVEL){
+            if (ativaTempo){
+                Toast.makeText(this, "Dificuldade média", Toast.LENGTH_SHORT).show();
+                acertosConsecutivos = 0;
+                errosConsecutivos = 0;
+
+                cronometro.setText("");
+                ativaTempo = false;
+            } else {
+                Toast.makeText(this, "Dificuldade fácil", Toast.LENGTH_SHORT).show();
+                acertosConsecutivos = 0;
+                errosConsecutivos = 0;
+                ativaResposta = true;
+            }
+        }
+    }
+
+    private void marcaResposta() {
+        String palavraBraile = MenuPrincipal.text_to_braille.get(palavraSorteada);
+        int index = 0;
+
+        for (ToggleButton button : tecladoBraile) {
+            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.teclado_braile_normal));
+
+            if (palavraBraile.charAt(index) == '1') {
+                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.teclado_braile_com_dica));
+            }
+            index += 1;
+        }
     }
 
     private void verificaResposta() {
         String resposta = "";
 
-        for (ToggleButton button : brailleKeyboard) {
+        for (ToggleButton button : tecladoBraile) {
             if (button.isChecked()) {
                 resposta = resposta.concat("1");
             } else {
@@ -88,53 +193,67 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
         try {
             if (MenuPrincipal.braille_to_text.get(resposta).equals(palavraSorteada)) {
-                Toast.makeText(this, "Correto", Toast.LENGTH_SHORT).show();
+                acertos += 1;
+                acertosConsecutivos += 1;
+                errosConsecutivos = 0;
+                txtAcertos.setText(String.valueOf(acertos));
             } else {
-                Toast.makeText(this, "Errado", Toast.LENGTH_SHORT).show();
+                acertosConsecutivos = 0;
+                errosConsecutivos += 1;
+                erros += 1;
+                txtErros.setText(String.valueOf(erros));
             }
         } catch (NullPointerException e) {
-            Toast.makeText(this, "Errado", Toast.LENGTH_SHORT).show();
+            acertosConsecutivos = 0;
+            erros += 1;
+            errosConsecutivos += 1;
+            txtErros.setText(String.valueOf(erros));
         }
 
-        temporizador.cancel();
+        if (ativaTempo) {
+            temporizador.cancel();
+        }
         reiniciaJogo();
     }
 
     private String sorteiaPalavra() {
-        Set<String> keys = MenuPrincipal.braille_to_text.keySet();
-        int keyNumber = (int) (Math.random() * keys.size());
-        Iterator<String> keyIterator = keys.iterator();
-
         String randomKey = null;
+        do {
+            Set<String> keys = MenuPrincipal.braille_to_text.keySet();
+            int keyNumber = (int) (Math.random() * keys.size());
+            Iterator<String> keyIterator = keys.iterator();
 
-        for (int i = 0; i < keyNumber && keyIterator.hasNext(); i++) {
-            randomKey = keyIterator.next();
-        }
+            for (int i = 0; i < keyNumber && keyIterator.hasNext(); i++) {
+                randomKey = keyIterator.next();
+            }
 
-        if (randomKey != null) {
-            return MenuPrincipal.braille_to_text.get(randomKey);
-        } else {
-            return null;
-        }
+        } while (randomKey == null);
+
+        return MenuPrincipal.braille_to_text.get(randomKey);
     }
 
     public void onPauseClick(View view) {
-        temporizador.cancel();
+        if (ativaTempo) {
+            temporizador.cancel();
+        }
         new PauseFragment().abrir(getSupportFragmentManager());
     }
 
     @Override
     public void continuarJogo() {
-        temporizador = new Timer();
-        temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
+        if (ativaTempo) {
+            temporizador = new Timer();
+            temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
+        }
     }
 
     @Override
     public void voltarMenuPrincipal() {
-        temporizador.cancel();
+        if (ativaTempo) {
+            temporizador.cancel();
+        }
 
-        Intent intent = new Intent(this, MenuPrincipal.class);
-        startActivity(intent);
+        finish();
     }
 
     public void onCheckClick(View view) {

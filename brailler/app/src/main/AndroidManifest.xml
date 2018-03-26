@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".JogoPrincipal" />
-        <activity android:name=".TradutorParaBraille"></activity>
+        <activity android:name=".SeletorDificuldade"
+            android:noHistory="true"/>
+        <activity android:name=".TradutorParaBraille"/>
     </application>
 
 </manifest>

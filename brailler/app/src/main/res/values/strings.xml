@@ -11,6 +11,16 @@
     <string name="menu_principal">Menu Principal</string>
     <string name="menu_pause">Pause</string>
 
+    <string name="acertos">Acertos: </string>
+    <string name="erros">Erros: </string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Dificuldades-->
+    <string name="dificuldade_facil">Fácil</string>
+    <string name="dificuldade_medio">Médio</string>
+    <string name="dificuldade_dificil">Difícil</string>
+    <string name="dificuldade_progressiva">Aumentar dificuldade automaticamente</string>
 </resources>
+

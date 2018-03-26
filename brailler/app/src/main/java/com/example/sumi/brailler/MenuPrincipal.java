@@ -61,7 +61,7 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     public void onClickStartButton(View view) {
-        Intent intent = new Intent(this, JogoPrincipal.class);
+        Intent intent = new Intent(this, SeletorDificuldade.class);
         startActivity(intent);
     }
 
