@@ -1,8 +1,6 @@
 package com.example.sumi.brailler;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -169,5 +167,5 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
             }
         }
     }
-    
+
 }
