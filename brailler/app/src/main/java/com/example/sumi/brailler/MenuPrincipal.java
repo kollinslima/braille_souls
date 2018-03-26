@@ -66,7 +66,8 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     public void onClickDictionatyButton(View view) {
-        return;
+        Intent intent = new Intent(this, TradutorParaBraille.class);
+        startActivity(intent);
     }
 
     public void onClickExitButton(View view) {

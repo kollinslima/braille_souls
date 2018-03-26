@@ -10,4 +10,7 @@
     <string name="continua_jogo">Continuar</string>
     <string name="menu_principal">Menu Principal</string>
     <string name="menu_pause">Pause</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
