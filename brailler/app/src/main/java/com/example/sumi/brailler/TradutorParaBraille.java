@@ -12,6 +12,5 @@ public class TradutorParaBraille extends AppCompatActivity {
         setContentView(R.layout.activity_tradutor_para_braille);
     }
 
-    public void onClickMudarDoBraille(View view) {
-    }
+
 }
