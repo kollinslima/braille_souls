@@ -2,6 +2,8 @@ package com.example.sumi.brailler;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.Toast;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 public class TradutorDoBraille extends AppCompatActivity {
 
     private ToggleButton[] tecladoBraile = new ToggleButton[6];
+    private Switch numLock;
     private String resultadoCampo;
     private TextView resultadoCampoView;
 
@@ -23,6 +26,7 @@ public class TradutorDoBraille extends AppCompatActivity {
         tecladoBraile[3] = (ToggleButton) findViewById(R.id.braille_button_2x2);
         tecladoBraile[4] = (ToggleButton) findViewById(R.id.braille_button_3x1);
         tecladoBraile[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
+        numLock = (Switch) findViewById(R.id.button_numLock);
     }
 
     public void onClickAdicionar(android.view.View view) {

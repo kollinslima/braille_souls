@@ -31,7 +31,7 @@
         <TextView
             android:id="@+id/resultadoCampo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="321dp"
             android:gravity="center"
             android:textColor="@android:color/background_dark"
             android:textSize="30sp"
@@ -71,6 +71,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
+            <Switch
+                android:id="@+id/button_numLock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="14dp"
+                android:text="Num" />
 
             <Button
                 android:id="@+id/traduz_button"
