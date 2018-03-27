@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,5 +43,10 @@ public class TradutorParaBraille extends AppCompatActivity {
         });
     }
 
+
+    public void onClickMudaDirTradParaBraille(View view) {
+        Intent intent = new Intent(this, TradutorDoBraille.class);
+        startActivity(intent);
+    }
 
 }
