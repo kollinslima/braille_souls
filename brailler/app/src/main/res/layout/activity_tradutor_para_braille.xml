@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sumi.brailler.TradutorParaBraille">
+    tools:context="com.example.sumi.brailler.TradutorParaBraille"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/tradutorInfoDir"
@@ -13,7 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="Traduzindo para braille"
-        android:textColor="@color/braille_keyboard_black_ring"
+        android:textColor="#FFFFFF"
         android:textSize="30sp" />
 
     <Button
@@ -36,7 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tradutorParaBrailleEspaco1"
-        android:hint="Digite a palavra aqui" />
+        android:hint="Digite a palavra aqui"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/buttonTraduzir"
@@ -44,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tradutorCampoParaBraille"
-        android:background="@android:color/background_light"
         android:text="Traduzir" />
     <ListView
         android:id="@+id/tradutorListView"

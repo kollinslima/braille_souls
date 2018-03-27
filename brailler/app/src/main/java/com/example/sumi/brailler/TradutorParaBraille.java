@@ -32,7 +32,7 @@ public class TradutorParaBraille extends AppCompatActivity {
             public void onClick(View view) {
                 tv = (TextView) findViewById(R.id.tradutorCampoParaBraille);
                 String palavra = tv.getText().toString();
-                //palavra.toUpperCase();
+                palavra = palavra.toUpperCase();
                 braille_list.clear();
                 for(int i = 0; i < palavra.length(); i++){
                     braille_list.add(MenuPrincipal.text_to_braille.get(String.valueOf(palavra.charAt(i))));
