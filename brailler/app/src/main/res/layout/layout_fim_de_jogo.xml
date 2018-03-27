@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/menu_pause"
+        android:text="@string/fim_de_jogo"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
@@ -20,17 +20,10 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/botaoContinuarJogo"
+            android:id="@+id/botaoReiniciaJogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/continua_jogo"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/botaoTrocaDificuldade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/troca_dificuldade"
+            android:text="@string/jogar_novamente"
             android:textAllCaps="false" />
 
         <Button

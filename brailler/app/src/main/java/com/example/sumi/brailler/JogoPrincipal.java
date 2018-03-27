@@ -1,10 +1,10 @@
 package com.example.sumi.brailler;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class JogoPrincipal extends AppCompatActivity implements PauseFragment.onDismissListener {
+public class JogoPrincipal extends AppCompatActivity implements PauseFragment.onDismissListener, FimJogoFragment.onDismissListener {
 
     public static final String SELETOR_DIFICULDADE = "seletor_dificuldade";
     public static final String DIFICULDADE_PROGRESSIVA = "dificuldade_progressiva";
@@ -24,7 +24,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     public static final String DIFICIL = "dificil";
 
     private final int ACERTOS_TROCA_NIVEL = 10;
-    private final int ERROS_TROCA_NIVEL = 5;
+    private final int ERROS_TROCA_NIVEL = 3;
 
     public static final String GAME_TAG_LOG = "gameLog";
 
@@ -41,9 +41,14 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     private ToggleButton[] tecladoBraile = new ToggleButton[6];
 
+    private ImageView[] vidas = new ImageView[6];
+    private boolean[] vidasControle = new boolean[6];
+
     private Button botaoPause;
 
-    private boolean ativaResposta, ativaTempo, dificuldadeProgressiva;
+    public static String dificuldadeJogo;
+    public static boolean dificuldadeProgressiva;
+    private boolean ativaResposta, ativaTempo;
 
     private TextView txtAcertos, txtErros;
     int acertos, erros, acertosConsecutivos, errosConsecutivos;
@@ -60,6 +65,18 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         tecladoBraile[4] = (ToggleButton) findViewById(R.id.braille_button_3x1);
         tecladoBraile[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
 
+        vidas[0] = (ImageView) findViewById(R.id.vida1);
+        vidas[1] = (ImageView) findViewById(R.id.vida2);
+        vidas[2] = (ImageView) findViewById(R.id.vida3);
+        vidas[3] = (ImageView) findViewById(R.id.vida4);
+        vidas[4] = (ImageView) findViewById(R.id.vida5);
+        vidas[5] = (ImageView) findViewById(R.id.vida6);
+
+        for (int i = 0; i < vidas.length; i++) {
+            vidas[i].setImageResource(R.drawable.ic_vida_ativa);
+            vidasControle[i] = true;
+        }
+
         errosConsecutivos = 0;
         acertosConsecutivos = 0;
         acertos = 0;
@@ -74,12 +91,12 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
         palavra = (TextView) findViewById(R.id.palavraProposta);
 
-        String dificuldade = getIntent().getExtras().getString(SELETOR_DIFICULDADE);
+        dificuldadeJogo = getIntent().getExtras().getString(SELETOR_DIFICULDADE);
 
-        if (dificuldade.equals(FACIL)) {
+        if (dificuldadeJogo.equals(FACIL)) {
             ativaTempo = false;
             ativaResposta = true;
-        } else if (dificuldade.equals(MEDIO)) {
+        } else if (dificuldadeJogo.equals(MEDIO)) {
             ativaTempo = false;
             ativaResposta = false;
         } else {
@@ -89,23 +106,17 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
         dificuldadeProgressiva = getIntent().getExtras().getBoolean(DIFICULDADE_PROGRESSIVA);
 
-    }
+        novaPalavra();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        reiniciaJogo();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (ativaTempo) {
-            temporizador.cancel();
-        }
+        pauseJogo();
     }
 
-    private void reiniciaJogo() {
+    private void novaPalavra() {
         if (dificuldadeProgressiva) {
             trocaNivel();
         }
@@ -116,21 +127,15 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         if (ativaResposta) {
             marcaResposta();
         }
-
-        if (ativaTempo) {
-            cronometro.setText(String.valueOf(TEMPO_CRONOMETRO));
-
-            tempoRestante = TEMPO_CRONOMETRO;
-            temporizador = new Timer();
-            temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
-        }
+        tempoRestante = TEMPO_CRONOMETRO;
+        continuarJogo();
     }
 
-    private void trocaNivel(){
+    private void trocaNivel() {
         //Aumenta dificuldade
         if (acertosConsecutivos >= ACERTOS_TROCA_NIVEL) {
             if (ativaResposta) {
-                Toast.makeText(this, "Dificuldade média", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Médio", Toast.LENGTH_SHORT).show();
                 acertosConsecutivos = 0;
                 errosConsecutivos = 0;
                 ativaResposta = false;
@@ -140,26 +145,30 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
                 }
 
             } else {
-                Toast.makeText(this, "Dificuldade difícil", Toast.LENGTH_SHORT).show();
-                acertosConsecutivos = 0;
-                errosConsecutivos = 0;
-                ativaTempo = true;
+                if (!ativaTempo) {
+                    Toast.makeText(this, "Difícil", Toast.LENGTH_SHORT).show();
+                    acertosConsecutivos = 0;
+                    errosConsecutivos = 0;
+                    ativaTempo = true;
+                }
             }
         }
         //Diminui dificuldade
-        else if (errosConsecutivos >= ERROS_TROCA_NIVEL){
-            if (ativaTempo){
-                Toast.makeText(this, "Dificuldade média", Toast.LENGTH_SHORT).show();
+        else if (errosConsecutivos >= ERROS_TROCA_NIVEL) {
+            if (ativaTempo) {
+                Toast.makeText(this, "Médio", Toast.LENGTH_SHORT).show();
                 acertosConsecutivos = 0;
                 errosConsecutivos = 0;
 
                 cronometro.setText("");
                 ativaTempo = false;
             } else {
-                Toast.makeText(this, "Dificuldade fácil", Toast.LENGTH_SHORT).show();
-                acertosConsecutivos = 0;
-                errosConsecutivos = 0;
-                ativaResposta = true;
+                if (!ativaResposta) {
+                    Toast.makeText(this, "Fácil", Toast.LENGTH_SHORT).show();
+                    acertosConsecutivos = 0;
+                    errosConsecutivos = 0;
+                    ativaResposta = true;
+                }
             }
         }
     }
@@ -213,7 +222,40 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         if (ativaTempo) {
             temporizador.cancel();
         }
-        reiniciaJogo();
+
+        if (atualizaVidas()) {
+            novaPalavra();
+        } else {
+            fimDeJogo();
+        }
+    }
+
+    private boolean atualizaVidas() {
+        if (errosConsecutivos == 0) {
+            if (acertosConsecutivos >= ACERTOS_TROCA_NIVEL) {
+                for (int i = 0; i < vidas.length; i++) {
+                    if (!vidasControle[i]) {
+                        vidas[i].setImageResource(R.drawable.ic_vida_ativa);
+                        vidasControle[i] = true;
+                        break;
+                    }
+                }
+
+                if (!dificuldadeProgressiva) {
+                    acertosConsecutivos = 0;
+                }
+            }
+        } else {
+            for (int i = vidas.length - 1; i >= 0; i--) {
+                if (vidasControle[i]) {
+                    vidas[i].setImageResource(R.drawable.ic_vida_perdida);
+                    vidasControle[i] = false;
+                    break;
+                }
+            }
+        }
+
+        return vidasControle[0];
     }
 
     private String sorteiaPalavra() {
@@ -233,18 +275,59 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     }
 
     public void onPauseClick(View view) {
+        pauseJogo();
+    }
+
+    private void pauseJogo() {
         if (ativaTempo) {
             temporizador.cancel();
         }
         new PauseFragment().abrir(getSupportFragmentManager());
     }
 
-    @Override
-    public void continuarJogo() {
+    private void continuarJogo(){
         if (ativaTempo) {
+            cronometro.setText(String.valueOf(tempoRestante));
             temporizador = new Timer();
             temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
         }
+    }
+
+    @Override
+    public void continuarJogoFragment() {
+
+        if (dificuldadeJogo.equals(FACIL)) {
+            cronometro.setText("");
+            ativaTempo = false;
+            ativaResposta = true;
+        } else if (dificuldadeJogo.equals(MEDIO)) {
+            cronometro.setText("");
+            ativaTempo = false;
+            ativaResposta = false;
+        } else {
+            ativaTempo = true;
+            ativaResposta = false;
+        }
+
+        novaPalavra();
+    }
+
+    @Override
+    public void recomecarJogo() {
+        for (int i = 0; i < vidas.length; i++) {
+            vidas[i].setImageResource(R.drawable.ic_vida_ativa);
+            vidasControle[i] = true;
+        }
+
+        errosConsecutivos = 0;
+        acertosConsecutivos = 0;
+        acertos = 0;
+        erros = 0;
+
+        txtAcertos.setText(String.valueOf(acertos));
+        txtErros.setText(String.valueOf(erros));
+
+        novaPalavra();
     }
 
     @Override
@@ -258,6 +341,13 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     public void onCheckClick(View view) {
         verificaResposta();
+    }
+
+    private void fimDeJogo() {
+        if (ativaTempo) {
+            temporizador.cancel();
+        }
+        new FimJogoFragment().abrir(getSupportFragmentManager());
     }
 
     public class TempoJogo extends TimerTask {

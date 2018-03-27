@@ -10,13 +10,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <include layout="@layout/layout_vidas"/>
 
         <Button
             android:id="@+id/botaoPause"
             android:layout_width="@dimen/pause_button_size"
             android:layout_height="@dimen/pause_button_size"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:background="@drawable/ic_botao_pause"
             android:onClick="onPauseClick" />
     </RelativeLayout>
@@ -80,6 +84,7 @@
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:columnCount="2">
 
                 <TextView

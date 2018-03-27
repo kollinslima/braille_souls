@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="2">
+
+    <ImageView
+        android:id="@+id/vida1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vida_ativa"/>
+    <ImageView
+        android:id="@+id/vida2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vida_ativa"/>
+    <ImageView
+        android:id="@+id/vida3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vida_ativa"/>
+    <ImageView
+        android:id="@+id/vida4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vida_ativa"/>
+    <ImageView
+        android:id="@+id/vida5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vida_ativa"/>
+    <ImageView
+        android:id="@+id/vida6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vida_ativa"/>
+
+
+</GridLayout>

@@ -7,9 +7,13 @@
     <string name="start">Braille On !!!</string>
     <string name="exit">Exit</string>
     <string name="dictionaty">Dictionary</string>
-    <string name="continua_jogo">Continuar</string>
-    <string name="menu_principal">Menu Principal</string>
+
     <string name="menu_pause">Pause</string>
+    <string name="continua_jogo">Continuar</string>
+    <string name="troca_dificuldade">Dificuldade</string>
+    <string name="menu_principal">Menu Principal</string>
+
+    <string name="fim_de_jogo">Fim de Jogo</string>
 
     <string name="acertos">Acertos: </string>
     <string name="erros">Erros: </string>
@@ -22,5 +26,6 @@
     <string name="dificuldade_medio">Médio</string>
     <string name="dificuldade_dificil">Difícil</string>
     <string name="dificuldade_progressiva">Aumentar dificuldade automaticamente</string>
+    <string name="jogar_novamente">Jogar Novamente</string>
 </resources>
 
