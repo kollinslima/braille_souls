@@ -14,13 +14,15 @@ import java.util.List;
 
 public class TradutorParaBraille extends AppCompatActivity {
 
+    private TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tradutor_para_braille);
         final ListView lv = (ListView) findViewById(R.id.tradutorListView);
         final Button btn = (Button) findViewById(R.id.buttonTraduzir);
-        final TextView tv = (TextView) findViewById(R.id.tradutorCampoParaBraille);
+        tv = (TextView) findViewById(R.id.tradutorCampoParaBraille);
         final List<String> braille_list = new ArrayList<String>();
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, braille_list);
         lv.setAdapter(arrayAdapter);
@@ -28,15 +30,14 @@ public class TradutorParaBraille extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                braille_list.add("01010101");
-                arrayAdapter.notifyDataSetChanged();
-                /*
+                tv = (TextView) findViewById(R.id.tradutorCampoParaBraille);
                 String palavra = tv.getText().toString();
+                //palavra.toUpperCase();
                 braille_list.clear();
                 for(int i = 0; i < palavra.length(); i++){
-                    braille_list.add(MenuPrincipal.text_to_braille.get(palavra.charAt(i)));
+                    braille_list.add(MenuPrincipal.text_to_braille.get(String.valueOf(palavra.charAt(i))));
                 }
-                arrayAdapter.notifyDataSetChanged();*/
+                arrayAdapter.notifyDataSetChanged();
             }
         });
     }
