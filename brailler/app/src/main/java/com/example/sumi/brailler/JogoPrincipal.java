@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.plusquare.clockview.ClockView;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Timer;
@@ -29,15 +31,17 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     public static final String GAME_TAG_LOG = "gameLog";
 
     //10 segundos
-    private final int TEMPO_CRONOMETRO = 10;
-    private final int INTERVALO_TEMPO = 1000;   //ms
+    private final double TEMPO_CRONOMETRO = 10;
+    private final int INTERVALO_TEMPO = (int) ((TEMPO_CRONOMETRO/60)*1000);   //ms
 
     private Timer temporizador;
-    private long tempoRestante = TEMPO_CRONOMETRO;
+//    private long tempoRestante = TEMPO_CRONOMETRO;
+    private int tempoGrafico = 0;
 
     private String palavraSorteada;
 
-    private TextView cronometro, palavra;
+    private TextView palavra;
+    private ClockView cronometroGrafico;
 
     private ToggleButton[] tecladoBraile = new ToggleButton[6];
 
@@ -87,7 +91,8 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         txtErros = (TextView) findViewById(R.id.pontos_erros);
         txtErros.setText(String.valueOf(erros));
 
-        cronometro = (TextView) findViewById(R.id.cronometro);
+//        cronometro = (TextView) findViewById(R.id.cronometro);
+        cronometroGrafico = (ClockView) findViewById(R.id.cronometroGrafico);
 
         palavra = (TextView) findViewById(R.id.palavraProposta);
 
@@ -96,12 +101,15 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         if (dificuldadeJogo.equals(FACIL)) {
             ativaTempo = false;
             ativaResposta = true;
+            cronometroGrafico.setVisibility(View.INVISIBLE);
         } else if (dificuldadeJogo.equals(MEDIO)) {
             ativaTempo = false;
             ativaResposta = false;
+            cronometroGrafico.setVisibility(View.INVISIBLE);
         } else {
             ativaTempo = true;
             ativaResposta = false;
+            cronometroGrafico.setVisibility(View.VISIBLE);
         }
 
         dificuldadeProgressiva = getIntent().getExtras().getBoolean(DIFICULDADE_PROGRESSIVA);
@@ -127,7 +135,6 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         if (ativaResposta) {
             marcaResposta();
         }
-        tempoRestante = TEMPO_CRONOMETRO;
         continuarJogo();
     }
 
@@ -160,7 +167,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
                 acertosConsecutivos = 0;
                 errosConsecutivos = 0;
 
-                cronometro.setText("");
+//                cronometro.setText("");
                 ativaTempo = false;
             } else {
                 if (!ativaResposta) {
@@ -287,7 +294,6 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     private void continuarJogo(){
         if (ativaTempo) {
-            cronometro.setText(String.valueOf(tempoRestante));
             temporizador = new Timer();
             temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
         }
@@ -297,16 +303,25 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     public void continuarJogoFragment() {
 
         if (dificuldadeJogo.equals(FACIL)) {
-            cronometro.setText("");
             ativaTempo = false;
             ativaResposta = true;
+            cronometroGrafico.setVisibility(View.INVISIBLE);
         } else if (dificuldadeJogo.equals(MEDIO)) {
-            cronometro.setText("");
             ativaTempo = false;
             ativaResposta = false;
+            cronometroGrafico.setVisibility(View.INVISIBLE);
+
+            for (ToggleButton button : tecladoBraile) {
+                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.teclado_braile_normal));
+            }
         } else {
             ativaTempo = true;
             ativaResposta = false;
+            cronometroGrafico.setVisibility(View.VISIBLE);
+
+            for (ToggleButton button : tecladoBraile) {
+                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.teclado_braile_normal));
+            }
         }
 
         novaPalavra();
@@ -340,6 +355,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     }
 
     public void onCheckClick(View view) {
+        tempoGrafico = 0;
         verificaResposta();
     }
 
@@ -355,22 +371,19 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         @Override
         public void run() {
 
-            tempoRestante -= 1;
+            tempoGrafico = (tempoGrafico + 1)%60;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    cronometroGrafico.setMinute(tempoGrafico);
+                }
+            });
 
-            if (tempoRestante <= 0) {
-                tempoRestante = TEMPO_CRONOMETRO;
+            if (tempoGrafico == 0) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         verificaResposta();
-                    }
-                });
-
-            } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        cronometro.setText(String.valueOf(tempoRestante));
                     }
                 });
             }
