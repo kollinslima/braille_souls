@@ -33,7 +33,7 @@
             android:id="@+id/eh_digito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Digito:"
+            android:text="Dígito:"
             android:textColor="@android:color/background_dark"
             android:textSize="30sp"
             android:textAlignment="center"/>
@@ -41,8 +41,11 @@
         <TextView
             android:id="@+id/campoDigito"
             android:layout_width="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/eh_digito"
+            android:background="#d5d6d6"
             android:textColor="@android:color/background_dark"
             android:textSize="30sp"
             android:textAlignment="center"/>
@@ -57,10 +60,13 @@
             android:textAlignment="center"/>
         <TextView
             android:id="@+id/campoCaractere"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/nao_eh_digito"
             android:textColor="@android:color/background_dark"
+            android:background="#d5d6d6"
             android:textSize="30sp"
             android:textAlignment="center"/>
 
