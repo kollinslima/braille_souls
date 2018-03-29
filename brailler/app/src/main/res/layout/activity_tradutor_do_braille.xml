@@ -29,13 +29,40 @@
         android:layout_weight="2">
 
         <TextView
-            android:id="@+id/resultadoCampo"
+            android:layout_marginTop="85dp"
+            android:id="@+id/eh_digito"
             android:layout_width="match_parent"
-            android:layout_height="321dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Digito:"
             android:textColor="@android:color/background_dark"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/campoDigito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/eh_digito"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/nao_eh_digito"
+            android:layout_below="@+id/campoDigito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Caractere:"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/campoCaractere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nao_eh_digito"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
 
     </RelativeLayout>
 
@@ -72,14 +99,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <Switch
-                android:id="@+id/button_numLock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="14dp"
-                android:text="Num" />
 
             <Button
                 android:id="@+id/traduz_button"
