@@ -50,19 +50,29 @@
         android:layout_weight="1"
         android:visibility="visible">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/cronometro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <!--<TextView-->
+                <!--android:id="@+id/cronometro"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
-        </RelativeLayout>
+            <com.plusquare.clockview.ClockView
+                android:id="@+id/cronometroGrafico"
+                android:layout_width="@dimen/tamanho_relogio"
+                android:layout_height="@dimen/tamanho_relogio"
+                app:clockColor="@color/cor_relogio"
+                app:clockPointerColor="@color/cor_relogio_ponteiro"
+                android:visibility="visible"/>
+
+
+        </LinearLayout>
 
         <include layout="@layout/teclado_braile" />
 

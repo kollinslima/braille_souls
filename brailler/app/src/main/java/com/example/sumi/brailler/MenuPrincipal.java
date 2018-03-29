@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
@@ -46,8 +47,8 @@ public class MenuPrincipal extends AppCompatActivity {
                     braille_to_text.put(cursor.getString(cursor.getColumnIndex("Braille")),
                             cursor.getString(cursor.getColumnIndex("PlainText")));
 
-//                    Log.d(DATABASE_TAG, "Texto: " + cursor.getString(cursor.getColumnIndex("PlainText"))
-//                            + " - Braille: " + tradutor.get(cursor.getString(cursor.getColumnIndex("PlainText"))));
+//                    Log.d(DATABASE_TAG, "Braille: " + cursor.getString(cursor.getColumnIndex("Braille"))
+//                            + " - Text: " + braille_to_text.get(cursor.getString(cursor.getColumnIndex("Braille"))));
                 } while (cursor.moveToNext());
             }
 
