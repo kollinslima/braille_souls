@@ -10,8 +10,8 @@
         android:id="@+id/fragmentSeletorDificuldade"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.example.sumi.brailler.SeletorDificuldadeFragment"
-        tools:layout="@layout/dificuldade_menu"/>
+        class="com.example.sumi.brailler.fragments.SeletorDificuldadeFragment"
+        tools:layout="@layout/dificuldade_menu_activity"/>
 
 
 </FrameLayout>

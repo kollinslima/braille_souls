@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.sumi.brailler.fragments.FimJogoFragment;
+import com.example.sumi.brailler.fragments.PauseFragment;
 import com.plusquare.clockview.ClockView;
 
 import java.util.Iterator;

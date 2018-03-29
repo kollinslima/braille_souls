@@ -1,42 +1,36 @@
-package com.example.sumi.brailler;
+package com.example.sumi.brailler.fragments;
 
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.example.sumi.brailler.banco_de_dados.DataBaseHelper;
+import com.example.sumi.brailler.JogoPrincipal;
+import com.example.sumi.brailler.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class MenuPrincipal extends AppCompatActivity {
+import static com.example.sumi.brailler.MenuPrincipal.PADRAO_ANIMACAO;
+import static com.example.sumi.brailler.MenuPrincipal.TEMPO_ANIMACAO;
 
-    public static final int[] PADRAO_ANIMACAO = {
-            R.drawable.ic_background_animation_1,
-            R.drawable.ic_background_animation_2,
-            R.drawable.ic_background_animation_3,
-            R.drawable.ic_background_animation_4,
-            R.drawable.ic_background_animation_5,
-            R.drawable.ic_background_animation_6
-    };
+/**
+ * Created by kollins on 3/26/18.
+ */
 
-    public static final long TEMPO_ANIMACAO = 5000;
+public class SeletorDificuldadeFragment extends Fragment {
 
-    public static final String DATABASE_TAG = "DatabaseTest";
-    public static final HashMap<String, String> text_to_braille = new HashMap<String, String>();
-    public static final HashMap<String, String> braille_to_text = new HashMap<String, String>();
+    private Intent itJogoPrincipal;
+    private CheckBox chkDificuldade;
 
     private FrameLayout frameAnimacao;
     private ImageView auxImageView;
@@ -46,13 +40,18 @@ public class MenuPrincipal extends AppCompatActivity {
     private ValueAnimator animator;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_principal);
+        itJogoPrincipal = new Intent(getActivity(), JogoPrincipal.class);
+    }
 
-        inicializaTradutor();
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        frameAnimacao = (FrameLayout) findViewById(R.id.frameAnimacao);
+        View view = inflater.inflate(R.layout.dificuldade_menu_activity, container, false);
+
+        frameAnimacao = (FrameLayout) view.findViewById(R.id.frameAnimacao);
         vetorAnimacao = new ArrayList<ImageView>();
         iniciaAnimacao = true;
 
@@ -120,57 +119,42 @@ public class MenuPrincipal extends AppCompatActivity {
         });
         animator.start();
 
-    }
 
-    private void inicializaTradutor() {
+        chkDificuldade = (CheckBox) view.findViewById(R.id.chbDificuldadeProgressiva);
 
-        DataBaseHelper mDBHelper = new DataBaseHelper(this);
-        SQLiteDatabase mDb = null;
-
-        try {
-            mDBHelper.updateDataBase();
-            mDb = mDBHelper.getWritableDatabase();
-
-            Cursor cursor = mDb.query("brailleTable", null, null, null, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-
-                    text_to_braille.put(cursor.getString(cursor.getColumnIndex("PlainText")),
-                            cursor.getString(cursor.getColumnIndex("Braille")));
-
-                    braille_to_text.put(cursor.getString(cursor.getColumnIndex("Braille")),
-                            cursor.getString(cursor.getColumnIndex("PlainText")));
-
-//                    Log.d(DATABASE_TAG, "Braille: " + cursor.getString(cursor.getColumnIndex("Braille"))
-//                            + " - Text: " + braille_to_text.get(cursor.getString(cursor.getColumnIndex("Braille"))));
-                } while (cursor.moveToNext());
+        ((Button) view.findViewById(R.id.btnFacil)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itJogoPrincipal.putExtra(JogoPrincipal.SELETOR_DIFICULDADE, JogoPrincipal.FACIL);
+                iniciaJogo();
             }
+        });
 
-        } catch (SQLException mSQLException) {
-            throw mSQLException;
-        } catch (IOException mIOException) {
-            throw new Error("UnableToUpdateDatabase");
-        } finally {
-            mDb.close();
+        ((Button) view.findViewById(R.id.btnMedio)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itJogoPrincipal.putExtra(JogoPrincipal.SELETOR_DIFICULDADE, JogoPrincipal.MEDIO);
+                iniciaJogo();
+            }
+        });
+
+        ((Button) view.findViewById(R.id.btnDificil)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itJogoPrincipal.putExtra(JogoPrincipal.SELETOR_DIFICULDADE, JogoPrincipal.DIFICIL);
+                iniciaJogo();
+            }
+        });
+
+        return view;
+    }
+
+    private void iniciaJogo(){
+        if (chkDificuldade.isChecked()){
+            itJogoPrincipal.putExtra(JogoPrincipal.DIFICULDADE_PROGRESSIVA, true);
+        } else {
+            itJogoPrincipal.putExtra(JogoPrincipal.DIFICULDADE_PROGRESSIVA, false);
         }
-    }
-
-    public void onClickStartButton(View view) {
-        Intent intent = new Intent(this, SeletorDificuldade.class);
-        startActivity(intent);
-    }
-
-    public void onClickDictionatyButton(View view) {
-        Intent intent = new Intent(this, TradutorParaBraille.class);
-        startActivity(intent);
-    }
-
-    public void onClickExitButton(View view) {
-        finish();
-    }
-
-    private Context getContext() {
-        return this;
+        startActivity(itJogoPrincipal);
     }
 }

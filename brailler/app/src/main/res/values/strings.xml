@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">brailler</string>
+    <string name="app_name">Braille Souls</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="start">Braille On !!!</string>
-    <string name="exit">Exit</string>
-    <string name="dictionaty">Dictionary</string>
+    <string name="start">Jogar</string>
+    <string name="exit">Sair</string>
+    <string name="dictionaty">Dicionário</string>
 
     <string name="menu_pause">Pause</string>
     <string name="continua_jogo">Continuar</string>
@@ -25,7 +25,7 @@
     <string name="dificuldade_facil">Fácil</string>
     <string name="dificuldade_medio">Médio</string>
     <string name="dificuldade_dificil">Difícil</string>
-    <string name="dificuldade_progressiva">Aumentar dificuldade automaticamente</string>
+    <string name="dificuldade_progressiva">Dificuldade progressiva</string>
     <string name="jogar_novamente">Jogar Novamente</string>
 </resources>
 

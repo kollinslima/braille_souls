@@ -1,42 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center"
-    android:weightSum="2"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:gravity="center">
+
+    <!--Animações-->
+    <FrameLayout
+        android:id="@+id/frameAnimacao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/animacao1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_background_animation_1"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/animacao2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_background_animation_2"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/animacao3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_background_animation_3"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/animacao4"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_background_animation_4"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/animacao5"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_background_animation_5"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/animacao6"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_background_animation_6"/>-->
+
+    </FrameLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/start"
-            android:onClick="onClickStartButton"/>
+            android:layout_weight="1"
+            android:divider="@drawable/divisor_vertical"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
-        <Button
-            android:id="@+id/btnDictionaty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dictionaty"
-            android:onClick="onClickDictionatyButton"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/cor_nome_menu_principal"
+                android:textSize="50dp"
+                android:shadowColor="@android:color/black"
+                android:shadowRadius="20"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnExit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/exit"
-            android:onClick="onClickExitButton"/>
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordas_botao"
+                android:onClick="onClickStartButton"
+                android:text="@string/start"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnDictionaty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordas_botao"
+                android:onClick="onClickDictionatyButton"
+                android:text="@string/dictionaty"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnExit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordas_botao"
+                android:onClick="onClickExitButton"
+                android:text="@string/exit"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-
-</LinearLayout>
+</FrameLayout>

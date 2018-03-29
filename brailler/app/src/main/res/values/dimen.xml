@@ -5,4 +5,5 @@
     <dimen name="check_button_size">75dp</dimen>
     <dimen name="braille_keyboard_circle_size">45dp</dimen>
     <dimen name="braille_keyboard_margin">5dp</dimen>
+
 </resources>

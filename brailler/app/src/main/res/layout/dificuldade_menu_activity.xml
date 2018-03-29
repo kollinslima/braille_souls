@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <FrameLayout
+        android:id="@+id/frameAnimacao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:divider="@drawable/divisor_vertical"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <Button
+                android:id="@+id/btnFacil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordas_botao"
+                android:onClick="onClickStartButton"
+                android:text="@string/dificuldade_facil"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnMedio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordas_botao"
+                android:onClick="onClickStartButton"
+                android:text="@string/dificuldade_medio"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnDificil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordas_botao"
+                android:onClick="onClickStartButton"
+                android:text="@string/dificuldade_dificil"
+                android:textColor="@android:color/black" />
+
+
+            <CheckBox
+                android:id="@+id/chbDificuldadeProgressiva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@android:color/black"
+                android:shadowColor="@android:color/black"
+                android:shadowRadius="20"
+                android:text="@string/dificuldade_progressiva"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/ic_icone_braille_souls"
         android:supportsRtl="true"
         android:theme="@style/FullscreenTheme">
-        <activity android:name=".MenuPrincipal">
+        <activity android:name=".MenuPrincipal"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +20,8 @@
         <activity android:name=".JogoPrincipal" />
         <activity
             android:name=".SeletorDificuldade"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
         <activity android:name=".TradutorParaBraille" />
         <activity android:name=".TradutorDoBraille"></activity>
     </application>

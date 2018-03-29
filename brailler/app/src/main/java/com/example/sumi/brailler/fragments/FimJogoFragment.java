@@ -1,4 +1,4 @@
-package com.example.sumi.brailler;
+package com.example.sumi.brailler.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+
+import com.example.sumi.brailler.R;
 
 /**
  * Created by kollins on 3/22/18.
@@ -23,6 +26,9 @@ public class FimJogoFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         View layout = inflater.inflate(R.layout.layout_fim_de_jogo, container, false);
 
         botaoJogarNovamente = (Button) layout.findViewById(R.id.botaoReiniciaJogo);

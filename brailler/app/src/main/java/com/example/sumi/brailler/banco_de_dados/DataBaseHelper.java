@@ -1,4 +1,4 @@
-package com.example.sumi.brailler;
+package com.example.sumi.brailler.banco_de_dados;
 
 import android.content.Context;
 import android.database.SQLException;
