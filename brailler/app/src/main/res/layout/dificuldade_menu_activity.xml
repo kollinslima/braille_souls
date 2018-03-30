@@ -58,7 +58,7 @@
                 android:id="@+id/chbDificuldadeProgressiva"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@android:color/black"
+                android:buttonTint="@android:color/white"
                 android:shadowColor="@android:color/black"
                 android:shadowRadius="20"
                 android:text="@string/dificuldade_progressiva"
