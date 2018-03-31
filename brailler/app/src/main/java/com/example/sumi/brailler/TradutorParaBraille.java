@@ -19,6 +19,7 @@ public class TradutorParaBraille extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tradutor_para_braille);
         final ListView lv = (ListView) findViewById(R.id.tradutorListView);
