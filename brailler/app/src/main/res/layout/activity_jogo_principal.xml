@@ -13,7 +13,13 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <include layout="@layout/layout_vidas"/>
+        <FrameLayout
+            android:id="@+id/frameVidas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_vidas" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/botaoPause"
@@ -38,7 +44,7 @@
             android:gravity="center"
             android:text="T"
             android:textColor="@android:color/background_dark"
-            android:textSize="30sp"
+            android:textSize="200sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -54,22 +60,22 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <!--<TextView-->
-                <!--android:id="@+id/cronometro"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
+            <!--android:id="@+id/cronometro"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
             <com.plusquare.clockview.ClockView
                 android:id="@+id/cronometroGrafico"
                 android:layout_width="@dimen/tamanho_relogio"
                 android:layout_height="@dimen/tamanho_relogio"
+                android:visibility="visible"
                 app:clockColor="@color/cor_relogio"
-                app:clockPointerColor="@color/cor_relogio_ponteiro"
-                android:visibility="visible"/>
+                app:clockPointerColor="@color/cor_relogio_ponteiro" />
 
 
         </LinearLayout>
@@ -108,8 +114,8 @@
                     android:id="@+id/pontos_acertos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:layout_gravity="center"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -123,8 +129,8 @@
                     android:id="@+id/pontos_erros"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:layout_gravity="center"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold" />
             </GridLayout>
 

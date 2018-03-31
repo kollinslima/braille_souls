@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".JogoPrincipal" />
+        <activity android:name=".JogoPrincipal"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SeletorDificuldade"
             android:noHistory="true"

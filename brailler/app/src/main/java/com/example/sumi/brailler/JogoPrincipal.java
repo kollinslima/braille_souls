@@ -2,8 +2,11 @@ package com.example.sumi.brailler;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,13 +59,18 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     public static boolean dificuldadeProgressiva;
     private boolean ativaResposta, ativaTempo;
 
+    private FrameLayout frameVidas;
     private TextView txtAcertos, txtErros;
-    int acertos, erros, acertosConsecutivos, errosConsecutivos;
+    private int acertos, erros, acertosConsecutivos, errosConsecutivos;
+
+    private boolean botaoVoltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogo_principal);
+
+        botaoVoltar = false;
 
         tecladoBraile[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
         tecladoBraile[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
@@ -77,6 +85,8 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         vidas[3] = (ImageView) findViewById(R.id.vida4);
         vidas[4] = (ImageView) findViewById(R.id.vida5);
         vidas[5] = (ImageView) findViewById(R.id.vida6);
+
+        frameVidas = (FrameLayout) findViewById(R.id.frameVidas);
 
         for (int i = 0; i < vidas.length; i++) {
             vidas[i].setImageResource(R.drawable.ic_vida_ativa);
@@ -100,10 +110,13 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
         dificuldadeJogo = getIntent().getExtras().getString(SELETOR_DIFICULDADE);
 
+        frameVidas.setVisibility(View.VISIBLE);
+
         if (dificuldadeJogo.equals(FACIL)) {
             ativaTempo = false;
             ativaResposta = true;
             cronometroGrafico.setVisibility(View.INVISIBLE);
+            frameVidas.setVisibility(View.INVISIBLE);
         } else if (dificuldadeJogo.equals(MEDIO)) {
             ativaTempo = false;
             ativaResposta = false;
@@ -123,7 +136,15 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     @Override
     protected void onPause() {
         super.onPause();
-        pauseJogo();
+        if (!botaoVoltar) {
+            pauseJogo();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        botaoVoltar = true;
     }
 
     private void novaPalavra() {
@@ -141,9 +162,11 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     }
 
     private void trocaNivel() {
+
         //Aumenta dificuldade
         if (acertosConsecutivos >= ACERTOS_TROCA_NIVEL) {
             if (ativaResposta) {
+                frameVidas.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "Médio", Toast.LENGTH_SHORT).show();
                 acertosConsecutivos = 0;
                 errosConsecutivos = 0;
@@ -173,10 +196,17 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
                 ativaTempo = false;
             } else {
                 if (!ativaResposta) {
+                    frameVidas.setVisibility(View.INVISIBLE);
                     Toast.makeText(this, "Fácil", Toast.LENGTH_SHORT).show();
                     acertosConsecutivos = 0;
                     errosConsecutivos = 0;
                     ativaResposta = true;
+
+                    //Recupera vidas
+                    for (int i = 0; i < vidas.length; i++) {
+                        vidas[i].setImageResource(R.drawable.ic_vida_ativa);
+                        vidasControle[i] = true;
+                    }
                 }
             }
         }
@@ -240,6 +270,11 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     }
 
     private boolean atualizaVidas() {
+        //Não conta vidas no fácil
+        if (ativaResposta){
+            return true;
+        }
+
         if (errosConsecutivos == 0) {
             if (acertosConsecutivos >= ACERTOS_TROCA_NIVEL) {
                 for (int i = 0; i < vidas.length; i++) {
@@ -304,10 +339,13 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
     @Override
     public void continuarJogoFragment() {
 
+        frameVidas.setVisibility(View.VISIBLE);
+
         if (dificuldadeJogo.equals(FACIL)) {
             ativaTempo = false;
             ativaResposta = true;
             cronometroGrafico.setVisibility(View.INVISIBLE);
+            frameVidas.setVisibility(View.INVISIBLE);
         } else if (dificuldadeJogo.equals(MEDIO)) {
             ativaTempo = false;
             ativaResposta = false;
@@ -343,6 +381,12 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
         txtAcertos.setText(String.valueOf(acertos));
         txtErros.setText(String.valueOf(erros));
+
+        if (dificuldadeProgressiva){
+            frameVidas.setVisibility(View.INVISIBLE);
+            ativaResposta = true;
+            ativaTempo = false;
+        }
 
         novaPalavra();
     }
