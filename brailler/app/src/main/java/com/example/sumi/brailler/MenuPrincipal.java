@@ -16,6 +16,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.sumi.brailler.banco_de_dados.DataBaseHelper;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
     public static final String DATABASE_TAG = "DatabaseTest";
     public static final HashMap<String, String> text_to_braille = new HashMap<String, String>();
-    public static final HashMap<String, String> braille_to_text = new HashMap<String, String>();
+    public static final Multimap<String, String> braille_to_text = ArrayListMultimap.create();
 
     private FrameLayout frameAnimacao;
     private ImageView auxImageView;

@@ -17,6 +17,7 @@ import com.example.sumi.brailler.fragments.PauseFragment;
 import com.plusquare.clockview.ClockView;
 
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,10 +38,10 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     //10 segundos
     private final double TEMPO_CRONOMETRO = 10;
-    private final int INTERVALO_TEMPO = (int) ((TEMPO_CRONOMETRO/60)*1000);   //ms
+    private final int INTERVALO_TEMPO = (int) ((TEMPO_CRONOMETRO / 60) * 1000);   //ms
 
     private Timer temporizador;
-//    private long tempoRestante = TEMPO_CRONOMETRO;
+    //    private long tempoRestante = TEMPO_CRONOMETRO;
     private int tempoGrafico = 0;
 
     private String palavraSorteada;
@@ -65,10 +66,14 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     private boolean botaoVoltar;
 
+    private Random geradorAleatorio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogo_principal);
+
+        geradorAleatorio = new Random();
 
         botaoVoltar = false;
 
@@ -240,7 +245,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         }
 
         try {
-            if (MenuPrincipal.braille_to_text.get(resposta).equals(palavraSorteada)) {
+            if (MenuPrincipal.braille_to_text.get(resposta).contains(palavraSorteada)) {
                 acertos += 1;
                 acertosConsecutivos += 1;
                 errosConsecutivos = 0;
@@ -271,7 +276,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     private boolean atualizaVidas() {
         //Não conta vidas no fácil
-        if (ativaResposta){
+        if (ativaResposta) {
             return true;
         }
 
@@ -304,18 +309,16 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
 
     private String sorteiaPalavra() {
         String randomKey = null;
-        do {
-            Set<String> keys = MenuPrincipal.braille_to_text.keySet();
-            int keyNumber = (int) (Math.random() * keys.size());
-            Iterator<String> keyIterator = keys.iterator();
 
-            for (int i = 0; i < keyNumber && keyIterator.hasNext(); i++) {
-                randomKey = keyIterator.next();
-            }
+        do {
+            Set<String> keys = MenuPrincipal.text_to_braille.keySet();
+            int keyNumber = geradorAleatorio.nextInt(keys.size());
+
+            randomKey = (String) keys.toArray()[keyNumber];
 
         } while (randomKey == null);
 
-        return MenuPrincipal.braille_to_text.get(randomKey);
+        return randomKey;
     }
 
     public void onPauseClick(View view) {
@@ -329,7 +332,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         new PauseFragment().abrir(getSupportFragmentManager());
     }
 
-    private void continuarJogo(){
+    private void continuarJogo() {
         if (ativaTempo) {
             temporizador = new Timer();
             temporizador.scheduleAtFixedRate(new TempoJogo(), INTERVALO_TEMPO, INTERVALO_TEMPO);
@@ -382,7 +385,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         txtAcertos.setText(String.valueOf(acertos));
         txtErros.setText(String.valueOf(erros));
 
-        if (dificuldadeProgressiva){
+        if (dificuldadeProgressiva) {
             frameVidas.setVisibility(View.INVISIBLE);
             ativaResposta = true;
             ativaTempo = false;
@@ -417,7 +420,7 @@ public class JogoPrincipal extends AppCompatActivity implements PauseFragment.on
         @Override
         public void run() {
 
-            tempoGrafico = (tempoGrafico + 1)%60;
+            tempoGrafico = (tempoGrafico + 1) % 60;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

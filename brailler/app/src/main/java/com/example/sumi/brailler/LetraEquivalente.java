@@ -22,7 +22,8 @@ public class LetraEquivalente {
     }
 
     public String getBinario(String letra){
-        return braille_to_text.get(letra);
+        return null;
+//        return braille_to_text.get(letra);
     }
 
     public String getLetra(String braille){
