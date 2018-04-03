@@ -29,7 +29,7 @@
         android:layout_weight="2">
 
         <TextView
-            android:id="@+id/traduto_do_braille_titulo"
+            android:id="@+id/braille_translator_tittle"
             android:layout_marginTop="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,13 +37,14 @@
             android:textColor="@android:color/background_dark"
             android:textSize="30sp"
             android:textAlignment="center"/>
+
         <TextView
             android:id="@+id/campoResultado"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/traduto_do_braille_titulo"
+            android:layout_below="@+id/braille_translator_tittle"
             android:textColor="@android:color/background_dark"
             android:background="#d5d6d6"
             android:textSize="30sp"

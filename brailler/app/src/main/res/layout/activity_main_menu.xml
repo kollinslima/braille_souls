@@ -7,49 +7,12 @@
     android:background="@color/colorPrimary"
     android:gravity="center">
 
-    <!--Animações-->
+
     <FrameLayout
-        android:id="@+id/frameAnimacao"
+        android:id="@+id/animationFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <!--<ImageView-->
-            <!--android:id="@+id/animacao1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_background_animation_1"/>-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/animacao2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_background_animation_2"/>-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/animacao3"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_background_animation_3"/>-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/animacao4"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_background_animation_4"/>-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/animacao5"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_background_animation_5"/>-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/animacao6"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_background_animation_6"/>-->
-
-    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 public class MainMenu extends AppCompatActivity {
 
-    public static final int[] PADRAO_ANIMACAO = {
+    public static final int[] ANIMATION_PATTERN = {
             R.drawable.ic_background_animation_1,
             R.drawable.ic_background_animation_2,
             R.drawable.ic_background_animation_3,
@@ -34,89 +34,79 @@ public class MainMenu extends AppCompatActivity {
             R.drawable.ic_background_animation_6
     };
 
-    public static final long TEMPO_ANIMACAO = 5000;
+    public static final long ANIMATION_TIME = 5000;
 
     public static final String DATABASE_TAG = "DatabaseTest";
     public static final HashMap<String, String> text_to_braille = new HashMap<String, String>();
     public static final Multimap<String, String> braille_to_text = ArrayListMultimap.create();
 
-    private FrameLayout frameAnimacao;
+    private FrameLayout animationFrame;
     private ImageView auxImageView;
-    private ArrayList<ImageView> vetorAnimacao;
-    private boolean iniciaAnimacao;
+    private ArrayList<ImageView> animationVector;
+    private boolean animationInitFlag;
 
     private ValueAnimator animator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_principal);
+        setContentView(R.layout.activity_main_menu);
 
-        inicializaTradutor();
+        loadDataBase();
 
-        frameAnimacao = (FrameLayout) findViewById(R.id.frameAnimacao);
-        vetorAnimacao = new ArrayList<ImageView>();
-        iniciaAnimacao = true;
+        animationFrame = (FrameLayout) findViewById(R.id.animationFrame);
+        animationVector = new ArrayList<ImageView>();
+        animationInitFlag = true;
 
-        //Adiciona primeiro elemento para poder pegar o tamanho
+        //Add first element to get size later
         auxImageView = new ImageView(getContext());
-        auxImageView.setImageResource(PADRAO_ANIMACAO[0]);
+        auxImageView.setImageResource(ANIMATION_PATTERN[0]);
         auxImageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         auxImageView.setTranslationY(0);
 
-        vetorAnimacao.add(0, auxImageView);
+        animationVector.add(0, auxImageView);
 
-        frameAnimacao.addView(auxImageView);
+        animationFrame.addView(auxImageView);
 
         animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(TEMPO_ANIMACAO);
+        animator.setDuration(ANIMATION_TIME);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 final float progress = (float) animation.getAnimatedValue();
-                final float heightFrame = frameAnimacao.getHeight();
+                final float heightFrame = animationFrame.getHeight();
                 final float heightBase = auxImageView.getHeight();
-                final float translationY = (heightBase*PADRAO_ANIMACAO.length) * progress;
+                final float translationY = (heightBase* ANIMATION_PATTERN.length) * progress;
 
-                Log.d("Animacao", "Tranlation: " + translationY);
-
-                if (iniciaAnimacao) {
+                if (animationInitFlag) {
                     if (heightBase > 0) {
-                        Log.d("Animacao", "Base: " + heightBase);
 
-                        //Posiciona acima da tela para rolagem
-                        vetorAnimacao.get(0).setTranslationY(-PADRAO_ANIMACAO.length*heightBase);
+                        //set position to scroll
+                        animationVector.get(0).setTranslationY(-ANIMATION_PATTERN.length*heightBase);
 
-                        //Preenche a tela com o padrão
-                        for (int i = 1; (i - PADRAO_ANIMACAO.length) * heightBase < heightFrame; i++) {
+                        //fill screen
+                        for (int i = 1; (i - ANIMATION_PATTERN.length) * heightBase < heightFrame; i++) {
                             auxImageView = new ImageView(getContext());
-                            auxImageView.setImageResource(PADRAO_ANIMACAO[i % 6]);
+                            auxImageView.setImageResource(ANIMATION_PATTERN[i % 6]);
                             auxImageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                            auxImageView.setTranslationY((i - PADRAO_ANIMACAO.length) * heightBase);
+                            auxImageView.setTranslationY((i - ANIMATION_PATTERN.length) * heightBase);
 
-                            vetorAnimacao.add(i, auxImageView);
+                            animationVector.add(i, auxImageView);
 
-                            frameAnimacao.addView(auxImageView);
+                            animationFrame.addView(auxImageView);
                         }
 
-                        iniciaAnimacao = false;
+                        animationInitFlag = false;
                     }
                 } else {
 
-                    for (int i = 0; i < vetorAnimacao.size(); i++) {
-                        vetorAnimacao.get(i).setTranslationY(translationY + (i-PADRAO_ANIMACAO.length)*heightBase);
+                    for (int i = 0; i < animationVector.size(); i++) {
+                        animationVector.get(i).setTranslationY(translationY + (i- ANIMATION_PATTERN.length)*heightBase);
                     }
 
                 }
-
-//                animacao[0].setTranslationY(translationY);
-//                animacao[1].setTranslationY(translationY - heightBase);
-//                animacao[2].setTranslationY(translationY - 2*heightBase);
-//                animacao[3].setTranslationY(translationY - 3*heightBase);
-//                animacao[4].setTranslationY(translationY - 4*heightBase);
-//                animacao[5].setTranslationY(translationY - 5*heightBase);
 
             }
         });
@@ -124,7 +114,7 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    private void inicializaTradutor() {
+    private void loadDataBase() {
 
         DataBaseHelper mDBHelper = new DataBaseHelper(this);
         SQLiteDatabase mDb = null;
