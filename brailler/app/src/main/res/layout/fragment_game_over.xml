@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -8,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/menu_pause"
+        android:text="@string/game_over"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
@@ -19,24 +20,17 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/botaoContinuarJogo"
+            android:id="@+id/buttonResetGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/continua_jogo"
+            android:text="@string/play_again"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/botaoTrocaDificuldade"
+            android:id="@+id/mainMenuButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/troca_dificuldade"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/botaoMenuPrincipal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_principal"
+            android:text="@string/main_menu"
             android:onClick="onClickMenuPrincipal"
             android:textAllCaps="false" />
 

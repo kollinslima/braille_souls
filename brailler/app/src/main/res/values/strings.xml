@@ -4,28 +4,19 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="start">Jogar</string>
-    <string name="exit">Sair</string>
-    <string name="dictionaty">Dicionário</string>
+    <string name="start">Play</string>
+    <string name="exit">Exit</string>
+    <string name="dictionaty">Dictionary</string>
 
-    <string name="menu_pause">Pause</string>
-    <string name="continua_jogo">Continuar</string>
-    <string name="troca_dificuldade">Dificuldade</string>
-    <string name="menu_principal">Menu Principal</string>
+    <string name="pause_menu">Pause</string>
+    <string name="continue_game">Continue</string>
+    <string name="main_menu">Main Menu</string>
 
-    <string name="fim_de_jogo">Fim de Jogo</string>
+    <string name="game_over">Game Over</string>
 
-    <string name="acertos">Acertos: </string>
-    <string name="erros">Erros: </string>
+    <string name="hit">Hits: </string>
+    <string name="miss">Miss: </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!--Dificuldades-->
-    <string name="dificuldade_facil">Fácil</string>
-    <string name="dificuldade_medio">Médio</string>
-    <string name="dificuldade_dificil">Difícil</string>
-    <string name="dificuldade_progressiva">Dificuldade progressiva</string>
-    <string name="jogar_novamente">Jogar Novamente</string>
+    <string name="play_again">Play Again</string>
 </resources>
 

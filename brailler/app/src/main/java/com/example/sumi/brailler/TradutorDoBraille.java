@@ -7,8 +7,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.Toast;
 
-import java.util.Map;
-
 public class TradutorDoBraille extends AppCompatActivity {
 
     private ToggleButton[] tecladoBraile = new ToggleButton[6];
@@ -41,7 +39,7 @@ public class TradutorDoBraille extends AppCompatActivity {
             button.setChecked(false);
         }
         campoRes = campoResView.getText().toString();
-        resposta = MenuPrincipal.braille_to_text.get(resposta).toString();
+        resposta = MainMenu.braille_to_text.get(resposta).toString();
         if(resposta.equals("[]")){
             Toast.makeText(this, "Desconhecido", Toast.LENGTH_SHORT).show();
             return;

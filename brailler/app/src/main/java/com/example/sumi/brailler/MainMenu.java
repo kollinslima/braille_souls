@@ -15,7 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.example.sumi.brailler.banco_de_dados.DataBaseHelper;
+import com.example.sumi.brailler.database.DataBaseHelper;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MenuPrincipal extends AppCompatActivity {
+public class MainMenu extends AppCompatActivity {
 
     public static final int[] PADRAO_ANIMACAO = {
             R.drawable.ic_background_animation_1,
@@ -159,7 +159,7 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     public void onClickStartButton(View view) {
-        Intent intent = new Intent(this, SeletorDificuldade.class);
+        Intent intent = new Intent(this, MainGame.class);
         startActivity(intent);
     }
 

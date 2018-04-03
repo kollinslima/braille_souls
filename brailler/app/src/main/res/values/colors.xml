@@ -6,13 +6,13 @@
 
     <color name="black_overlay">#66000000</color>
 
-    <color name="cor_relogio">#000000</color>
-    <color name="cor_relogio_ponteiro">#0ebdf2</color>
+    <color name="clock_collor">#000000</color>
+    <color name="clock_pointer_collor">#0ebdf2</color>
 
     <color name="braille_keyboard_black_ring">#000000</color>
     <color name="braille_keyboard">#b4b4b4</color>
     <color name="braille_keyboard_hint">#0ebdf2</color>
     <color name="braille_keyboard_selected">#000000</color>
 
-    <color name="cor_nome_menu_principal">#FFFFFF</color>
+    <color name="main_menu_tittle_collor">#FFFFFF</color>
 </resources>

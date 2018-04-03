@@ -17,11 +17,11 @@ import com.example.sumi.brailler.R;
  * Created by kollins on 3/22/18.
  */
 
-public class FimJogoFragment extends DialogFragment {
+public class GameOverFragment extends DialogFragment {
 
-    private static final String DIALOG_TAG = "fimJogoDialog";
+    private static final String DIALOG_TAG = "gameOverDialog";
 
-    private Button botaoJogarNovamente, botaoMenuPrincipal;
+    private Button playAgainButton, mainMenuButton;
 
     @Nullable
     @Override
@@ -29,27 +29,27 @@ public class FimJogoFragment extends DialogFragment {
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        View layout = inflater.inflate(R.layout.layout_fim_de_jogo, container, false);
+        View layout = inflater.inflate(R.layout.fragment_game_over, container, false);
 
-        botaoJogarNovamente = (Button) layout.findViewById(R.id.botaoReiniciaJogo);
-        botaoJogarNovamente.setOnClickListener(new View.OnClickListener() {
+        playAgainButton = (Button) layout.findViewById(R.id.buttonResetGame);
+        playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
                 if (activity instanceof onDismissListener) {
-                    ((onDismissListener) activity).recomecarJogo();
+                    ((onDismissListener) activity).resetGame();
                 }
                 dismiss();
             }
         });
 
-        botaoMenuPrincipal = (Button) layout.findViewById(R.id.botaoMenuPrincipal);
-        botaoMenuPrincipal.setOnClickListener(new View.OnClickListener() {
+        mainMenuButton = (Button) layout.findViewById(R.id.mainMenuButton);
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
                 if (activity instanceof onDismissListener) {
-                    ((onDismissListener) activity).voltarMenuPrincipal();
+                    ((onDismissListener) activity).backToMainMenu();
                 }
                 dismiss();
             }
@@ -59,7 +59,7 @@ public class FimJogoFragment extends DialogFragment {
     }
 
 
-    public void abrir(FragmentManager fm){
+    public void showDialog(FragmentManager fm){
         if (fm.findFragmentByTag(DIALOG_TAG) == null){
             setCancelable(false);
             show(fm, DIALOG_TAG);
@@ -68,7 +68,7 @@ public class FimJogoFragment extends DialogFragment {
 
     public interface onDismissListener
     {
-        void recomecarJogo();
-        void voltarMenuPrincipal();
+        void resetGame();
+        void backToMainMenu();
     }
 }

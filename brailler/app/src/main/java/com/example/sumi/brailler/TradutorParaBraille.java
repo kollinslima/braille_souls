@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.content.Intent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TradutorParaBraille extends AppCompatActivity {
@@ -37,7 +36,7 @@ public class TradutorParaBraille extends AppCompatActivity {
                 palavra = palavra.toUpperCase();
                 braille_list.clear();
                 for(int i = 0; i < palavra.length(); i++){
-                    braille_list.add(MenuPrincipal.text_to_braille.get(String.valueOf(palavra.charAt(i))));
+                    braille_list.add(MainMenu.text_to_braille.get(String.valueOf(palavra.charAt(i))));
                 }
                 arrayAdapter.notifyDataSetChanged();
             }

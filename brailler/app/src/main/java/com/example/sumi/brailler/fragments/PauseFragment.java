@@ -21,10 +21,7 @@ public class PauseFragment extends DialogFragment {
 
     public static final String DIALOG_TAG = "pauseDialog";
 
-    private Button botaoContinua, botaoDificuldade, botaoMenuPrincipal;
-
-    private String dificuldadeNivel;
-    private boolean dificuldadeProgressiva;
+    private Button continueButton, mainMenuButton;
 
     @Nullable
     @Override
@@ -32,10 +29,10 @@ public class PauseFragment extends DialogFragment {
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        View layout = inflater.inflate(R.layout.botao_pause_menu, container, false);
+        View layout = inflater.inflate(R.layout.pause_button_menu, container, false);
 
-        botaoContinua = (Button) layout.findViewById(R.id.botaoContinuarJogo);
-        botaoContinua.setOnClickListener(new View.OnClickListener() {
+        continueButton = (Button) layout.findViewById(R.id.continueButton);
+        continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
@@ -46,21 +43,13 @@ public class PauseFragment extends DialogFragment {
             }
         });
 
-        botaoDificuldade = (Button) layout.findViewById(R.id.botaoTrocaDificuldade);
-        botaoDificuldade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DificuldadeDialogFragment().abrir(getActivity().getSupportFragmentManager());
-            }
-        });
-
-        botaoMenuPrincipal = (Button) layout.findViewById(R.id.botaoMenuPrincipal);
-        botaoMenuPrincipal.setOnClickListener(new View.OnClickListener() {
+        mainMenuButton = (Button) layout.findViewById(R.id.mainMenuButton);
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
                 if (activity instanceof onDismissListener) {
-                    ((onDismissListener) activity).voltarMenuPrincipal();
+                    ((onDismissListener) activity).backToMainMenu();
                 }
                 dismiss();
             }
@@ -70,7 +59,7 @@ public class PauseFragment extends DialogFragment {
     }
 
 
-    public void abrir(FragmentManager fm){
+    public void showDialog(FragmentManager fm){
         if (fm.findFragmentByTag(DIALOG_TAG) == null){
             setCancelable(false);
             show(fm, DIALOG_TAG);
@@ -80,7 +69,7 @@ public class PauseFragment extends DialogFragment {
     public interface onDismissListener
     {
         void continuarJogoFragment();
-        void voltarMenuPrincipal();
+        void backToMainMenu();
     }
 
 }

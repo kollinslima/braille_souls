@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:divider="@drawable/divisor_vertical"
+            android:divider="@drawable/vertical_div"
             android:orientation="vertical"
             android:showDividers="middle">
 
@@ -72,7 +72,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/cor_nome_menu_principal"
+                android:textColor="@color/main_menu_tittle_collor"
                 android:textSize="50dp"
                 android:shadowColor="@android:color/black"
                 android:shadowRadius="20"
@@ -82,7 +82,7 @@
                 android:id="@+id/btnStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bordas_botao"
+                android:background="@drawable/border_button"
                 android:onClick="onClickStartButton"
                 android:text="@string/start"
                 android:textColor="@android:color/black" />
@@ -91,7 +91,7 @@
                 android:id="@+id/btnDictionaty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bordas_botao"
+                android:background="@drawable/border_button"
                 android:onClick="onClickDictionatyButton"
                 android:text="@string/dictionaty"
                 android:textColor="@android:color/black" />
@@ -100,7 +100,7 @@
                 android:id="@+id/btnExit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bordas_botao"
+                android:background="@drawable/border_button"
                 android:onClick="onClickExitButton"
                 android:text="@string/exit"
                 android:textColor="@android:color/black" />

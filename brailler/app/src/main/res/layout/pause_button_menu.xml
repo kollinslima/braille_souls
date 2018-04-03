@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -9,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/fim_de_jogo"
+        android:text="@string/pause_menu"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
@@ -20,17 +19,18 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/botaoReiniciaJogo"
+            android:id="@+id/continueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/jogar_novamente"
+            android:text="@string/continue_game"
             android:textAllCaps="false" />
 
+
         <Button
-            android:id="@+id/botaoMenuPrincipal"
+            android:id="@+id/mainMenuButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/menu_principal"
+            android:text="@string/main_menu"
             android:onClick="onClickMenuPrincipal"
             android:textAllCaps="false" />
 

@@ -1,10 +1,6 @@
 package com.example.sumi.brailler;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.example.sumi.brailler.MenuPrincipal.braille_to_text;
-import static com.example.sumi.brailler.MenuPrincipal.text_to_braille;
+import static com.example.sumi.brailler.MainMenu.text_to_braille;
 
 
 /**

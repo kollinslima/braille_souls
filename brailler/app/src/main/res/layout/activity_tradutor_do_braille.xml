@@ -70,14 +70,14 @@
                 android:layout_height="@dimen/check_button_size"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/botao_checar"
+                android:background="@drawable/check_button"
                 android:onClick="onClickAdicionarEspaco"
                 android:text="Espaço"
                 android:textSize="10sp"/>
 
         </RelativeLayout>
 
-        <include layout="@layout/teclado_braile" />
+        <include layout="@layout/braille_keyboard_layout" />
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -91,7 +91,7 @@
                 android:layout_height="@dimen/check_button_size"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/botao_checar"
+                android:background="@drawable/check_button"
                 android:onClick="onClickAdicionar"
                 android:text="Adicionar"
                 android:textSize="10sp"/>
