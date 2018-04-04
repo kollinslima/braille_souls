@@ -1,5 +1,10 @@
-package com.example.sumi.brailler;
+package com.example.sumi.brailler.game;
 
+import android.content.Context;
+import android.os.Build;
+import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,19 +12,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.sumi.brailler.MainMenu;
+import com.example.sumi.brailler.R;
 import com.example.sumi.brailler.fragments.GameOverFragment;
 import com.example.sumi.brailler.fragments.PauseFragment;
 
 import java.util.Random;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainGame extends AppCompatActivity implements PauseFragment.onDismissListener, GameOverFragment.onDismissListener {
 
 
     private final int CHANGE_LEVEL_HITS = 10;
     private final int CHANGE_LEVEL_MISS = 3;
+
+    private final long VIBRATE_TIME = 500; //ms
+    private final long ANSWER_INTERVAL = 500; //ms
 
     public static final String GAME_TAG_LOG = "gameLog";
 
@@ -45,12 +53,16 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
 
     private Random random;
 
+    private Vibrator vibrator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
 
         random = new Random();
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         backButtonFlag = false;
 
@@ -80,6 +92,8 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
     @Override
     protected void onPause() {
         super.onPause();
+        MainMenu.user.saveData();
+
         if (!backButtonFlag) {
             pauseGame();
         }
@@ -96,20 +110,20 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
         randomSymbol = getSymbol();
         symbolDisplay.setText(randomSymbol);
 
-        showAnswer();
-
-        gameContinue();
+        showHint();
     }
 
-    private void showAnswer() {
+    private void showHint() {
         String brailleSymbol = MainMenu.text_to_braille.get(randomSymbol);
         int index = 0;
 
         for (ToggleButton button : brailleKeyboard) {
-            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_normal));
+            button.setBackgroundResource(R.drawable.braille_keyboard_normal_style);
+//            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_normal_style));
 
             if (brailleSymbol.charAt(index) == '1') {
-                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_with_hint));
+//                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_hint_style));
+                button.setBackgroundResource(R.drawable.braille_keyboard_hint_style);
             }
             index += 1;
         }
@@ -134,21 +148,60 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
                 consecutiveHits += 1;
                 consecutiveMiss = 0;
                 textHits.setText(String.valueOf(hitCount));
+
+                MainMenu.user.addHit();
             } else {
                 consecutiveHits = 0;
                 consecutiveMiss += 1;
                 missCount += 1;
                 textMiss.setText(String.valueOf(missCount));
+                MainMenu.user.addMiss();
             }
         } catch (NullPointerException e) {
             consecutiveHits = 0;
             missCount += 1;
             consecutiveMiss += 1;
             textMiss.setText(String.valueOf(missCount));
+            MainMenu.user.addMiss();
         }
 
-        newSymbol();
+        showRightAnswer();
 
+    }
+
+    private void showRightAnswer(){
+
+        String brailleSymbol = MainMenu.text_to_braille.get(randomSymbol);
+        int index = 0;
+
+        int background = R.drawable.braille_keyboard_right_answer;
+        if (consecutiveHits == 0){
+            background = R.drawable.braille_keyboard_wrong_answer;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(VIBRATE_TIME,VibrationEffect.DEFAULT_AMPLITUDE));
+            }else{
+                vibrator.vibrate(500);
+            }
+        }
+
+        for (ToggleButton button : brailleKeyboard) {
+            if (brailleSymbol.charAt(index) == '1') {
+                button.setBackgroundResource(background);
+            }
+            index += 1;
+        }
+
+        new CountDownTimer(ANSWER_INTERVAL, ANSWER_INTERVAL)
+        {
+            @Override
+            public final void onTick(final long millisUntilFinished){}
+            @Override
+            public final void onFinish()
+            {
+                newSymbol();
+            }
+        }.start();
     }
 
     private String getSymbol() {
@@ -171,12 +224,8 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
         new PauseFragment().showDialog(getSupportFragmentManager());
     }
 
-    private void gameContinue() {
-
-    }
-
     @Override
-    public void continuarJogoFragment() {
+    public void continueGameFragment() {
 
         newSymbol();
     }

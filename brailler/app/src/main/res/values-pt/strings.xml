@@ -19,4 +19,6 @@
     <string name="miss">Erros: </string>
 
     <string name="play_again">Jogar Novamente</string>
+
+    <string name="profile">Perfil</string>
 </resources>

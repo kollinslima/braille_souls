@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.sumi.brailler.MainGame">
+    tools:context="com.example.sumi.brailler.game.MainGame">
 
 
     <RelativeLayout
@@ -13,44 +13,9 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <Button
-            android:id="@+id/pauseButton"
-            android:layout_width="@dimen/pause_button_size"
-            android:layout_height="@dimen/pause_button_size"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/ic_pause_button"
-            android:onClick="onPauseClick" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
-
-        <TextView
-            android:id="@+id/symbolDisplay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@android:color/background_dark"
-            android:textSize="200sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:visibility="visible">
-
         <GridLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:columnCount="2">
 
@@ -85,11 +50,49 @@
                 android:textStyle="bold" />
         </GridLayout>
 
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="@dimen/pause_button_size"
+            android:layout_height="@dimen/pause_button_size"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_pause_button"
+            android:onClick="onPauseClick" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/symbolDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="200sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <include layout="@layout/braille_keyboard_layout" />
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <Button
@@ -97,11 +100,9 @@
                 android:layout_width="@dimen/check_button_size"
                 android:layout_height="@dimen/check_button_size"
                 android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
                 android:background="@drawable/check_button"
                 android:onClick="onCheckClick"
                 android:text="check" />
-
         </RelativeLayout>
 
     </LinearLayout>

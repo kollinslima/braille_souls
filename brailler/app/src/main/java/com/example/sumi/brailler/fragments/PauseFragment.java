@@ -37,7 +37,7 @@ public class PauseFragment extends DialogFragment {
             public void onClick(View v) {
                 Activity activity = getActivity();
                 if (activity instanceof onDismissListener) {
-                    ((onDismissListener) activity).continuarJogoFragment();
+                    ((onDismissListener) activity).continueGameFragment();
                 }
                 dismiss();
             }
@@ -68,7 +68,7 @@ public class PauseFragment extends DialogFragment {
 
     public interface onDismissListener
     {
-        void continuarJogoFragment();
+        void continueGameFragment();
         void backToMainMenu();
     }
 

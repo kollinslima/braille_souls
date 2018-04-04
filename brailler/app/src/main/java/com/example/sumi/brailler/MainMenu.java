@@ -8,7 +8,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -16,6 +15,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
+import com.example.sumi.brailler.game.MainGame;
+import com.example.sumi.brailler.user_profile.UserProfile;
+import com.example.sumi.brailler.user_profile.UserProfileActivity;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -36,6 +38,8 @@ public class MainMenu extends AppCompatActivity {
 
     public static final long ANIMATION_TIME = 5000;
 
+    public static UserProfile user;
+
     public static final String DATABASE_TAG = "DatabaseTest";
     public static final HashMap<String, String> text_to_braille = new HashMap<String, String>();
     public static final Multimap<String, String> braille_to_text = ArrayListMultimap.create();
@@ -51,6 +55,8 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        user = new UserProfile(this);
 
         loadDataBase();
 
@@ -155,6 +161,11 @@ public class MainMenu extends AppCompatActivity {
 
     public void onClickDictionatyButton(View view) {
         Intent intent = new Intent(this, TradutorParaBraille.class);
+        startActivity(intent);
+    }
+
+    public void onClickProfileButton(View view) {
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
