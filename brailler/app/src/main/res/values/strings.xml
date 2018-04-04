@@ -25,5 +25,6 @@
     <string name="result">Result:</string>
     <string name="space">Space</string>
     <string name="add_key">Add</string>
+    <string name="toast_unknown">Unknow</string>
 </resources>
 
