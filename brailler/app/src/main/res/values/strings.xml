@@ -20,5 +20,10 @@
     <string name="play_again">Play Again</string>
 
     <string name="profile">Profile</string>
+
+    <!--Strings do dicionario -->
+    <string name="result">Result:</string>
+    <string name="space">Space</string>
+    <string name="add_key">Add</string>
 </resources>
 
