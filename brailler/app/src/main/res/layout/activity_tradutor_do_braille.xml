@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.sumi.brailler.TradutorDoBraille"
+    tools:context="com.example.sumi.brailler.translate.TradutorDoBraille"
     android:background="@color/colorPrimary">
 
 

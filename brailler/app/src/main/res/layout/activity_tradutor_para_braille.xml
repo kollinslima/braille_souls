@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sumi.brailler.TradutorParaBraille"
+    tools:context="com.example.sumi.brailler.translate.TradutorParaBraille"
     android:background="@color/colorPrimary">
 
     <Button

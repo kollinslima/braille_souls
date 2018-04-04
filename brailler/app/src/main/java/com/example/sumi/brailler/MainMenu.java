@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
 import com.example.sumi.brailler.game.MainGame;
+import com.example.sumi.brailler.translate.TradutorParaBraille;
 import com.example.sumi.brailler.user_profile.UserProfile;
 import com.example.sumi.brailler.user_profile.UserProfileActivity;
 import com.google.common.collect.ArrayListMultimap;

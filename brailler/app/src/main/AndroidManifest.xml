@@ -23,8 +23,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".user_profile.UserProfileActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".TradutorParaBraille" />
-        <activity android:name=".TradutorDoBraille"></activity>
+        <activity android:name=".translate.TradutorParaBraille" />
+        <activity android:name=".translate.TradutorDoBraille"></activity>
     </application>
 
 </manifest>
