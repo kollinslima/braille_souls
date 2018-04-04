@@ -21,4 +21,10 @@
     <string name="play_again">Jogar Novamente</string>
 
     <string name="profile">Perfil</string>
+
+    <!--Strings do dicionario -->
+    <string name="result">Resultado:</string>
+    <string name="space">Espaço</string>
+    <string name="add_key">Adicionar</string>
+    <string name="toast_unknown">Desconhecido</string>
 </resources>
