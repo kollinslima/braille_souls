@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
 import com.example.sumi.brailler.game.MainGame;
 import com.example.sumi.brailler.translate.TabbedTranslator;
-import com.example.sumi.brailler.translate.TradutorParaBraille;
 import com.example.sumi.brailler.user_profile.UserProfile;
 import com.example.sumi.brailler.user_profile.UserProfileActivity;
+import com.example.sumi.brailler.visual_components.ProportionalImageView;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -47,8 +46,8 @@ public class MainMenu extends AppCompatActivity {
     public static final Multimap<String, String> braille_to_text = ArrayListMultimap.create();
 
     private FrameLayout animationFrame;
-    private ImageView auxImageView;
-    private ArrayList<ImageView> animationVector;
+    private ProportionalImageView auxImageView;
+    private ArrayList<ProportionalImageView> animationVector;
     private boolean animationInitFlag;
 
     private ValueAnimator animator;
@@ -63,11 +62,11 @@ public class MainMenu extends AppCompatActivity {
         loadDataBase();
 
         animationFrame = (FrameLayout) findViewById(R.id.animationFrame);
-        animationVector = new ArrayList<ImageView>();
+        animationVector = new ArrayList<ProportionalImageView>();
         animationInitFlag = true;
 
         //Add first element to get size later
-        auxImageView = new ImageView(getContext());
+        auxImageView = new ProportionalImageView(getContext());
         auxImageView.setImageResource(ANIMATION_PATTERN[0]);
         auxImageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         auxImageView.setTranslationY(0);
@@ -96,7 +95,7 @@ public class MainMenu extends AppCompatActivity {
 
                         //fill screen
                         for (int i = 1; (i - ANIMATION_PATTERN.length) * heightBase < heightFrame; i++) {
-                            auxImageView = new ImageView(getContext());
+                            auxImageView = new ProportionalImageView(getContext());
                             auxImageView.setImageResource(ANIMATION_PATTERN[i % 6]);
                             auxImageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             auxImageView.setTranslationY((i - ANIMATION_PATTERN.length) * heightBase);
@@ -178,4 +177,5 @@ public class MainMenu extends AppCompatActivity {
     private Context getContext() {
         return this;
     }
+
 }

@@ -26,8 +26,6 @@
         <activity
             android:name=".user_profile.UserProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".translate.TradutorParaBraille" />
-        <activity android:name=".translate.TranslateFromBraille" />
         <activity
             android:name=".translate.TabbedTranslator"
             android:label="@string/title_activity_tabbed_translator"
