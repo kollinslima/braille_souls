@@ -18,4 +18,5 @@
 
     <color name="correct_answer">#00FF00</color>
     <color name="wrong_answer">#FF0000</color>
+
 </resources>

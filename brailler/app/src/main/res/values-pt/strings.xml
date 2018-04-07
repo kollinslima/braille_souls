@@ -2,10 +2,16 @@
 <resources>
     <string name="app_name">Braille Souls</string>
 
+    <!--Strings do dicionario -->
+    <string name="result">Resultado:</string>
+    <string name="space">Espaço</string>
+    <string name="add_key">Adicionar</string>
+    <string name="toast_unknown">Desconhecido</string>
+
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="start">Jogar</string>
+    <string name="learn">Aprender</string>
     <string name="exit">Sair</string>
     <string name="dictionaty">Dicionário</string>
 
@@ -22,9 +28,10 @@
 
     <string name="profile">Perfil</string>
 
-    <!--Strings do dicionario -->
-    <string name="result">Resultado:</string>
-    <string name="space">Espaço</string>
-    <string name="add_key">Adicionar</string>
-    <string name="toast_unknown">Desconhecido</string>
+    <string name="play">Jogar</string>
+    <string name="single">Single Player</string>
+    <string name="multi">MultiPlayer</string>
+    <string name="number_of_players">Número de Jogadores</string>
+    <string name="choose_player_start">Start</string>
+
 </resources>
