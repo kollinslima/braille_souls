@@ -35,7 +35,7 @@
         <activity
             android:name=".translate.TabbedTranslator"
             android:label="@string/title_activity_tabbed_translator"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
     </application>
 
 </manifest>
