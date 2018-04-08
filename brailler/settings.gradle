@@ -1,1 +1,2 @@
 include ':app', ':clockview'
+include ':app', ':android-outline-textview'

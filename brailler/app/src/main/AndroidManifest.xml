@@ -25,7 +25,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".GameSelector"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".game.MultiplayerGame"
             android:screenOrientation="portrait" />

@@ -60,7 +60,7 @@ public class MultiplayerChooseFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
-                if (activity instanceof PauseFragment.onDismissListener) {
+                if (activity instanceof MultiplayerChooseFragment.onDismissListener) {
                     ((MultiplayerChooseFragment.onDismissListener) activity).startGame(Integer.valueOf(numberOfPlayers.getText().toString()));
                 }
                 dismiss();
@@ -70,10 +70,8 @@ public class MultiplayerChooseFragment extends DialogFragment {
         return layout;
     }
 
-
     public void showDialog(FragmentManager fm) {
         if (fm.findFragmentByTag(DIALOG_TAG) == null) {
-            setCancelable(false);
             show(fm, DIALOG_TAG);
         }
     }

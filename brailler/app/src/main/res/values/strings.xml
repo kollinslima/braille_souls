@@ -40,5 +40,10 @@
     <string name="number_of_players">Number of Players</string>
     <string name="choose_player_start">Start</string>
 
+    <string name="player_turn">Player %d</string>
+    <string name="close_button">Next Turn</string>
+    <string name="close_button_end">Play Again</string>
+    <string name="table_of_points">Table of Points</string>
+
 </resources>
 

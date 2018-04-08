@@ -5,8 +5,11 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,22 +20,28 @@ import com.example.sumi.brailler.R;
 import com.example.sumi.brailler.fragments.GameOverFragment;
 import com.example.sumi.brailler.fragments.MultiplayerChooseFragment;
 import com.example.sumi.brailler.fragments.PauseFragment;
+import com.example.sumi.brailler.fragments.PlayerWaitFragment;
+import com.example.sumi.brailler.fragments.PointTableMultiplayer;
 import com.plusquare.clockview.ClockView;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MultiplayerGame extends AppCompatActivity implements PauseFragment.onDismissListener, MultiplayerChooseFragment.onDismissListener {
+public class MultiplayerGame extends AppCompatActivity
+        implements PauseFragment.onDismissListener, MultiplayerChooseFragment.onDismissListener,
+        PlayerWaitFragment.onDismissListener, PointTableMultiplayer.onDismissListener {
 
     private final long VIBRATE_TIME = 500; //ms
     private final long ANSWER_INTERVAL = 500; //ms
 
     public static final String GAME_TAG_LOG = "gameLog";
 
-    //10 seconds
-    private final double TIMER_SET = 10;
+    //60 seconds
+    private final double TIMER_SET = 60;
+    //    private final double TIMER_SET = 5;
     private final int TIMER_INTERVAL = (int) ((TIMER_SET / 60) * 1000);   //ms
 
     private Timer timer;
@@ -50,13 +59,14 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
     private TextView textHits, textMiss;
     private int hitCount, missCount;
 
-    private boolean backButtonFlag;
+    private boolean backButtonFlag, gameOverFlag, isGameRunning;
 
     private Random random;
 
     private Vibrator vibrator;
 
-    private int numberOfPlayers;
+    private int numberOfPlayers, playerTurn;
+    private ArrayList<Integer> playerPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +77,10 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        playerTurn = 1;
+
         backButtonFlag = false;
+        gameOverFlag = false;
 
         brailleKeyboard[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
         brailleKeyboard[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
@@ -88,6 +101,7 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
 
         graphicClock = (ClockView) findViewById(R.id.graphicClock);
 
+        isGameRunning = false;
         new MultiplayerChooseFragment().showDialog(getSupportFragmentManager());
 
     }
@@ -95,10 +109,19 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
     @Override
     protected void onPause() {
         super.onPause();
-        MainMenu.user.saveData();
 
-        if (!backButtonFlag) {
+        if ((!(backButtonFlag || gameOverFlag)) && isGameRunning) {
             pauseGame();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            timer.cancel();
+        } catch (NullPointerException e) {
+            Log.e("Timer", "Timer not running", e);
         }
     }
 
@@ -145,15 +168,19 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
             MainMenu.user.addMiss();
         }
 
+        newSymbol();
+
     }
 
     private String getSymbol() {
         String randomKey = null;
 
-        Set<String> keys = MainMenu.text_to_braille.keySet();
-        int keyNumber = random.nextInt(keys.size());
+        do {
+            Set<String> keys = MainMenu.text_to_braille.keySet();
+            int keyNumber = random.nextInt(keys.size());
 
-        randomKey = (String) keys.toArray()[keyNumber];
+            randomKey = (String) keys.toArray()[keyNumber];
+        } while (randomKey == null);
 
         return randomKey;
     }
@@ -163,30 +190,30 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
     }
 
     private void pauseGame() {
-
+        try {
+            timer.cancel();
+        } catch (NullPointerException e) {
+            Log.e("Timer", "Timer not running", e);
+        }
         new PauseFragment().showDialog(getSupportFragmentManager());
     }
 
     @Override
     public void continueGameFragment() {
-
-        newSymbol();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new GameTimer(), TIMER_INTERVAL, TIMER_INTERVAL);
+//        newSymbol();
     }
 
-//    @Override
-//    public void resetGame() {
-//
-//        hitCount = 0;
-//        missCount = 0;
-//
-//        textHits.setText(String.valueOf(hitCount));
-//        textMiss.setText(String.valueOf(missCount));
-//
-//        newSymbol();
-//    }
+    @Override
+    public void resetGame() {
+        playerTurn = 1;
+        new MultiplayerChooseFragment().showDialog(getSupportFragmentManager());
+    }
 
     @Override
     public void backToMainMenu() {
+        gameOverFlag = true;
         finish();
     }
 
@@ -197,6 +224,50 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
     @Override
     public void startGame(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+        playerPoints = new ArrayList<Integer>(numberOfPlayers);
+        playerPoints.clear();
+
+        new PlayerWaitFragment().showDialog(getSupportFragmentManager(), playerTurn);
+    }
+
+    @Override
+    public void startTurn() {
+
+        hitCount = 0;
+        missCount = 0;
+        textHits.setText(String.valueOf(hitCount));
+        textMiss.setText(String.valueOf(missCount));
+
+        for (ToggleButton b : brailleKeyboard) {
+            b.setChecked(false);
+        }
+
+        isGameRunning = true;
+        newSymbol();
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new GameTimer(), TIMER_INTERVAL, TIMER_INTERVAL);
+    }
+
+    public void endPlayerTurn() {
+        int totalPoints = hitCount - missCount;
+        playerPoints.add(playerTurn - 1, totalPoints);
+        playerTurn += 1;
+
+        isGameRunning = false;
+
+        if (playerTurn > numberOfPlayers) {
+            new PointTableMultiplayer().showDialog(getSupportFragmentManager(), new ArrayList<Integer>(playerPoints), true);
+        } else {
+            new PlayerWaitFragment().showDialog(getSupportFragmentManager(), playerTurn);
+            new PointTableMultiplayer().showDialog(getSupportFragmentManager(), new ArrayList<Integer>(playerPoints), false);
+        }
+
+        try {
+            timer.cancel();
+        } catch (NullPointerException e) {
+            Log.e("Timer", "Timer not running", e);
+        }
     }
 
     public class GameTimer extends TimerTask {
@@ -213,12 +284,12 @@ public class MultiplayerGame extends AppCompatActivity implements PauseFragment.
             });
 
             if (graphicClockMinutes == 0) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        endPlayerTurn();
-//                    }
-//                });
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        endPlayerTurn();
+                    }
+                });
             }
         }
     }
