@@ -20,7 +20,7 @@ import com.example.sumi.brailler.fragments.PauseFragment;
 import java.util.Random;
 import java.util.Set;
 
-public class MainGame extends AppCompatActivity implements PauseFragment.onDismissListener, GameOverFragment.onDismissListener {
+public class LearnGame extends AppCompatActivity implements PauseFragment.onDismissListener, GameOverFragment.onDismissListener {
 
 
     private final int CHANGE_LEVEL_HITS = 10;
