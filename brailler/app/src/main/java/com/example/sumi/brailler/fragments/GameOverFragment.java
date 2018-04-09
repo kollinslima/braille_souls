@@ -36,8 +36,8 @@ public class GameOverFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
-                if (activity instanceof GameOverFragment.onDismissListener) {
-                    ((GameOverFragment.onDismissListener) activity).resetGame();
+                if (activity instanceof onDismissListener) {
+                    ((onDismissListener) activity).resetGame();
                 }
                 dismiss();
             }
@@ -48,8 +48,8 @@ public class GameOverFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
-                if (activity instanceof GameOverFragment.onDismissListener) {
-                    ((GameOverFragment.onDismissListener) activity).backToMainMenu();
+                if (activity instanceof onDismissListener) {
+                    ((onDismissListener) activity).backToMainMenu();
                 }
                 dismiss();
             }

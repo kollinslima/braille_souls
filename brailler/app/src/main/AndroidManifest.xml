@@ -21,14 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".game.LearnGame"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".GameSelector"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
-        <activity
-            android:name=".game.MultiplayerGame"
+            android:name=".game.MainGame"
             android:screenOrientation="portrait" />
         <activity
             android:name=".user_profile.UserProfileActivity"
@@ -36,8 +29,7 @@
         <activity
             android:name=".translate.TabbedTranslator"
             android:label="@string/title_activity_tabbed_translator"
-            android:theme="@style/FullscreenTheme" />
-        <activity android:name=".game.LearnModeGame"></activity>
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

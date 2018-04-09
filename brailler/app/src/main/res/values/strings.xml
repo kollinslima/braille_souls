@@ -1,23 +1,10 @@
 <resources>
     <string name="app_name">Braille Souls</string>
 
-    <!--Strings do dicionario -->
-    <string name="result">Result:</string>
-    <string name="space">Space</string>
-    <string name="add_key">Add</string>
-    <string name="toast_unknown">Unknow</string>
-    <string name="title_activity_tabbed_translator">TabbedTranslator</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
-
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="learn">Learn</string>
+    <string name="start">Play</string>
     <string name="exit">Exit</string>
     <string name="dictionaty">Dictionary</string>
 
@@ -34,16 +21,16 @@
 
     <string name="profile">Profile</string>
 
-    <string name="play">Play</string>
-    <string name="single">Single Player</string>
-    <string name="multi">MultiPlayer</string>
-    <string name="number_of_players">Number of Players</string>
-    <string name="choose_player_start">Start</string>
-
-    <string name="player_turn">Player %d</string>
-    <string name="close_button">Next Turn</string>
-    <string name="close_button_end">Play Again</string>
-    <string name="table_of_points">Table of Points</string>
-
+    <!--Strings do dicionario -->
+    <string name="result">Result:</string>
+    <string name="space">Space</string>
+    <string name="add_key">Add</string>
+    <string name="toast_unknown">Unknow</string>
+    <string name="title_activity_tabbed_translator">TabbedTranslator</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
 

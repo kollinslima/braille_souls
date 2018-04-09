@@ -29,7 +29,7 @@ public class PauseFragment extends DialogFragment {
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        View layout = inflater.inflate(R.layout.fragment_pause_button_menu, container, false);
+        View layout = inflater.inflate(R.layout.pause_button_menu, container, false);
 
         continueButton = (Button) layout.findViewById(R.id.continueButton);
         continueButton.setOnClickListener(new View.OnClickListener() {

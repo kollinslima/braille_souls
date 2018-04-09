@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
 import com.example.sumi.brailler.game.LearnGame;
+import com.example.sumi.brailler.game.LearnModeGame;
 import com.example.sumi.brailler.game.MultiplayerGame;
 import com.example.sumi.brailler.translate.TabbedTranslator;
 import com.example.sumi.brailler.user_profile.UserProfile;
@@ -113,7 +114,8 @@ public class GameSelector extends AppCompatActivity {
     }
 
     public void onClickSingleButton(View view) {
-
+        Intent intent = new Intent(this, LearnModeGame.class);
+        startActivity(intent);
     }
 
     public void onClickMultiButton(View view) {
