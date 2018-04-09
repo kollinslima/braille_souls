@@ -83,10 +83,22 @@
         android:layout_weight="1"
         android:gravity="center">
 
-        <android.support.v4.widget.Space
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <com.plusquare.clockview.ClockView
+                android:id="@+id/graphicClock"
+                android:layout_width="@dimen/clock_size"
+                android:layout_height="@dimen/clock_size"
+                android:layout_weight="1"
+                app:clockColor="@color/clock_collor"
+                app:clockPointerColor="@color/clock_pointer_collor"/>
+
+        </RelativeLayout>
+
 
         <include layout="@layout/braille_keyboard_layout" />
 

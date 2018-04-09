@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
 import com.example.sumi.brailler.game.LearnGame;
+import com.example.sumi.brailler.game.MultiplayerGame;
 import com.example.sumi.brailler.translate.TabbedTranslator;
 import com.example.sumi.brailler.user_profile.UserProfile;
 import com.example.sumi.brailler.user_profile.UserProfileActivity;
@@ -26,7 +27,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainMenu extends AppCompatActivity {
+import static com.example.sumi.brailler.MainMenu.ANIMATION_TIME;
+
+public class GameSelector extends AppCompatActivity {
 
     public static final int[] ANIMATION_PATTERN = {
             R.drawable.ic_background_animation_1,
@@ -36,14 +39,6 @@ public class MainMenu extends AppCompatActivity {
             R.drawable.ic_background_animation_5,
             R.drawable.ic_background_animation_6
     };
-
-    public static final long ANIMATION_TIME = 5000;
-
-    public static UserProfile user;
-
-    public static final String DATABASE_TAG = "DatabaseTest";
-    public static final HashMap<String, String> text_to_braille = new HashMap<String, String>();
-    public static final Multimap<String, String> braille_to_text = ArrayListMultimap.create();
 
     private FrameLayout animationFrame;
     private ProportionalImageView auxImageView;
@@ -55,11 +50,7 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
-
-        user = new UserProfile(this);
-
-        loadDataBase();
+        setContentView(R.layout.activity_game_selector);
 
         animationFrame = (FrameLayout) findViewById(R.id.animationFrame);
         animationVector = new ArrayList<ProportionalImageView>();
@@ -121,62 +112,13 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    private void loadDataBase() {
+    public void onClickSingleButton(View view) {
 
-        DataBaseHelper mDBHelper = new DataBaseHelper(this);
-        SQLiteDatabase mDb = null;
-
-        try {
-            mDBHelper.updateDataBase();
-            mDb = mDBHelper.getWritableDatabase();
-
-            Cursor cursor = mDb.query("brailleTable", null, null, null, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-
-                    text_to_braille.put(cursor.getString(cursor.getColumnIndex("PlainText")),
-                            cursor.getString(cursor.getColumnIndex("Braille")));
-
-                    braille_to_text.put(cursor.getString(cursor.getColumnIndex("Braille")),
-                            cursor.getString(cursor.getColumnIndex("PlainText")));
-
-//                    Log.d(DATABASE_TAG, "Braille: " + cursor.getString(cursor.getColumnIndex("Braille"))
-//                            + " - Text: " + braille_to_text.get(cursor.getString(cursor.getColumnIndex("Braille"))));
-                } while (cursor.moveToNext());
-            }
-
-        } catch (SQLException mSQLException) {
-            throw mSQLException;
-        } catch (IOException mIOException) {
-            throw new Error("UnableToUpdateDatabase");
-        } finally {
-            mDb.close();
-        }
     }
 
-    public void onClickLearnButton(View view) {
-        Intent intent = new Intent(this, LearnGame.class);
+    public void onClickMultiButton(View view) {
+        Intent intent = new Intent(this, MultiplayerGame.class);
         startActivity(intent);
-    }
-
-    public void onClickPlayButton(View view) {
-        Intent intent = new Intent(this, GameSelector.class);
-        startActivity(intent);
-    }
-
-    public void onClickDictionatyButton(View view) {
-        Intent intent = new Intent(this, TabbedTranslator.class);
-        startActivity(intent);
-    }
-
-    public void onClickProfileButton(View view) {
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        startActivity(intent);
-    }
-
-    public void onClickExitButton(View view) {
-        finish();
     }
 
     private Context getContext() {

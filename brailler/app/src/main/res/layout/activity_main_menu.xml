@@ -24,30 +24,39 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:divider="@drawable/vertical_div"
             android:orientation="vertical"
             android:showDividers="middle">
 
-            <TextView
+            <com.biomorgoth.outlinetextview.StrokedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/main_menu_tittle_collor"
-                android:textSize="50dp"
-                android:shadowColor="@android:color/black"
-                android:shadowRadius="20"
+                app:textStrokeColor="@android:color/black"
+                app:textStrokeWidth="0.5"
+                android:textSize="75sp"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btnStart"
+                android:id="@+id/btnLearn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_button"
-                android:onClick="onClickStartButton"
-                android:text="@string/start"
+                android:onClick="onClickLearnButton"
+                android:text="@string/learn"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_button"
+                android:onClick="onClickPlayButton"
+                android:text="@string/play"
                 android:textColor="@android:color/black" />
 
             <Button

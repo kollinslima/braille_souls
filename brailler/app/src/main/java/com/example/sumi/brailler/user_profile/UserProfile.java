@@ -42,6 +42,16 @@ public class UserProfile {
 
     }
 
+    public int getMaxLimit(String type){
+        if(type.equals("hits")){
+            return consecutiveHitsCount;
+        }else if(type.equals("misses")){
+            return consecutiveMissCount;
+        }else{
+            return 0;
+        }
+    }
+
     public void saveData(){
         SharedPreferences.Editor editor = preferences.edit();
 

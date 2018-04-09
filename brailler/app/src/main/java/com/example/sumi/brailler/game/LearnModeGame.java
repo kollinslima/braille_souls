@@ -14,29 +14,18 @@ import android.widget.ToggleButton;
 
 import com.example.sumi.brailler.MainMenu;
 import com.example.sumi.brailler.R;
-import com.example.sumi.brailler.fragments.GameOverFragment;
 import com.example.sumi.brailler.fragments.PauseFragment;
 
 import java.util.Random;
 import java.util.Set;
 
-public class MainGame extends AppCompatActivity implements PauseFragment.onDismissListener, GameOverFragment.onDismissListener {
+public class LearnModeGame extends AppCompatActivity {
 
-
-    private final int CHANGE_LEVEL_HITS = 10;
-    private final int CHANGE_LEVEL_MISS = 3;
 
     private final long VIBRATE_TIME = 500; //ms
     private final long ANSWER_INTERVAL = 500; //ms
 
     public static final String GAME_TAG_LOG = "gameLog";
-
-    //10 seconds
-//    private final double TIMER_SET = 10;
-//    private final int TIMER_INTERVAL = (int) ((TIMER_SET / 60) * 1000);   //ms
-//
-//    private Timer timer;
-//    private int graphicClockMinutes = 0;
 
     private String randomSymbol;
 
@@ -58,8 +47,7 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_game);
-
+        setContentView(R.layout.activity_learn_mode_game);
         random = new Random();
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -86,25 +74,15 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
         symbolDisplay = (TextView) findViewById(R.id.symbolDisplay);
 
         newSymbol();
-
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MainMenu.user.saveData();
-
-        if (!backButtonFlag) {
-            pauseGame();
-        }
+    public void onPauseClick(View view) {
+        pauseGame();
     }
+    private void pauseGame() {
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        backButtonFlag = true;
+        new PauseFragment().showDialog(getSupportFragmentManager());
     }
-
     private void newSymbol() {
 
         randomSymbol = getSymbol();
@@ -112,23 +90,33 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
 
         showHint();
     }
+    private String getSymbol() {
+        String randomKey = null;
 
+        Set<String> keys = MainMenu.text_to_braille.keySet();
+        int keyNumber = random.nextInt(keys.size());
+
+        randomKey = (String) keys.toArray()[keyNumber];
+
+        return randomKey;
+    }
     private void showHint() {
         String brailleSymbol = MainMenu.text_to_braille.get(randomSymbol);
         int index = 0;
 
         for (ToggleButton button : brailleKeyboard) {
             button.setBackgroundResource(R.drawable.braille_keyboard_normal_style);
-//            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_normal_style));
 
             if (brailleSymbol.charAt(index) == '1') {
-//                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_hint_style));
                 button.setBackgroundResource(R.drawable.braille_keyboard_hint_style);
             }
             index += 1;
         }
     }
 
+    public void onCheckClick(View view) {
+        checkAnswer();
+    }
     private void checkAnswer() {
         String answer = "";
 
@@ -168,7 +156,6 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
         showRightAnswer();
 
     }
-
     private void showRightAnswer(){
 
         String brailleSymbol = MainMenu.text_to_braille.get(randomSymbol);
@@ -203,78 +190,4 @@ public class MainGame extends AppCompatActivity implements PauseFragment.onDismi
             }
         }.start();
     }
-
-    private String getSymbol() {
-        String randomKey = null;
-
-        Set<String> keys = MainMenu.text_to_braille.keySet();
-        int keyNumber = random.nextInt(keys.size());
-
-        randomKey = (String) keys.toArray()[keyNumber];
-
-        return randomKey;
-    }
-
-    public void onPauseClick(View view) {
-        pauseGame();
-    }
-
-    private void pauseGame() {
-
-        new PauseFragment().showDialog(getSupportFragmentManager());
-    }
-
-    @Override
-    public void continueGameFragment() {
-
-        newSymbol();
-    }
-
-    @Override
-    public void resetGame() {
-
-        consecutiveMiss = 0;
-        consecutiveHits = 0;
-        hitCount = 0;
-        missCount = 0;
-
-        textHits.setText(String.valueOf(hitCount));
-        textMiss.setText(String.valueOf(missCount));
-
-        newSymbol();
-    }
-
-    @Override
-    public void backToMainMenu() {
-        finish();
-    }
-
-    public void onCheckClick(View view) {
-        checkAnswer();
-    }
-
-//    public class TempoJogo extends TimerTask {
-//
-//        @Override
-//        public void run() {
-//
-//            graphicClockMinutes = (graphicClockMinutes + 1) % 60;
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    graphicClock.setMinute(graphicClockMinutes);
-//                }
-//            });
-//
-//            if (graphicClockMinutes == 0) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        checkAnswer();
-//                    }
-//                });
-//            }
-//        }
-//    }
-
 }
