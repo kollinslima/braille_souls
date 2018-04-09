@@ -149,6 +149,7 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
                 consecutiveMiss = 0;
                 textHits.setText(String.valueOf(hitCount));
 
+
                 MainMenu.user.addHit();
             } else {
                 consecutiveHits = 0;

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.example.sumi.brailler.MainMenu;
 
+import java.util.HashMap;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class UserProfile {
@@ -13,10 +15,12 @@ public class UserProfile {
     private final String ALL_MISS_KEY = "AllMiss";
     private final String ALL_CONSECUTIVE_HITS_KEY = "AllConsecutiveHits";
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
+    private final String ALL_USER_PROGRESS = "LearnProgress";
+    private final HashMap<String, long> heatMap;
 
     private SharedPreferences preferences;
 
-    private long allHits, allMiss;
+    private long allHits, allMiss, progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
 
     private int consecutiveHitsCount, consecutiveMissCount;
@@ -28,6 +32,7 @@ public class UserProfile {
         allMiss = preferences.getLong(ALL_MISS_KEY, 0);
         maxConsecutiveHits = preferences.getLong(ALL_CONSECUTIVE_HITS_KEY, 0);
         maxConsecutiveMiss = preferences.getLong(ALL_CONSECUTIVE_MISS_KEY, 0);
+        progress = preferences.getLong(ALL_USER_PROGRESS, 0);
 
         consecutiveHitsCount = 0;
         consecutiveMissCount = 0;
@@ -40,6 +45,7 @@ public class UserProfile {
         editor.putLong(ALL_MISS_KEY, allMiss);
         editor.putLong(ALL_CONSECUTIVE_HITS_KEY, maxConsecutiveHits);
         editor.putLong(ALL_CONSECUTIVE_MISS_KEY, maxConsecutiveMiss);
+        editor.putLong(ALL_USER_PROGRESS, progress); //progress to measure dificulty
         editor.apply();
     }
 
