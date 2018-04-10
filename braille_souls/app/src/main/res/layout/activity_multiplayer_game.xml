@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.sumi.brailler.game.LearnGame">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:columnCount="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hit"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/hit_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/miss"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/miss_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </GridLayout>
+
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="@dimen/pause_button_size"
+            android:layout_height="@dimen/pause_button_size"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_pause_button"
+            android:onClick="onPauseClick" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/symbolDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="200sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <!--<com.plusquare.clockview.ClockView-->
+                <!--android:id="@+id/graphicClock"-->
+                <!--android:layout_width="@dimen/clock_size"-->
+                <!--android:layout_height="@dimen/clock_size"-->
+                <!--android:layout_weight="1"-->
+                <!--app:clockColor="@color/clock_collor"-->
+                <!--app:clockPointerColor="@color/clock_pointer_collor"/>-->
+
+        </RelativeLayout>
+
+
+        <include layout="@layout/braille_keyboard_layout" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/check_button"
+                android:layout_width="@dimen/check_button_size"
+                android:layout_height="@dimen/check_button_size"
+                android:layout_centerInParent="true"
+                android:background="@drawable/check_button"
+                android:onClick="onCheckClick"
+                android:text="check" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

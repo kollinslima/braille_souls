@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Braille Souls</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="start">Jogar</string>
+    <string name="exit">Sair</string>
+    <string name="dictionaty">Dicionário</string>
+
+    <string name="pause_menu">Pause</string>
+    <string name="continue_game">Continuar</string>
+    <string name="main_menu">Menu Principal</string>
+
+    <string name="game_over">Fim de Jogo</string>
+
+    <string name="hit">Acertos: </string>
+    <string name="miss">Erros: </string>
+
+    <string name="play_again">Jogar Novamente</string>
+
+    <string name="profile">Perfil</string>
+
+    <!--Strings do dicionario -->
+    <string name="result">Resultado:</string>
+    <string name="space">Espaço</string>
+    <string name="add_key">Adicionar</string>
+    <string name="toast_unknown">Desconhecido</string>
+</resources>
