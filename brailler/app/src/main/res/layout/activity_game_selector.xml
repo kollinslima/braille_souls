@@ -35,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_button"
                 android:onClick="onClickSingleButton"
-                android:text="@string/single"
                 android:textColor="@android:color/black" />
 
             <Button
@@ -44,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_button"
                 android:onClick="onClickMultiButton"
-                android:text="@string/multi"
                 android:textColor="@android:color/black" />
 
         </LinearLayout>

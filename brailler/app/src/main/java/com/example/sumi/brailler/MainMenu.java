@@ -14,7 +14,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
-import com.example.sumi.brailler.game.MainGame;
+import com.example.sumi.brailler.game.LearnGame;
 import com.example.sumi.brailler.translate.TabbedTranslator;
 import com.example.sumi.brailler.user_profile.UserProfile;
 import com.example.sumi.brailler.user_profile.UserProfileActivity;
@@ -156,7 +156,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void onClickStartButton(View view) {
-        Intent intent = new Intent(this, MainGame.class);
+        Intent intent = new Intent(this, LearnGame.class);
         startActivity(intent);
     }
 

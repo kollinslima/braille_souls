@@ -16,7 +16,7 @@ public class UserProfile {
     private final String ALL_CONSECUTIVE_HITS_KEY = "AllConsecutiveHits";
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
     private final String ALL_USER_PROGRESS = "LearnProgress";
-    private final HashMap<String, long> heatMap;
+//    private final HashMap<String, Long> heatMap;
 
     private SharedPreferences preferences;
 

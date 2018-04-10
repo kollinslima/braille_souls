@@ -7,14 +7,14 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <com.biomorgoth.outlinetextview.StrokedTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/table_of_points"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        app:textStrokeWidth="0.2"
-        android:textStyle="bold" />
+    <!--<com.biomorgoth.outlinetextview.StrokedTextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/table_of_points"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--app:textStrokeWidth="0.2"-->
+        <!--android:textStyle="bold" />-->
 
     <ListView
         android:id="@+id/pointList"
