@@ -154,8 +154,13 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
-    public void onClickStartButton(View view) {
+    public void onClickLearnButton(View view) {
         Intent intent = new Intent(this, LearnGame.class);
+        startActivity(intent);
+    }
+
+    public void onClickPlayButton(View view) {
+        Intent intent = new Intent(this, GameSelector.class);
         startActivity(intent);
     }
 

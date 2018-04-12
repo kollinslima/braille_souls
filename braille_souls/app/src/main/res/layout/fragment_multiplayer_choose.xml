@@ -12,9 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@null"
+        android:text="@string/number_of_players"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="20"
         android:textStyle="bold" />
 
     <LinearLayout

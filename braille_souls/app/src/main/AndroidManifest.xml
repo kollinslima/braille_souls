@@ -21,7 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".game.MainGame"
+            android:name=".GameSelector"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.LearnGame"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.MultiplayerGame"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.SinglePlayerGame"
             android:screenOrientation="portrait" />
         <activity
             android:name=".user_profile.UserProfileActivity"

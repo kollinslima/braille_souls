@@ -22,6 +22,7 @@ import com.example.sumi.brailler.fragments.MultiplayerChooseFragment;
 import com.example.sumi.brailler.fragments.PauseFragment;
 import com.example.sumi.brailler.fragments.PlayerWaitFragment;
 import com.example.sumi.brailler.fragments.PointTableMultiplayer;
+import com.plusquare.clockview.ClockView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,13 +40,13 @@ public class MultiplayerGame extends AppCompatActivity
     public static final String GAME_TAG_LOG = "gameLog";
 
     //60 seconds
-    private final double TIMER_SET = 60;
-    //    private final double TIMER_SET = 5;
+//    private final double TIMER_SET = 60;
+        private final double TIMER_SET = 5;
     private final int TIMER_INTERVAL = (int) ((TIMER_SET / 60) * 1000);   //ms
 
     private Timer timer;
     private int graphicClockMinutes = 0;
-//    private ClockView graphicClock;
+    private ClockView graphicClock;
 
     private String randomSymbol;
 
@@ -98,7 +99,7 @@ public class MultiplayerGame extends AppCompatActivity
 
         symbolDisplay = (TextView) findViewById(R.id.symbolDisplay);
 
-//        graphicClock = (ClockView) findViewById(R.id.graphicClock);
+        graphicClock = (ClockView) findViewById(R.id.graphicClock);
 
         isGameRunning = false;
         new MultiplayerChooseFragment().showDialog(getSupportFragmentManager());
@@ -200,7 +201,7 @@ public class MultiplayerGame extends AppCompatActivity
     @Override
     public void continueGameFragment() {
         timer = new Timer();
-//        timer.scheduleAtFixedRate(new GameTimer(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timer.scheduleAtFixedRate(new GameTimer(), TIMER_INTERVAL, TIMER_INTERVAL);
 //        newSymbol();
     }
 
@@ -245,7 +246,7 @@ public class MultiplayerGame extends AppCompatActivity
         newSymbol();
 
         timer = new Timer();
-//        timer.scheduleAtFixedRate(new GameTimer(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timer.scheduleAtFixedRate(new GameTimer(), TIMER_INTERVAL, TIMER_INTERVAL);
     }
 
     public void endPlayerTurn() {
@@ -269,28 +270,28 @@ public class MultiplayerGame extends AppCompatActivity
         }
     }
 
-//    public class GameTimer extends TimerTask {
-//
-//        @Override
-//        public void run() {
-//
-//            graphicClockMinutes = (graphicClockMinutes + 1) % 60;
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    graphicClock.setMinute(graphicClockMinutes);
-//                }
-//            });
-//
-//            if (graphicClockMinutes == 0) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        endPlayerTurn();
-//                    }
-//                });
-//            }
-//        }
-//    }
+    public class GameTimer extends TimerTask {
+
+        @Override
+        public void run() {
+
+            graphicClockMinutes = (graphicClockMinutes + 1) % 60;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    graphicClock.setMinute(graphicClockMinutes);
+                }
+            });
+
+            if (graphicClockMinutes == 0) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        endPlayerTurn();
+                    }
+                });
+            }
+        }
+    }
 
 }

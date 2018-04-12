@@ -42,12 +42,21 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btnStart"
+                android:id="@+id/btnLearn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_button"
-                android:onClick="onClickStartButton"
-                android:text="@string/start"
+                android:onClick="onClickLearnButton"
+                android:text="@string/learn"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_button"
+                android:onClick="onClickPlayButton"
+                android:text="@string/play"
                 android:textColor="@android:color/black" />
 
             <Button
