@@ -25,22 +25,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <FrameLayout
-                android:id="@+id/imageBox0"
+                android:id="@+id/frameBox0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
             <FrameLayout
-                android:id="@+id/imageBox1"
+                android:id="@+id/frameBox1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
             <FrameLayout
-                android:id="@+id/imageBox2"
+                android:id="@+id/frameBox2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
             <FrameLayout
-                android:id="@+id/imageBox3"
+                android:id="@+id/frameBox3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
@@ -77,7 +77,6 @@
                 android:layout_height="@dimen/check_button_size"
                 android:layout_centerInParent="true"
                 android:background="@drawable/check_button"
-                android:onClick="onCheckClick"
                 android:text="check" />
         </RelativeLayout>
 

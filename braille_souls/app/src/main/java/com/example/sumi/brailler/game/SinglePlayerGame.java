@@ -5,9 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -22,25 +21,22 @@ import android.widget.ToggleButton;
 
 import com.example.sumi.brailler.MainMenu;
 import com.example.sumi.brailler.R;
-import com.example.sumi.brailler.fragments.MultiplayerChooseFragment;
 import com.example.sumi.brailler.fragments.PauseFragment;
-import com.example.sumi.brailler.fragments.PlayerWaitFragment;
-import com.example.sumi.brailler.fragments.PointTableMultiplayer;
-import com.example.sumi.brailler.visual_components.ProportionalImageView;
-import com.plusquare.clockview.ClockView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Random;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SinglePlayerGame extends AppCompatActivity
-        implements PauseFragment.onDismissListener {
+        implements PauseFragment.onDismissListener, View.OnClickListener {
 
     public static final String GAME_TAG_LOG = "gameLog";
 
-    private int speedDown = 5000;
+    private int speedDown = 10000;
 
     private final double TIMER_SET = 1;
     private final int TIMER_INTERVAL = (int) (TIMER_SET * 1000);   //ms
@@ -52,7 +48,8 @@ public class SinglePlayerGame extends AppCompatActivity
 
     private Button pauseButton;
 
-    private FrameLayout imageBox0, imageBox1, imageBox2, imageBox3;
+    private FrameLayout[] frameBox = new FrameLayout[4];
+//    private FrameLayout imageBox0, imageBox1, imageBox2, imageBox3;
 
 //    private TextView textHits, textMiss;
 //    private int hitCount, missCount;
@@ -76,6 +73,8 @@ public class SinglePlayerGame extends AppCompatActivity
         backButtonFlag = false;
         gameOverFlag = false;
 
+        ((Button) findViewById(R.id.check_button)).setOnClickListener(this);
+
         brailleKeyboard[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
         brailleKeyboard[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
         brailleKeyboard[2] = (ToggleButton) findViewById(R.id.braille_button_2x1);
@@ -83,10 +82,10 @@ public class SinglePlayerGame extends AppCompatActivity
         brailleKeyboard[4] = (ToggleButton) findViewById(R.id.braille_button_3x1);
         brailleKeyboard[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
 
-        imageBox0 = (FrameLayout) findViewById(R.id.imageBox0);
-        imageBox1 = (FrameLayout) findViewById(R.id.imageBox1);
-        imageBox2 = (FrameLayout) findViewById(R.id.imageBox2);
-        imageBox3 = (FrameLayout) findViewById(R.id.imageBox3);
+        frameBox[0] = (FrameLayout) findViewById(R.id.frameBox0);
+        frameBox[1] = (FrameLayout) findViewById(R.id.frameBox1);
+        frameBox[2] = (FrameLayout) findViewById(R.id.frameBox2);
+        frameBox[3] = (FrameLayout) findViewById(R.id.frameBox3);
 
         textBox0 = new ArrayList<TextView>();
         transactionBox0 = new ArrayList<Float>();
@@ -102,7 +101,8 @@ public class SinglePlayerGame extends AppCompatActivity
     private void setAnimation() {
 
         imageAnimator0 = ValueAnimator.ofFloat(0.0f, 1.0f);
-        imageAnimator0.setRepeatCount(ValueAnimator.INFINITE);
+//        imageAnimator0.setRepeatCount(ValueAnimator.INFINITE);
+        imageAnimator0.setRepeatCount(0);
         imageAnimator0.setInterpolator(new LinearInterpolator());
         imageAnimator0.setDuration(speedDown);
         imageAnimator0.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -110,24 +110,23 @@ public class SinglePlayerGame extends AppCompatActivity
             public void onAnimationUpdate(ValueAnimator animation) {
 
                 final float progress = (float) animation.getAnimatedValue();
-                final float heightFrame = imageBox0.getHeight();
-                float translationY = heightFrame * progress;
+                final float heightFrame = frameBox[0].getHeight();
 
-                for (int i = 0; i < textBox0.size(); i++) {
-                    textBox0.get(i).setTranslationY(translationY - transactionBox0.get(i));
+                if (textBox0.size() > 0) {
+                    if ((progress - transactionBox0.get(0)) >= 1) {
+                        imageAnimator0.cancel();
+                    } else {
+                        final float baseHeigh = textBox0.get(0).getHeight();
+
+                        if (baseHeigh != 0) {
+                            final float efectiveHeigh = heightFrame - baseHeigh;
+
+                            for (int i = 0; i < textBox0.size(); i++) {
+                                textBox0.get(i).setTranslationY(efectiveHeigh * (progress - transactionBox0.get(i)));
+                            }
+                        }
+                    }
                 }
-
-
-            }
-        });
-        imageAnimator0.addListener(new AnimatorListenerAdapter() {
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                super.onAnimationRepeat(animation);
-                textBox0.clear();
-                transactionBox0.clear();
-                imageBox0.removeAllViews();
             }
         });
         imageAnimator0.start();
@@ -161,6 +160,43 @@ public class SinglePlayerGame extends AppCompatActivity
         return this;
     }
 
+    @Override
+    public void onClick(View v) {
+        String answer = "";
+
+        for (ToggleButton button : brailleKeyboard) {
+            if (button.isChecked()) {
+                answer = answer.concat("1");
+            } else {
+                answer = answer.concat("0");
+            }
+
+            button.setChecked(false);
+        }
+
+        try {
+            boolean removeOne = false;
+            for (int i = 0; i < textBox0.size() && !removeOne; i++) {
+                if (MainMenu.braille_to_text.get(answer).contains(textBox0.get(i).getText().toString())) {
+                    ((ViewGroup) textBox0.get(i).getParent()).removeView(textBox0.get(i));
+                    textBox0.remove(textBox0.indexOf(textBox0.get(i)));
+                    transactionBox0.remove(i);
+
+                    final float oldAnimationValue = (float) imageAnimator0.getAnimatedValue();
+                    imageAnimator0.setCurrentPlayTime(0);
+
+                    for (int j = 0; j < transactionBox0.size(); j++){
+                        transactionBox0.set(j, -(oldAnimationValue-transactionBox0.get(j)));
+                    }
+
+                    removeOne = true;
+                }
+            }
+        } catch (NullPointerException e) {
+            Log.e("ERROR", "Error reading braille_to_text", e);
+        }
+    }
+
     private class AddNewSymbol0 extends TimerTask {
 
         @Override
@@ -174,18 +210,19 @@ public class SinglePlayerGame extends AppCompatActivity
                         auxTextView.setText("A");
                         auxTextView.setTextColor(Color.BLACK);
                         auxTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                        auxTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
                         auxTextView.setGravity(Gravity.CENTER_HORIZONTAL);
                         auxTextView.setTranslationY(0);
 
                         if (textBox0.size() > 0) {
-                            transactionBox0.add(textBox0.get(0).getTranslationY());
+                            transactionBox0.add((Float) imageAnimator0.getAnimatedValue());
                         } else {
                             imageAnimator0.setCurrentPlayTime(0);
                             transactionBox0.add(0f);
                         }
 
                         textBox0.add(auxTextView);
-                        imageBox0.addView(auxTextView);
+                        frameBox[0].addView(auxTextView);
                     }
                 });
             }
