@@ -10,7 +10,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/clockview" />
-            <option value="$PROJECT_DIR$/mytextoutline" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
