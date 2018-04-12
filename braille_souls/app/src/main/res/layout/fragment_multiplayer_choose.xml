@@ -66,5 +66,6 @@
         android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/start"
         android:background="@drawable/border_button"/>
 </LinearLayout>
