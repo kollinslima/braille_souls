@@ -1,11 +1,9 @@
 package com.example.sumi.brailler.game;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,45 +21,40 @@ import com.example.sumi.brailler.MainMenu;
 import com.example.sumi.brailler.R;
 import com.example.sumi.brailler.fragments.PauseFragment;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Random;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SinglePlayerGame extends AppCompatActivity
         implements PauseFragment.onDismissListener, View.OnClickListener {
 
+    private final int TRACKS = 4;
     public static final String GAME_TAG_LOG = "gameLog";
 
-    private int speedDown = 10000;
+    private int speedDown = 20000;
 
-    private final double TIMER_SET = 1;
-    private final int TIMER_INTERVAL = (int) (TIMER_SET * 1000);   //ms
-    private Timer timerAddSymbol0;
+    private final double TIMER_NEW_SYMBOL = 3;
+    private final int TIMER_INTERVAL = (int) (TIMER_NEW_SYMBOL * 1000);   //ms
+    private Timer[] timerAddSymbol = new Timer[TRACKS];
 
     private String randomSymbol;
 
     private ToggleButton[] brailleKeyboard = new ToggleButton[6];
 
-    private Button pauseButton;
+    private Button pauseButton, checkButton;
 
-    private FrameLayout[] frameBox = new FrameLayout[4];
-//    private FrameLayout imageBox0, imageBox1, imageBox2, imageBox3;
-
-//    private TextView textHits, textMiss;
-//    private int hitCount, missCount;
+    private FrameLayout[] frameBox = new FrameLayout[TRACKS];
 
     private boolean backButtonFlag, gameOverFlag, isGameRunning;
 
     private Random random;
 
-    private ValueAnimator imageAnimator0, imageAnimator1, imageAnimator2, imageAnimator3;
+    private ValueAnimator[] imageAnimator = new ValueAnimator[TRACKS];
 
-    private ArrayList<TextView> textBox0;
-    private ArrayList<Float> transactionBox0;
+    private ArrayList<TextView>[] textBox = new ArrayList[TRACKS];
+    private ArrayList<Float>[] transactionBox = new ArrayList[TRACKS];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +66,8 @@ public class SinglePlayerGame extends AppCompatActivity
         backButtonFlag = false;
         gameOverFlag = false;
 
-        ((Button) findViewById(R.id.check_button)).setOnClickListener(this);
+        checkButton = (Button) findViewById(R.id.check_button);
+        checkButton.setOnClickListener(this);
 
         brailleKeyboard[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
         brailleKeyboard[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
@@ -87,49 +81,86 @@ public class SinglePlayerGame extends AppCompatActivity
         frameBox[2] = (FrameLayout) findViewById(R.id.frameBox2);
         frameBox[3] = (FrameLayout) findViewById(R.id.frameBox3);
 
-        textBox0 = new ArrayList<TextView>();
-        transactionBox0 = new ArrayList<Float>();
-
         isGameRunning = false;
 
-        timerAddSymbol0 = new Timer();
-        timerAddSymbol0.scheduleAtFixedRate(new AddNewSymbol0(), TIMER_INTERVAL, TIMER_INTERVAL);
-
-        setAnimation();
+        setUpGame();
     }
 
-    private void setAnimation() {
+    private void setUpGame() {
 
-        imageAnimator0 = ValueAnimator.ofFloat(0.0f, 1.0f);
-//        imageAnimator0.setRepeatCount(ValueAnimator.INFINITE);
-        imageAnimator0.setRepeatCount(0);
-        imageAnimator0.setInterpolator(new LinearInterpolator());
-        imageAnimator0.setDuration(speedDown);
-        imageAnimator0.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+        checkButton.setText("CHECK");
+        isGameRunning = true;
+        gameOverFlag = false;
 
-                final float progress = (float) animation.getAnimatedValue();
-                final float heightFrame = frameBox[0].getHeight();
+        for (int i = 0; i < TRACKS; i++){
+            textBox[i] = new ArrayList<>();
+            transactionBox[i] = new ArrayList<>();
+            frameBox[i].removeAllViews();
+            timerAddSymbol[i] = new Timer();
+        }
 
-                if (textBox0.size() > 0) {
-                    if ((progress - transactionBox0.get(0)) >= 1) {
-                        imageAnimator0.cancel();
-                    } else {
-                        final float baseHeigh = textBox0.get(0).getHeight();
+        timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), TIMER_INTERVAL, TIMER_INTERVAL);
 
-                        if (baseHeigh != 0) {
-                            final float efectiveHeigh = heightFrame - baseHeigh;
+        for (int i = 0; i < TRACKS; i++){
 
-                            for (int i = 0; i < textBox0.size(); i++) {
-                                textBox0.get(i).setTranslationY(efectiveHeigh * (progress - transactionBox0.get(i)));
+            imageAnimator[i] = ValueAnimator.ofFloat(0.0f, 1.0f);
+            imageAnimator[i].setRepeatCount(0);
+            imageAnimator[i].setInterpolator(new LinearInterpolator());
+            imageAnimator[i].setDuration(speedDown);
+
+            final int finalI = i;
+            imageAnimator[i].addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+
+                    final float progress = (float) animation.getAnimatedValue();
+                    final float heightFrame = frameBox[finalI].getHeight();
+
+                    if (textBox[finalI].size() > 0) {
+                        if ((progress - transactionBox[finalI].get(0)) >= 1) {
+                            gameOver();
+                        } else {
+                            final float baseHeigh = textBox[finalI].get(0).getHeight();
+
+                            if (baseHeigh != 0) {
+                                final float efectiveHeigh = heightFrame - baseHeigh;
+
+                                for (int j = 0; j < textBox[finalI].size(); j++) {
+                                    textBox[finalI].get(j).setTranslationY(efectiveHeigh * (progress - transactionBox[finalI].get(j)));
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
-        imageAnimator0.start();
+            });
+
+            imageAnimator[i].start();
+        }
+
+    }
+
+    private void gameOver() {
+        gameOverFlag = true;
+        checkButton.setText("AGAIN?");
+
+        for (int i = 0; i < TRACKS; i++) {
+            imageAnimator[i].cancel();
+            timerAddSymbol[i].cancel();
+        }
+    }
+
+    private String getSymbol() {
+        String randomKey = null;
+
+        Set<String> keys = MainMenu.text_to_braille.keySet();
+        int keyNumber = random.nextInt(keys.size());
+
+        randomKey = (String) keys.toArray()[keyNumber];
+
+        return randomKey;
     }
 
     @Override
@@ -162,38 +193,75 @@ public class SinglePlayerGame extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        String answer = "";
+        if (gameOverFlag){
+            setUpGame();
+        }else {
+            String answer = "";
 
-        for (ToggleButton button : brailleKeyboard) {
-            if (button.isChecked()) {
-                answer = answer.concat("1");
-            } else {
-                answer = answer.concat("0");
+            for (ToggleButton button : brailleKeyboard) {
+                if (button.isChecked()) {
+                    answer = answer.concat("1");
+                } else {
+                    answer = answer.concat("0");
+                }
+
+                button.setChecked(false);
             }
 
-            button.setChecked(false);
+            removeSymbol(answer);
         }
+    }
+
+    private void removeSymbol(String answer) {
+        int[] location1 = new int[2];
+        int[] location2 = new int[2];
+        int winnerViewToRemove = -1;
+        int [] indexToRemove = new int[TRACKS];
+        View[] viewToRemove = new View[]{null, null, null, null};
+        boolean[] findFirst = new boolean[]{false, false, false, false};
 
         try {
-            boolean removeOne = false;
-            for (int i = 0; i < textBox0.size() && !removeOne; i++) {
-                if (MainMenu.braille_to_text.get(answer).contains(textBox0.get(i).getText().toString())) {
-                    ((ViewGroup) textBox0.get(i).getParent()).removeView(textBox0.get(i));
-                    textBox0.remove(textBox0.indexOf(textBox0.get(i)));
-                    transactionBox0.remove(i);
-
-                    final float oldAnimationValue = (float) imageAnimator0.getAnimatedValue();
-                    imageAnimator0.setCurrentPlayTime(0);
-
-                    for (int j = 0; j < transactionBox0.size(); j++){
-                        transactionBox0.set(j, -(oldAnimationValue-transactionBox0.get(j)));
+            //Find Symbol in columns
+            for (int k = 0; k < TRACKS; k++) {
+                for (int i = 0; i < textBox[k].size() && !findFirst[k]; i++) {
+                    if (MainMenu.braille_to_text.get(answer).contains(textBox[k].get(i).getText().toString())) {
+                        viewToRemove[k] = textBox[k].get(i);
+                        indexToRemove[k] = i;
+                        findFirst[k] = true;
                     }
-
-                    removeOne = true;
                 }
             }
+
+            for (int i = 0; i < TRACKS; i++) {
+                if (viewToRemove[i] != null) {
+                    if (winnerViewToRemove == -1) {
+                        winnerViewToRemove = i;
+                    } else {
+                        viewToRemove[winnerViewToRemove].getLocationOnScreen(location1);
+                        viewToRemove[i].getLocationOnScreen(location2);
+
+                        if (location2[1] > location1[1]) {
+                            winnerViewToRemove = i;
+                        }
+                    }
+                }
+            }
+
+            if (winnerViewToRemove >= 0) {
+                ((ViewGroup) viewToRemove[winnerViewToRemove].getParent()).removeView(viewToRemove[winnerViewToRemove]);
+                textBox[winnerViewToRemove].remove(textBox[winnerViewToRemove].indexOf(viewToRemove[winnerViewToRemove]));
+                transactionBox[winnerViewToRemove].remove(indexToRemove[winnerViewToRemove]);
+
+                final float oldAnimationValue = (float) imageAnimator[winnerViewToRemove].getAnimatedValue();
+                imageAnimator[winnerViewToRemove].setCurrentPlayTime(0);
+
+                for (int j = 0; j < transactionBox[winnerViewToRemove].size(); j++) {
+                    transactionBox[winnerViewToRemove].set(j, -(oldAnimationValue - transactionBox[winnerViewToRemove].get(j)));
+                }
+            }
+
         } catch (NullPointerException e) {
-            Log.e("ERROR", "Error reading braille_to_text", e);
+            Log.e("ERROR", "Error reading braille_to_text OR Symbol not found", e);
         }
     }
 
@@ -207,22 +275,118 @@ public class SinglePlayerGame extends AppCompatActivity
                     @Override
                     public void run() {
                         TextView auxTextView = new TextView(getContext());
-                        auxTextView.setText("A");
+                        auxTextView.setText(getSymbol());
                         auxTextView.setTextColor(Color.BLACK);
                         auxTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
                         auxTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-                        auxTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        auxTextView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
                         auxTextView.setTranslationY(0);
 
-                        if (textBox0.size() > 0) {
-                            transactionBox0.add((Float) imageAnimator0.getAnimatedValue());
+                        if (textBox[0].size() > 0) {
+                            transactionBox[0].add((Float) imageAnimator[0].getAnimatedValue());
                         } else {
-                            imageAnimator0.setCurrentPlayTime(0);
-                            transactionBox0.add(0f);
+                            imageAnimator[0].setCurrentPlayTime(0);
+                            transactionBox[0].add(0f);
                         }
 
-                        textBox0.add(auxTextView);
+                        textBox[0].add(auxTextView);
                         frameBox[0].addView(auxTextView);
+                    }
+                });
+            }
+        }
+    }
+
+    private class AddNewSymbol1 extends TimerTask {
+
+        @Override
+        public void run() {
+
+            if (random.nextBoolean()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView auxTextView = new TextView(getContext());
+                        auxTextView.setText(getSymbol());
+                        auxTextView.setTextColor(Color.BLACK);
+                        auxTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                        auxTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+                        auxTextView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+                        auxTextView.setTranslationY(0);
+
+                        if (textBox[1].size() > 0) {
+                            transactionBox[1].add((Float) imageAnimator[1].getAnimatedValue());
+                        } else {
+                            imageAnimator[1].setCurrentPlayTime(0);
+                            transactionBox[1].add(0f);
+                        }
+
+                        textBox[1].add(auxTextView);
+                        frameBox[1].addView(auxTextView);
+                    }
+                });
+            }
+        }
+    }
+
+    private class AddNewSymbol2 extends TimerTask {
+
+        @Override
+        public void run() {
+
+            if (random.nextBoolean()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView auxTextView = new TextView(getContext());
+                        auxTextView.setText(getSymbol());
+                        auxTextView.setTextColor(Color.BLACK);
+                        auxTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                        auxTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+                        auxTextView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+                        auxTextView.setTranslationY(0);
+
+                        if (textBox[2].size() > 0) {
+                            transactionBox[2].add((Float) imageAnimator[2].getAnimatedValue());
+                        } else {
+                            imageAnimator[2].setCurrentPlayTime(0);
+                            transactionBox[2].add(0f);
+                        }
+
+                        textBox[2].add(auxTextView);
+                        frameBox[2].addView(auxTextView);
+                    }
+                });
+            }
+        }
+    }
+
+    private class AddNewSymbol3 extends TimerTask {
+
+        @Override
+        public void run() {
+
+            if (random.nextBoolean()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView auxTextView = new TextView(getContext());
+                        auxTextView.setText(getSymbol());
+                        auxTextView.setTextColor(Color.BLACK);
+                        auxTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                        auxTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+                        auxTextView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+                        auxTextView.setTranslationY(0);
+
+                        if (textBox[3].size() > 0) {
+                            transactionBox[3].add((Float) imageAnimator[3].getAnimatedValue());
+                        } else {
+                            imageAnimator[3].setCurrentPlayTime(0);
+                            transactionBox[3].add(0f);
+                        }
+
+                        textBox[3].add(auxTextView);
+                        frameBox[3].addView(auxTextView);
                     }
                 });
             }
