@@ -53,6 +53,7 @@ public class PlayerWaitFragment extends DialogFragment {
 
     public void showDialog(FragmentManager fm, int playerTurn) {
         if (fm.findFragmentByTag(DIALOG_TAG) == null) {
+            setCancelable(false);
             show(fm, DIALOG_TAG);
             this.playerTurn = playerTurn;
         }

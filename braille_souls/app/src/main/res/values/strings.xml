@@ -42,5 +42,6 @@
 
     <string name="close_button">Next Turn</string>
     <string name="close_button_end">Play Again</string>
+    <string name="start_player">Start</string>
 </resources>
 

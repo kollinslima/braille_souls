@@ -18,39 +18,42 @@
             android:layout_width="@dimen/pause_button_size"
             android:layout_height="@dimen/pause_button_size"
             android:layout_gravity="right"
-            android:background="@drawable/ic_pause_button"
-            android:onClick="onPauseClick" />
+            android:background="@drawable/ic_pause_button" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <FrameLayout
                 android:id="@+id/frameBox0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <FrameLayout
                 android:id="@+id/frameBox1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <FrameLayout
                 android:id="@+id/frameBox2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <FrameLayout
                 android:id="@+id/frameBox3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_gravity="bottom"
-            android:background="@android:color/holo_red_dark" />
+            android:background="@color/end_of_line_single_player" />
 
     </FrameLayout>
 
@@ -72,13 +75,31 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <Button
-                android:id="@+id/check_button"
+            <FrameLayout
                 android:layout_width="@dimen/check_button_size"
                 android:layout_height="@dimen/check_button_size"
-                android:layout_centerInParent="true"
-                android:background="@drawable/check_button"
-                android:text="check" />
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/check_button"/>
+
+                <Button
+                    android:id="@+id/check_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/playAgainArrow"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_replay_black"/>
+
+            </FrameLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

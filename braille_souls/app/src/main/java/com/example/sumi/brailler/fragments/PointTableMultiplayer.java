@@ -106,6 +106,7 @@ public class PointTableMultiplayer extends DialogFragment {
 
     public void showDialog(FragmentManager fm, ArrayList<Integer> points, boolean isEndGame) {
         if (fm.findFragmentByTag(DIALOG_TAG) == null) {
+            setCancelable(false);
             show(fm, DIALOG_TAG);
             this.points = points;
             this.isEndGame = isEndGame;

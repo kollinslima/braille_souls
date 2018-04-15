@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -37,21 +38,33 @@ public class MultiplayerChooseFragment extends DialogFragment {
         numberOfPlayers.setText("1");
 
         buttonUp = (Button) layout.findViewById(R.id.buttonUp);
-        buttonUp.setOnClickListener(new View.OnClickListener() {
+        buttonUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                numberOfPlayers.setText(String.valueOf(Integer.valueOf(numberOfPlayers.getText().toString()) + 1));
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    buttonUp.setBackgroundResource(R.drawable.arrow_up_pressed);
+                    numberOfPlayers.setText(String.valueOf(Integer.valueOf(numberOfPlayers.getText().toString()) + 1));
+                } else {
+                    buttonUp.setBackgroundResource(R.drawable.arrow_up);
+                }
+                return true;
             }
         });
 
         buttonDown = (Button) layout.findViewById(R.id.buttonDown);
-        buttonDown.setOnClickListener(new View.OnClickListener() {
+        buttonDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                int newNumber = Integer.valueOf(numberOfPlayers.getText().toString()) - 1;
-                if (newNumber > 0) {
-                    numberOfPlayers.setText(String.valueOf(newNumber));
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    buttonDown.setBackgroundResource(R.drawable.arrow_down_pressed);
+                    int newNumber = Integer.valueOf(numberOfPlayers.getText().toString()) - 1;
+                    if (newNumber > 0) {
+                        numberOfPlayers.setText(String.valueOf(newNumber));
+                    }
+                } else {
+                    buttonDown.setBackgroundResource(R.drawable.arrow_down);
                 }
+                return true;
             }
         });
 

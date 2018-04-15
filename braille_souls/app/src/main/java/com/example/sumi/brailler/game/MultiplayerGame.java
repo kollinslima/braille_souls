@@ -41,7 +41,7 @@ public class MultiplayerGame extends AppCompatActivity
 
     //60 seconds
 //    private final double TIMER_SET = 60;
-        private final double TIMER_SET = 5;
+    private final double TIMER_SET = 5;
     private final int TIMER_INTERVAL = (int) ((TIMER_SET / 60) * 1000);   //ms
 
     private Timer timer;

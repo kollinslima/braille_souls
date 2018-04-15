@@ -17,6 +17,7 @@
         android:textColor="@android:color/white"
         android:shadowColor="@android:color/black"
         android:shadowRadius="20"
+        android:layout_margin="16dp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -67,5 +68,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start"
+        android:layout_margin="16dp"
         android:background="@drawable/border_button"/>
 </LinearLayout>

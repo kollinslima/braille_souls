@@ -11,7 +11,7 @@
     <FrameLayout
         android:id="@+id/animationFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
     <LinearLayout
@@ -24,69 +24,70 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:divider="@drawable/vertical_div"
+            android:layout_weight="1.3"
             android:orientation="vertical"
+            android:divider="@drawable/vertical_div"
             android:showDividers="middle">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/appNameMainMenu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_height"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/main_menu_tittle_collor"
-                android:textSize="50dp"
                 android:shadowColor="@android:color/black"
                 android:shadowRadius="20"
+                android:text="@string/app_name"
+                android:textColor="@color/main_menu_tittle_collor"
+                android:autoSizeTextType="uniform"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnLearn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_button"
-                android:onClick="onClickLearnButton"
-                android:text="@string/learn"
-                android:textColor="@android:color/black" />
+                <Button
+                    android:id="@+id/btnLearn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_button"
+                    android:onClick="onClickLearnButton"
+                    android:text="@string/learn"
+                    android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/btnPlay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_button"
-                android:onClick="onClickPlayButton"
-                android:text="@string/play"
-                android:textColor="@android:color/black" />
+                <Button
+                    android:id="@+id/btnPlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_button"
+                    android:onClick="onClickPlayButton"
+                    android:text="@string/play"
+                    android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/btnDictionaty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_button"
-                android:onClick="onClickDictionatyButton"
-                android:text="@string/dictionaty"
-                android:textColor="@android:color/black" />
+                <Button
+                    android:id="@+id/btnDictionaty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_button"
+                    android:onClick="onClickDictionatyButton"
+                    android:text="@string/dictionaty"
+                    android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/btnProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_button"
-                android:onClick="onClickProfileButton"
-                android:text="@string/profile"
-                android:textColor="@android:color/black" />
+                <Button
+                    android:id="@+id/btnProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_button"
+                    android:onClick="onClickProfileButton"
+                    android:text="@string/profile"
+                    android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/btnExit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_button"
-                android:onClick="onClickExitButton"
-                android:text="@string/exit"
-                android:textColor="@android:color/black" />
+                <Button
+                    android:id="@+id/btnExit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_button"
+                    android:onClick="onClickExitButton"
+                    android:text="@string/exit"
+                    android:textColor="@android:color/black" />
 
-        </LinearLayout>
+            </LinearLayout>
 
     </LinearLayout>
 

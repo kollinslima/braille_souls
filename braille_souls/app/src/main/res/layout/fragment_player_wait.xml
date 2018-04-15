@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/playerTurn"
@@ -12,13 +13,18 @@
         android:gravity="center"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_margin="16dp"
+        android:textColor="@android:color/white"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="20"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:textAllCaps="false" />
+        android:text="@string/start_player"
+        android:background="@drawable/border_button"
+        android:layout_margin="16dp"/>
 
 </LinearLayout>

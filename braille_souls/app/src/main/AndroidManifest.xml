@@ -22,6 +22,7 @@
         </activity>
         <activity
             android:name=".GameSelector"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".game.LearnGame"
