@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
 import com.example.sumi.brailler.game.LearnGame;
@@ -59,6 +61,9 @@ public class MainMenu extends AppCompatActivity {
         user = new UserProfile(this);
 
         loadDataBase();
+
+        TextView appName = findViewById(R.id.appNameMainMenu);
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(appName, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
         animationFrame = (FrameLayout) findViewById(R.id.animationFrame);
         animationVector = new ArrayList<ProportionalImageView>();
@@ -154,8 +159,13 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
-    public void onClickStartButton(View view) {
+    public void onClickLearnButton(View view) {
         Intent intent = new Intent(this, LearnGame.class);
+        startActivity(intent);
+    }
+
+    public void onClickPlayButton(View view) {
+        Intent intent = new Intent(this, GameSelector.class);
         startActivity(intent);
     }
 

@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import com.example.sumi.brailler.game.LearnGame;
 import com.example.sumi.brailler.game.MultiplayerGame;
+import com.example.sumi.brailler.game.SinglePlayerGame;
 import com.example.sumi.brailler.visual_components.ProportionalImageView;
 
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class GameSelector extends AppCompatActivity {
     }
 
     public void onClickSingleButton(View view) {
-        Intent intent = new Intent(this, LearnGame.class);
+        Intent intent = new Intent(this, SinglePlayerGame.class);
         startActivity(intent);
     }
 

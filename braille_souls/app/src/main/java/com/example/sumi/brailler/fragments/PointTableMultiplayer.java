@@ -66,7 +66,7 @@ public class PointTableMultiplayer extends DialogFragment {
 
         if (!isEndGame) {
             mainMenuButton.setVisibility(View.GONE);
-//            closeButton.setText(getResources().getString(R.string.close_button));
+            closeButton.setText(getResources().getString(R.string.close_button));
 
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,7 +76,7 @@ public class PointTableMultiplayer extends DialogFragment {
             });
 
         } else {
-//            closeButton.setText(getResources().getString(R.string.close_button_end));
+            closeButton.setText(getResources().getString(R.string.close_button_end));
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,6 +106,7 @@ public class PointTableMultiplayer extends DialogFragment {
 
     public void showDialog(FragmentManager fm, ArrayList<Integer> points, boolean isEndGame) {
         if (fm.findFragmentByTag(DIALOG_TAG) == null) {
+            setCancelable(false);
             show(fm, DIALOG_TAG);
             this.points = points;
             this.isEndGame = isEndGame;

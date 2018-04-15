@@ -26,12 +26,14 @@ import android.view.View;
 
 public class ClockView extends View {
     private Paint p;
-    int c, h, m;
+    int c, m, cp;
+//    int h;
 
     public ClockView(Context context) {
         super(context);
         c = Color.parseColor("#F44336");
-        h = 17;
+        cp = Color.parseColor("#F44336");
+//        h = 17;
         m = 0;
     }
 
@@ -39,7 +41,8 @@ public class ClockView extends View {
         super(context, attrs);
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.ClockView);
         c = arr.getColor(R.styleable.ClockView_clockColor, Color.parseColor("#F44336"));
-        h = arr.getInteger(R.styleable.ClockView_h, 17);
+        cp = arr.getColor(R.styleable.ClockView_clockPointerColor, Color.parseColor("#F44336"));
+//        h = arr.getInteger(R.styleable.ClockView_h, 17);
         m = arr.getInteger(R.styleable.ClockView_m, 0);
     }
 
@@ -66,16 +69,17 @@ public class ClockView extends View {
         p.setStrokeWidth((float) (int) (len * 0.2));
         p.setStrokeJoin(Paint.Join.ROUND);
         p.setStrokeCap(Paint.Cap.ROUND);
-        p.setColor(c);
+        p.setColor(cp);
         //p.setColor(getResources().getColor(R.color.textColorSecondary));
         canvas.drawLine(center_w, center_h, center_w + getMinuteX(len), center_h + getMinuteY(len), p);
         //p.setColor(getResources().getColor(R.color.textColorPrimary));
-        canvas.drawLine(center_w, center_h, center_w + getHourX(len), center_h + getHourY(len), p);
+//        canvas.drawLine(center_w, center_h, center_w + getHourX(len), center_h + getHourY(len), p);
+        this.invalidate();
     }
 
-    public void setHour(int h) {
-        this.h = h;
-    }
+//    public void setHour(int h) {
+//        this.h = h;
+//    }
 
     public void setMinute(int m) {
         this.m = m;
@@ -106,16 +110,16 @@ public class ClockView extends View {
         double angle = Math.toRadians(c * 6);
         return (float) (0.6 * l * Math.sin(angle));
     }
-
-    private float getHourX(int l) {
-        double angle = Math.toRadians(((h * 60) + m) / 2 - 90);
-        return (float) (0.4 * l * Math.cos(angle));
-    }
-
-    private float getHourY(int l) {
-        double angle = Math.toRadians(((h * 60) + m) / 2 - 90);
-        return (float) (0.4 * l * Math.sin(angle));
-    }
+//
+//    private float getHourX(int l) {
+//        double angle = Math.toRadians(((h * 60) + m) / 2 - 90);
+//        return (float) (0.4 * l * Math.cos(angle));
+//    }
+//
+//    private float getHourY(int l) {
+//        double angle = Math.toRadians(((h * 60) + m) / 2 - 90);
+//        return (float) (0.4 * l * Math.sin(angle));
+//    }
 
 
 }

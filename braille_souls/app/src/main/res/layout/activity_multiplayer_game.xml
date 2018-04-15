@@ -89,13 +89,13 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <!--<com.plusquare.clockview.ClockView-->
-                <!--android:id="@+id/graphicClock"-->
-                <!--android:layout_width="@dimen/clock_size"-->
-                <!--android:layout_height="@dimen/clock_size"-->
-                <!--android:layout_weight="1"-->
-                <!--app:clockColor="@color/clock_collor"-->
-                <!--app:clockPointerColor="@color/clock_pointer_collor"/>-->
+            <com.plusquare.clockview.ClockView
+                android:id="@+id/graphicClock"
+                android:layout_width="@dimen/clock_size"
+                android:layout_height="@dimen/clock_size"
+                android:layout_weight="1"
+                app:clockColor="@color/clock_collor"
+                app:clockPointerColor="@color/clock_pointer_collor"/>
 
         </RelativeLayout>
 
