@@ -13,6 +13,7 @@ public class UserProfile {
 
     private final String ALL_HITS_KEY = "AllHits";
     private final String ALL_MISS_KEY = "AllMiss";
+    private final String SINGLE_MODE_RECORD = "SingleModeRecord";
     private final String ALL_CONSECUTIVE_HITS_KEY = "AllConsecutiveHits";
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
     private final String ALL_USER_PROGRESS = "LearnProgress";
@@ -22,6 +23,7 @@ public class UserProfile {
 
     private long allHits, allMiss, progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
+    private int singleModeRecord;
 
     private int consecutiveHitsCount, consecutiveMissCount;
 
@@ -30,6 +32,7 @@ public class UserProfile {
 
         allHits = preferences.getLong(ALL_HITS_KEY, 0);
         allMiss = preferences.getLong(ALL_MISS_KEY, 0);
+        singleModeRecord = preferences.getInt(SINGLE_MODE_RECORD, 0);
         maxConsecutiveHits = preferences.getLong(ALL_CONSECUTIVE_HITS_KEY, 0);
         maxConsecutiveMiss = preferences.getLong(ALL_CONSECUTIVE_MISS_KEY, 0);
         progress = preferences.getLong(ALL_USER_PROGRESS, 0);
@@ -43,6 +46,7 @@ public class UserProfile {
 
         editor.putLong(ALL_HITS_KEY, allHits);
         editor.putLong(ALL_MISS_KEY, allMiss);
+        editor.putInt(SINGLE_MODE_RECORD, singleModeRecord);
         editor.putLong(ALL_CONSECUTIVE_HITS_KEY, maxConsecutiveHits);
         editor.putLong(ALL_CONSECUTIVE_MISS_KEY, maxConsecutiveMiss);
         editor.putLong(ALL_USER_PROGRESS, progress); //progress to measure dificulty
@@ -69,5 +73,13 @@ public class UserProfile {
         if (consecutiveHitsCount > maxConsecutiveHits){
             maxConsecutiveHits = consecutiveHitsCount;
         }
+    }
+
+    public int getSingleModeRecord(){
+        return singleModeRecord;
+    }
+
+    public void setSingleModeRecord(int newRecord){
+        singleModeRecord = newRecord;
     }
 }

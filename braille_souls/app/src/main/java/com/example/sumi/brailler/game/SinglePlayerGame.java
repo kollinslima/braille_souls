@@ -1,21 +1,22 @@
 package com.example.sumi.brailler.game;
 
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.sumi.brailler.MainMenu;
@@ -32,12 +33,12 @@ public class SinglePlayerGame extends AppCompatActivity
         implements PauseFragment.onDismissListener, View.OnClickListener {
 
     private final int TRACKS = 4;
+    private final int HIT_SPEED_UP = 1;
     public static final String GAME_TAG_LOG = "gameLog";
 
-    private int speedDown = 20000;
-
-    private final double TIMER_NEW_SYMBOL = 3;
-    private final int TIMER_INTERVAL = (int) (TIMER_NEW_SYMBOL * 1000);   //ms
+    private int speedDown = 20000; //20s
+    private final int INCREASE_SPEED_FACTOR = 1000; //1s
+    private int timerInterval = 3000; //3s
     private Timer[] timerAddSymbol = new Timer[TRACKS];
 
     private String randomSymbol;
@@ -49,9 +50,11 @@ public class SinglePlayerGame extends AppCompatActivity
 
     private FrameLayout[] frameBox = new FrameLayout[TRACKS];
 
-    private boolean backButtonFlag, gameOverFlag, isGameRunning;
+    private boolean backButtonFlag, gameOverFlag, isGameRunning, speedUpFlag;
 
     private Random random;
+    private int hitCount, totalHits;
+    private TextView hitView, hitRecord;
 
     private ValueAnimator[] imageAnimator = new ValueAnimator[TRACKS];
 
@@ -67,6 +70,7 @@ public class SinglePlayerGame extends AppCompatActivity
 
         backButtonFlag = false;
         gameOverFlag = false;
+        totalHits = 0;
 
         checkButton = (Button) findViewById(R.id.check_button);
         checkButton.setOnClickListener(this);
@@ -79,8 +83,11 @@ public class SinglePlayerGame extends AppCompatActivity
             }
         });
 
-        playAgainImage = (ImageView) findViewById(R.id.playAgainArrow);
+        hitRecord = (TextView) findViewById(R.id.record_single_mode);
+        hitView = (TextView) findViewById(R.id.hitView);
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(hitView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
+        playAgainImage = (ImageView) findViewById(R.id.playAgainArrow);
 
         brailleKeyboard[0] = (ToggleButton) findViewById(R.id.braille_button_1x1);
         brailleKeyboard[1] = (ToggleButton) findViewById(R.id.braille_button_1x2);
@@ -105,6 +112,11 @@ public class SinglePlayerGame extends AppCompatActivity
         playAgainImage.setVisibility(View.INVISIBLE);
         isGameRunning = true;
         gameOverFlag = false;
+        speedUpFlag = false;
+
+        hitCount = 0;
+        hitView.setText(String.valueOf(totalHits));
+        hitRecord.setText("Record: " + MainMenu.user.getSingleModeRecord());
 
         for (int i = 0; i < TRACKS; i++) {
             textBox[i] = new ArrayList<>();
@@ -113,10 +125,10 @@ public class SinglePlayerGame extends AppCompatActivity
             timerAddSymbol[i] = new Timer();
         }
 
-        timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), TIMER_INTERVAL, TIMER_INTERVAL);
-        timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), TIMER_INTERVAL, TIMER_INTERVAL);
-        timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), TIMER_INTERVAL, TIMER_INTERVAL);
-        timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), timerInterval/2, timerInterval);
+        timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), timerInterval/2, timerInterval);
+        timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), timerInterval/2, timerInterval);
+        timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), timerInterval/2, timerInterval);
 
         for (int i = 0; i < TRACKS; i++) {
 
@@ -161,6 +173,12 @@ public class SinglePlayerGame extends AppCompatActivity
         checkButton.setText("");
         playAgainImage.setVisibility(View.VISIBLE);
 
+        if (totalHits > MainMenu.user.getSingleModeRecord()){
+            MainMenu.user.setSingleModeRecord(totalHits);
+        }
+
+        totalHits = 0;
+
         textBox[symbolIndex].get(0).setTextColor(getResources().getColor(R.color.end_of_line_single_player));
 
         for (int i = 0; i < TRACKS; i++) {
@@ -183,6 +201,8 @@ public class SinglePlayerGame extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+
+        MainMenu.user.saveData();
 
         if ((!(backButtonFlag || gameOverFlag)) && isGameRunning) {
             pauseGame();
@@ -211,10 +231,10 @@ public class SinglePlayerGame extends AppCompatActivity
             timerAddSymbol[i] = new Timer();
         }
 
-        timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), TIMER_INTERVAL, TIMER_INTERVAL);
-        timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), TIMER_INTERVAL, TIMER_INTERVAL);
-        timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), TIMER_INTERVAL, TIMER_INTERVAL);
-        timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), TIMER_INTERVAL, TIMER_INTERVAL);
+        timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), timerInterval, timerInterval);
+        timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), timerInterval, timerInterval);
+        timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), timerInterval, timerInterval);
+        timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), timerInterval, timerInterval);
 
     }
 
@@ -222,6 +242,12 @@ public class SinglePlayerGame extends AppCompatActivity
     public void backToMainMenu() {
         gameOverFlag = true;
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backButtonFlag = true;
     }
 
 //    private Context getContext() {
@@ -246,6 +272,7 @@ public class SinglePlayerGame extends AppCompatActivity
             }
 
             removeSymbol(answer);
+            hitView.setText(String.valueOf(totalHits));
         }
     }
 
@@ -285,6 +312,7 @@ public class SinglePlayerGame extends AppCompatActivity
             }
 
             if (winnerViewToRemove >= 0) {
+
                 ((ViewGroup) viewToRemove[winnerViewToRemove].getParent()).removeView(viewToRemove[winnerViewToRemove]);
                 textBox[winnerViewToRemove].remove(textBox[winnerViewToRemove].indexOf(viewToRemove[winnerViewToRemove]));
                 transactionBox[winnerViewToRemove].remove(indexToRemove[winnerViewToRemove]);
@@ -295,10 +323,51 @@ public class SinglePlayerGame extends AppCompatActivity
                 for (int j = 0; j < transactionBox[winnerViewToRemove].size(); j++) {
                     transactionBox[winnerViewToRemove].set(j, -(oldAnimationValue - transactionBox[winnerViewToRemove].get(j)));
                 }
+
+                speedUpGame();
             }
 
         } catch (NullPointerException e) {
             Log.e("ERROR", "Error reading braille_to_text OR Symbol not found", e);
+        }
+    }
+
+    private void speedUpGame() {
+
+        hitCount += 1;
+        totalHits += 1;
+
+        if (!speedUpFlag) {
+            if (hitCount >= HIT_SPEED_UP) {
+                speedUpFlag = true;
+                for (int k = 0; k < TRACKS; k++) {
+                    timerAddSymbol[k].cancel(); //No new symbols.
+                }
+            }
+        }
+
+        if (speedUpFlag) {
+            boolean allEmpty = true;
+
+            for (int i = 0; i < TRACKS; i++) {
+                if (frameBox[i].getChildCount() > 0) {
+                    allEmpty = false;
+                }
+            }
+
+            if (allEmpty) {
+
+                for (int i = 0; i < TRACKS; i++) {
+                    imageAnimator[i].cancel();
+                }
+
+                double beta = ((double) speedDown)/timerInterval;
+                speedDown = speedDown - INCREASE_SPEED_FACTOR;
+                timerInterval = (int) (speedDown/beta);
+                Toast.makeText(this, "Speed Up!!!", Toast.LENGTH_SHORT).show();
+                setUpGame();
+            }
+
         }
     }
 

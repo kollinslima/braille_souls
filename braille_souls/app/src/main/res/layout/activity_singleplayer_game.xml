@@ -63,10 +63,27 @@
         android:layout_weight="1"
         android:gravity="center">
 
-        <android.support.v4.widget.Space
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/record_single_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/hitView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
         <include layout="@layout/braille_keyboard_layout" />
 
@@ -83,20 +100,20 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/check_button"/>
+                    android:src="@drawable/check_button" />
 
                 <Button
                     android:id="@+id/check_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"/>
+                    android:background="@android:color/transparent" />
 
                 <ImageView
                     android:id="@+id/playAgainArrow"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_replay_black"/>
+                    android:src="@drawable/ic_replay_black" />
 
             </FrameLayout>
 
