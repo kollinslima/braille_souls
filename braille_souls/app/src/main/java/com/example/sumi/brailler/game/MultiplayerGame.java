@@ -7,8 +7,10 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -98,6 +100,7 @@ public class MultiplayerGame extends AppCompatActivity
         textMiss.setText(String.valueOf(missCount));
 
         symbolDisplay = (TextView) findViewById(R.id.symbolDisplay);
+//        TextViewCompat.setAutoSizeTextTypeWithDefaults(symbolDisplay, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
         graphicClock = (ClockView) findViewById(R.id.graphicClock);
 
@@ -134,7 +137,12 @@ public class MultiplayerGame extends AppCompatActivity
     private void newSymbol() {
 
         randomSymbol = getSymbol();
-        symbolDisplay.setText(randomSymbol);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            symbolDisplay.setText(Html.fromHtml(randomSymbol, Html.FROM_HTML_MODE_COMPACT));
+        } else{
+            symbolDisplay.setText(Html.fromHtml(randomSymbol));
+
+        }
 
     }
 

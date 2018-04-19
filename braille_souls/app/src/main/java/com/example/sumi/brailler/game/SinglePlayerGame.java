@@ -2,15 +2,17 @@ package com.example.sumi.brailler.game;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -187,15 +189,19 @@ public class SinglePlayerGame extends AppCompatActivity
         }
     }
 
-    private String getSymbol() {
-        String randomKey = null;
+    private Spanned getSymbol() {
 
         Set<String> keys = MainMenu.text_to_braille.keySet();
         int keyNumber = random.nextInt(keys.size());
 
-        randomKey = (String) keys.toArray()[keyNumber];
+        String randomKey = (String) keys.toArray()[keyNumber];
 
-        return randomKey;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(randomKey, Html.FROM_HTML_MODE_COMPACT);
+        } else{
+            return Html.fromHtml(randomKey);
+
+        }
     }
 
     @Override
@@ -250,13 +256,12 @@ public class SinglePlayerGame extends AppCompatActivity
         backButtonFlag = true;
     }
 
-//    private Context getContext() {
-//        return this;
-//    }
-
     @Override
     public void onClick(View v) {
         if (gameOverFlag) {
+            for (ToggleButton button : brailleKeyboard){
+                button.setChecked(false);
+            }
             setUpGame();
         } else {
             String answer = "";

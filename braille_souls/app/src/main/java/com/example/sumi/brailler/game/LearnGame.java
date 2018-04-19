@@ -7,6 +7,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -108,7 +109,13 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
     private void newSymbol() {
 
         randomSymbol = getSymbol();
-        symbolDisplay.setText(randomSymbol);
+        //symbolDisplay.setText(randomSymbol);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            symbolDisplay.setText(Html.fromHtml(randomSymbol, Html.FROM_HTML_MODE_COMPACT));
+        } else{
+            symbolDisplay.setText(Html.fromHtml(randomSymbol));
+
+        }
 
         showHint();
     }

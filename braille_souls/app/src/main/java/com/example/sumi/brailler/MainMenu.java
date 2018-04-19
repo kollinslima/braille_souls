@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -64,6 +66,7 @@ public class MainMenu extends AppCompatActivity {
 
         TextView appName = findViewById(R.id.appNameMainMenu);
         TextViewCompat.setAutoSizeTextTypeWithDefaults(appName, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+
 
         animationFrame = (FrameLayout) findViewById(R.id.animationFrame);
         animationVector = new ArrayList<ProportionalImageView>();
