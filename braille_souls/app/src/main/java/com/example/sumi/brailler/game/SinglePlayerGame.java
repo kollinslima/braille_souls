@@ -38,9 +38,11 @@ public class SinglePlayerGame extends AppCompatActivity
     private final int HIT_SPEED_UP = 1;
     public static final String GAME_TAG_LOG = "gameLog";
 
-    private int speedDown = 20000; //20s
+    private final int INITIAL_SPEED = 20000; //20s
+    private int speedDown = INITIAL_SPEED;
     private final int INCREASE_SPEED_FACTOR = 1000; //1s
-    private int timerInterval = 3000; //3s
+    private final int INITIAL_INTERVAL = 3000; //3s
+    private int timerInterval = INITIAL_INTERVAL;
     private Timer[] timerAddSymbol = new Timer[TRACKS];
 
     private String randomSymbol;
@@ -115,6 +117,9 @@ public class SinglePlayerGame extends AppCompatActivity
         isGameRunning = true;
         gameOverFlag = false;
         speedUpFlag = false;
+
+        speedDown = INITIAL_SPEED;
+        timerInterval = INITIAL_INTERVAL;
 
         hitCount = 0;
         hitView.setText(String.valueOf(totalHits));
