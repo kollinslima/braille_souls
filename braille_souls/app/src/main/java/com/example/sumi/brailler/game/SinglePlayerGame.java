@@ -118,9 +118,6 @@ public class SinglePlayerGame extends AppCompatActivity
         gameOverFlag = false;
         speedUpFlag = false;
 
-        speedDown = INITIAL_SPEED;
-        timerInterval = INITIAL_INTERVAL;
-
         hitCount = 0;
         hitView.setText(String.valueOf(totalHits));
         hitRecord.setText("Record: " + MainMenu.user.getSingleModeRecord());
@@ -179,6 +176,9 @@ public class SinglePlayerGame extends AppCompatActivity
         gameOverFlag = true;
         checkButton.setText("");
         playAgainImage.setVisibility(View.VISIBLE);
+
+        speedDown = INITIAL_SPEED;
+        timerInterval = INITIAL_INTERVAL;
 
         if (totalHits > MainMenu.user.getSingleModeRecord()){
             MainMenu.user.setSingleModeRecord(totalHits);
