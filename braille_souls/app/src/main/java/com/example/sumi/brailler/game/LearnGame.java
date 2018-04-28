@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.sumi.brailler.MainMenu;
@@ -55,6 +57,8 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
     private Random random;
 
     private Vibrator vibrator;
+    private int minToShowHint;
+   // private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         brailleKeyboard[3] = (ToggleButton) findViewById(R.id.braille_button_2x2);
         brailleKeyboard[4] = (ToggleButton) findViewById(R.id.braille_button_3x1);
         brailleKeyboard[5] = (ToggleButton) findViewById(R.id.braille_button_3x2);
+//        progressBar = findViewById(R.id.progressBarLearnGame);
+//        progressBar.setProgress(0);
 
         consecutiveMiss = 0;
         consecutiveHits = 0;
@@ -87,6 +93,7 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         symbolDisplay = (TextView) findViewById(R.id.symbolDisplay);
 
         newSymbol();
+        minToShowHint = 5;
 
     }
 
@@ -118,21 +125,26 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         }
 
         showHint();
+
+
     }
 
     private void showHint() {
+
         String brailleSymbol = MainMenu.text_to_braille.get(randomSymbol);
         int index = 0;
 
         for (ToggleButton button : brailleKeyboard) {
             button.setBackgroundResource(R.drawable.braille_keyboard_normal_style);
 //            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_normal_style));
-
-            if (brailleSymbol.charAt(index) == '1') {
+            if(MainMenu.user.getProficiency(randomSymbol) < minToShowHint || hitCount == 0){
+                if (brailleSymbol.charAt(index) == '1') {
 //                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_hint_style));
-                button.setBackgroundResource(R.drawable.braille_keyboard_hint_style);
+                    button.setBackgroundResource(R.drawable.braille_keyboard_hint_style);
+                }
+                index += 1;
             }
-            index += 1;
+
         }
     }
 
@@ -156,15 +168,18 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
                 consecutiveMiss = 0;
                 textHits.setText(String.valueOf(hitCount));
 
-
+                MainMenu.user.addHitToProficiencyMap(randomSymbol);
                 MainMenu.user.addHit();
             } else {
                 consecutiveHits = 0;
                 consecutiveMiss += 1;
                 missCount += 1;
                 textMiss.setText(String.valueOf(missCount));
+
+                MainMenu.user.addMissToProficiencyMap(randomSymbol);
                 MainMenu.user.addMiss();
             }
+            Toast.makeText(this, "Proficiency at: " + MainMenu.user.getProficiency(randomSymbol).toString(), Toast.LENGTH_SHORT).show();
         } catch (NullPointerException e) {
             consecutiveHits = 0;
             missCount += 1;
@@ -174,6 +189,7 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         }
 
         showRightAnswer();
+       // progressBar.setProgress(MainMenu.user.getProgress());
 
     }
 

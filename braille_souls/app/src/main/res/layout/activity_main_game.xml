@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
+
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/symbolLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2">
@@ -74,6 +76,15 @@
             android:textColor="@android:color/background_dark"
             android:textSize="200sp"
             android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progressBarLearnGame"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="20"
+            android:layout_alignParentTop="true"/>
 
     </RelativeLayout>
 

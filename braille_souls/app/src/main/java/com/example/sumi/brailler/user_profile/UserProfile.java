@@ -3,8 +3,6 @@ package com.example.sumi.brailler.user_profile;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.sumi.brailler.MainMenu;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -22,7 +20,8 @@ public class UserProfile {
 
     private SharedPreferences preferences;
 
-    private long allHits, allMiss, progress;
+    private long allHits, allMiss;
+    private int  progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
     private int singleModeRecord;
 
@@ -38,7 +37,7 @@ public class UserProfile {
         singleModeRecord = preferences.getInt(SINGLE_MODE_RECORD, 0);
         maxConsecutiveHits = preferences.getLong(ALL_CONSECUTIVE_HITS_KEY, 0);
         maxConsecutiveMiss = preferences.getLong(ALL_CONSECUTIVE_MISS_KEY, 0);
-        progress = preferences.getLong(ALL_USER_PROGRESS, 0);
+        progress = preferences.getInt(ALL_USER_PROGRESS, 0);
 
         consecutiveHitsCount = 0;
         consecutiveMissCount = 0;
@@ -54,7 +53,7 @@ public class UserProfile {
         editor.putInt(SINGLE_MODE_RECORD, singleModeRecord);
         editor.putLong(ALL_CONSECUTIVE_HITS_KEY, maxConsecutiveHits);
         editor.putLong(ALL_CONSECUTIVE_MISS_KEY, maxConsecutiveMiss);
-        editor.putLong(ALL_USER_PROGRESS, progress); //progress to measure dificulty
+        editor.putInt(ALL_USER_PROGRESS, progress); //progress to measure difficulty
         editor.apply();
     }
 
@@ -80,25 +79,25 @@ public class UserProfile {
         }
     }
 
-    public void addHitToHeatMap(String input){
+    public void addHitToProficiencyMap(String input){
         if(proficiencyMap.containsKey(input)){
             proficiencyMap.put(input, proficiencyMap.get(input) + 1);
         }else{
             proficiencyMap.put(input, 1);
         }
-        checkHeatMapLimits(input);
+        checkProficiencyMapLimits(input);
     }
 
-    public void addMissToHeatMap(String input){
+    public void addMissToProficiencyMap(String input){
         if(proficiencyMap.containsKey(input)){
             proficiencyMap.put(input, proficiencyMap.get(input) - 1);
         }else{
             proficiencyMap.put(input, -1);
         }
-        checkHeatMapLimits(input);
+        checkProficiencyMapLimits(input);
     }
 
-    private void checkHeatMapLimits(String input) {
+    private void checkProficiencyMapLimits(String input) {
         if(proficiencyMap.get(input) > 50){
             for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
                 if(it.getValue() > 0){
@@ -175,6 +174,11 @@ public class UserProfile {
         return false;
     }
 
+    public Integer getProgress(){
+        checkProgress();
+        return progress;
+    }
+
     public ArrayList<String> getWorseFromWorst(){
         ArrayList<String> out = new ArrayList<String>();
         for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
@@ -201,6 +205,14 @@ public class UserProfile {
             }
         }
         return out;
+    }
+
+    public Integer getProficiency(String symbol){
+        int a;
+        if(proficiencyMap.containsKey(symbol)){
+            return proficiencyMap.get(symbol);
+        }
+        return 0;
     }
 
     public String getRandomWorseFromAll() {
