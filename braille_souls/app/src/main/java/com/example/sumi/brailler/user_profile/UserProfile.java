@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
+import static java.lang.StrictMath.toIntExact;
 
 public class UserProfile {
 
@@ -20,8 +21,7 @@ public class UserProfile {
 
     private SharedPreferences preferences;
 
-    private long allHits, allMiss;
-    private int  progress;
+    private long allHits, allMiss, progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
     private int singleModeRecord;
 
@@ -37,7 +37,7 @@ public class UserProfile {
         singleModeRecord = preferences.getInt(SINGLE_MODE_RECORD, 0);
         maxConsecutiveHits = preferences.getLong(ALL_CONSECUTIVE_HITS_KEY, 0);
         maxConsecutiveMiss = preferences.getLong(ALL_CONSECUTIVE_MISS_KEY, 0);
-        progress = preferences.getInt(ALL_USER_PROGRESS, 0);
+        progress = preferences.getLong(ALL_USER_PROGRESS, 0);
 
         consecutiveHitsCount = 0;
         consecutiveMissCount = 0;
@@ -53,7 +53,7 @@ public class UserProfile {
         editor.putInt(SINGLE_MODE_RECORD, singleModeRecord);
         editor.putLong(ALL_CONSECUTIVE_HITS_KEY, maxConsecutiveHits);
         editor.putLong(ALL_CONSECUTIVE_MISS_KEY, maxConsecutiveMiss);
-        editor.putInt(ALL_USER_PROGRESS, progress); //progress to measure difficulty
+        editor.putLong(ALL_USER_PROGRESS, progress); //progress to measure difficulty
         editor.apply();
     }
 
@@ -174,9 +174,8 @@ public class UserProfile {
         return false;
     }
 
-    public Integer getProgress(){
-        checkProgress();
-        return progress;
+    public int getProgress(){
+        return toIntExact(progress);
     }
 
     public ArrayList<String> getWorseFromWorst(){
@@ -208,7 +207,6 @@ public class UserProfile {
     }
 
     public Integer getProficiency(String symbol){
-        int a;
         if(proficiencyMap.containsKey(symbol)){
             return proficiencyMap.get(symbol);
         }
