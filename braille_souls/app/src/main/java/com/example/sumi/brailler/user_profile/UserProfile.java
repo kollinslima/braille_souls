@@ -7,6 +7,7 @@ import com.example.sumi.brailler.MainMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -18,7 +19,6 @@ public class UserProfile {
     private final String ALL_CONSECUTIVE_HITS_KEY = "AllConsecutiveHits";
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
     private final String ALL_USER_PROGRESS = "LearnProgress";
-    private final HashMap<String, Integer> heatMap;
 
     private SharedPreferences preferences;
 
