@@ -174,8 +174,8 @@ public class UserProfile {
         return false;
     }
 
-    public int getProgress(){
-        return toIntExact(progress);
+    public Long getProgress(){
+        return progress;
     }
 
     public ArrayList<String> getWorseFromWorst(){
