@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.sumi.brailler.MainMenu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -17,7 +18,7 @@ public class UserProfile {
     private final String ALL_CONSECUTIVE_HITS_KEY = "AllConsecutiveHits";
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
     private final String ALL_USER_PROGRESS = "LearnProgress";
-//    private final HashMap<String, Long> heatMap;
+    private final HashMap<String, Integer> heatMap;
 
     private SharedPreferences preferences;
 
@@ -26,6 +27,8 @@ public class UserProfile {
     private int singleModeRecord;
 
     private int consecutiveHitsCount, consecutiveMissCount;
+    private HashMap<String, Integer> proficiencyMap;
+    private Random random;
 
     public UserProfile(Context mainMenuContext) {
         preferences = mainMenuContext.getSharedPreferences("user", MODE_PRIVATE);
@@ -39,6 +42,8 @@ public class UserProfile {
 
         consecutiveHitsCount = 0;
         consecutiveMissCount = 0;
+        
+        proficiencyMap = new HashMap<String, Integer>();
     }
 
     public void saveData(){
@@ -75,6 +80,134 @@ public class UserProfile {
         }
     }
 
+    public void addHitToHeatMap(String input){
+        if(proficiencyMap.containsKey(input)){
+            proficiencyMap.put(input, proficiencyMap.get(input) + 1);
+        }else{
+            proficiencyMap.put(input, 1);
+        }
+        checkHeatMapLimits(input);
+    }
+
+    public void addMissToHeatMap(String input){
+        if(proficiencyMap.containsKey(input)){
+            proficiencyMap.put(input, proficiencyMap.get(input) - 1);
+        }else{
+            proficiencyMap.put(input, -1);
+        }
+        checkHeatMapLimits(input);
+    }
+
+    private void checkHeatMapLimits(String input) {
+        if(proficiencyMap.get(input) > 50){
+            for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
+                if(it.getValue() > 0){
+                    proficiencyMap.put(it.getKey(), it.getValue() - 1);
+                }else if(it.getValue() < 0){
+                    proficiencyMap.put(it.getKey(), it.getValue() + 1);
+                }
+            }
+        }else if(proficiencyMap.get(input) < -50){
+            for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
+                if(it.getValue() > 0){
+                    proficiencyMap.put(it.getKey(), it.getValue() - 1);
+                }else if(it.getValue() < 0){
+                    proficiencyMap.put(it.getKey(), it.getValue() + 1);
+                }
+            }
+        }
+//        for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
+//            if(it.getValue() > 50){
+//
+//            }else if(it.getValue() < -50){
+//
+//            }
+//        }
+    }
+
+    public boolean checkProgress(){
+        if(progress < 21){
+            if (consecutiveMissCount > 4){
+                progress--;
+                return false;
+            }
+            if (consecutiveHitsCount > 0) {
+                progress++;
+                return true;
+            }
+        }else if (progress < 41){
+            if (consecutiveMissCount > 3){
+                progress--;
+                return false;
+            }
+            if (consecutiveHitsCount > 1){
+                progress++;
+                return true;
+            }
+        }else if (progress < 61){
+            if (consecutiveMissCount > 2){
+                progress--;
+                return false;
+            }
+            if (consecutiveHitsCount > 2) {
+                progress++;
+                return true;
+            }
+        }else if (progress < 81){
+            if (consecutiveMissCount > 1) {
+                progress--;
+                return false;
+            }
+            if (consecutiveHitsCount > 3) {
+                progress++;
+                return true;
+            }
+        }else if (progress < 101){
+            if (consecutiveMissCount > 0){
+                progress--;
+                return false;
+            }
+            if (consecutiveHitsCount > 4) {
+                progress++;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<String> getWorseFromWorst(){
+        ArrayList<String> out = new ArrayList<String>();
+        for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
+            if(it.getValue() < 0){
+                for(int i = 0; i > it.getValue(); i--){
+                    out.add(it.getKey());
+                }
+            }
+        }
+        return out;
+    }
+
+    public String getRandomWorseFromWorst(){
+        ArrayList<String> aux = getWorseFromWorst();
+        return aux.get(random.nextInt(aux.size()));
+    }
+
+    public ArrayList<String> getWorseFromAll(){
+        ArrayList<String> out = new ArrayList<String>();
+        for(HashMap.Entry<String, Integer> it : proficiencyMap.entrySet()){
+            int temp = it.getValue() + 50;
+            for(int i = 0; i < temp; i ++){
+                out.add(it.getKey());
+            }
+        }
+        return out;
+    }
+
+    public String getRandomWorseFromAll() {
+        ArrayList<String> aux = getWorseFromAll();
+        return aux.get(random.nextInt(aux.size()));
+    }
+
     public int getSingleModeRecord(){
         return singleModeRecord;
     }
@@ -82,4 +215,6 @@ public class UserProfile {
     public void setSingleModeRecord(int newRecord){
         singleModeRecord = newRecord;
     }
+
+    
 }
