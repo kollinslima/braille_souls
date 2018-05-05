@@ -17,4 +17,12 @@
 
     <style name="FullscreenTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="myTheme" parent="AppTheme" >
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="myFullscreenTheme" parent="FullscreenTheme" >
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>
