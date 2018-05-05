@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.sumi.brailler.database.DataBaseHelper;
 import com.example.sumi.brailler.game.LearnGame;
+import com.example.sumi.brailler.translate.TranslatorActivity;
 import com.example.sumi.brailler.user_profile.UserProfile;
 import com.example.sumi.brailler.user_profile.UserProfileActivity;
 import com.example.sumi.brailler.visual_components.ProportionalImageView;
@@ -173,6 +174,8 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void onClickDictionatyButton(View view) {
+        Intent intent = new Intent(this, TranslatorActivity.class);
+        startActivity(intent);
 //        Intent intent = new Intent(this, TabbedTranslator.class);
 //        startActivity(intent);
     }
