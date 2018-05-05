@@ -95,6 +95,8 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         newSymbol();
         minToShowHint = 5;
 
+        progressBar.setProgress(MainMenu.user.getProgress().intValue());
+
     }
 
     @Override
@@ -190,7 +192,7 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
 
         showRightAnswer();
         progressBar.setProgress(MainMenu.user.getProgress().intValue());
-        Toast.makeText(this, "Progress at: " + MainMenu.user.getProgress(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Progress at: " + MainMenu.user.getProgress(), Toast.LENGTH_SHORT).show();
     }
 
     private void showRightAnswer(){

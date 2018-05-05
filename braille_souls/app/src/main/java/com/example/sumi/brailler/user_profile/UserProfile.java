@@ -23,7 +23,7 @@ public class UserProfile {
 
     private long allHits, allMiss, progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
-    private int singleModeRecord;
+    private int singleModeRecord, minToHide;
 
     private int consecutiveHitsCount, consecutiveMissCount;
     private HashMap<String, Integer> proficiencyMap;
@@ -172,6 +172,9 @@ public class UserProfile {
                 progress++;
                 return true;
             }
+        }else if (progress > 100){
+            progress = 100;
+            return true;
         }
         return false;
     }

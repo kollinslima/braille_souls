@@ -5,8 +5,11 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sumi.brailler.MainMenu;
 import com.example.sumi.brailler.R;
 
 
@@ -14,16 +17,18 @@ import com.example.sumi.brailler.R;
 public class UserProfileActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+    private TextView progressValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        TextView userName = findViewById(R.id.playerName);
-        //Not working
+        TextView userName = findViewById(R.id.playerName);//Not showing
+        progressValue = findViewById(R.id.user_profile_progress_value);
+        progressValue.setText(" " + MainMenu.user.getProgress().toString() + "%");
         userName.setText(getEmiailID(getApplicationContext()));
-        progressBar = findViewById(R.id.progressBarLearnGame);
-        progressBar.setProgress(0);
+        progressBar = findViewById(R.id.progressBarProfile);
+        progressBar.setProgress(MainMenu.user.getProgress().intValue());
 
     }
 
