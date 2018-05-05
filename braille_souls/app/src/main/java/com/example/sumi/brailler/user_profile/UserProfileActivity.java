@@ -9,7 +9,11 @@ import android.widget.TextView;
 
 import com.example.sumi.brailler.R;
 
+
+
 public class UserProfileActivity extends AppCompatActivity {
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,9 @@ public class UserProfileActivity extends AppCompatActivity {
         TextView userName = findViewById(R.id.playerName);
         //Not working
         userName.setText(getEmiailID(getApplicationContext()));
+        progressBar = findViewById(R.id.progressBarLearnGame);
+        progressBar.setProgress(0);
+
     }
 
     private String getEmiailID(Context context) {
