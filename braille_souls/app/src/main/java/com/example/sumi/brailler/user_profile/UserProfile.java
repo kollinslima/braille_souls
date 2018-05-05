@@ -66,6 +66,7 @@ public class UserProfile {
         if (consecutiveMissCount > maxConsecutiveMiss){
             maxConsecutiveMiss = consecutiveMissCount;
         }
+        checkProgress();
     }
 
     public void addHit() {
@@ -77,6 +78,7 @@ public class UserProfile {
         if (consecutiveHitsCount > maxConsecutiveHits){
             maxConsecutiveHits = consecutiveHitsCount;
         }
+        checkProgress();
     }
 
     public void addHitToProficiencyMap(String input){

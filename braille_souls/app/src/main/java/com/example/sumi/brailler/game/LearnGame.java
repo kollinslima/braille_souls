@@ -190,7 +190,7 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
 
         showRightAnswer();
         progressBar.setProgress(MainMenu.user.getProgress().intValue());
-
+        Toast.makeText(this, "Progress at: " + MainMenu.user.getProgress(), Toast.LENGTH_SHORT).show();
     }
 
     private void showRightAnswer(){
