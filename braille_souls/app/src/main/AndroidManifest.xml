@@ -39,6 +39,7 @@
         <activity
             android:name=".user_profile.UserProfileActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".translate.Translator"></activity>
     </application>
 
 </manifest>
