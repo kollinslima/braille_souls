@@ -93,7 +93,7 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         symbolDisplay = (TextView) findViewById(R.id.symbolDisplay);
 
         newSymbol();
-        minToShowHint = 5;
+        minToShowHint = 0;
 
         progressBar.setProgress(MainMenu.user.getProgress().intValue());
 
@@ -139,7 +139,9 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         for (ToggleButton button : brailleKeyboard) {
             button.setBackgroundResource(R.drawable.braille_keyboard_normal_style);
 //            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_normal_style));
-            if(MainMenu.user.getProficiency(randomSymbol) < minToShowHint || hitCount == 0){
+            if(MainMenu.user.getProficiency(randomSymbol) > minToShowHint){
+                return;
+            }else{
                 if (brailleSymbol.charAt(index) == '1') {
 //                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_hint_style));
                     button.setBackgroundResource(R.drawable.braille_keyboard_hint_style);
