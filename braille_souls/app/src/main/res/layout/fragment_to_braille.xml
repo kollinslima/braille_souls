@@ -11,7 +11,7 @@
         android:layout_height="60dp"/>
 
     <EditText
-        android:id="@+id/tradutorCampoParaBraille"
+        android:id="@+id/translatorTextFieldInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tradutorParaBrailleEspaco1"
@@ -23,21 +23,23 @@
         android:textCursorDrawable="@drawable/mypipe"/>
 
     <Button
-        android:id="@+id/buttonTraduzir"
+        android:id="@+id/translateButton"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tradutorCampoParaBraille"
+        android:layout_below="@+id/translatorTextFieldInput"
         android:text="@string/translator_button" />
-    <ListView
-        android:id="@+id/tradutorListView"
-        android:layout_below="@id/buttonTraduzir"
+    <GridView
+        android:id="@+id/gridviewToBraille"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/translateButton"></GridView>
 
-    </ListView>
+
 
 
 </RelativeLayout>
