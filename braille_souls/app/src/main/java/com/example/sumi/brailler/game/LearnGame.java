@@ -139,15 +139,14 @@ public class LearnGame extends AppCompatActivity implements PauseFragment.onDism
         for (ToggleButton button : brailleKeyboard) {
             button.setBackgroundResource(R.drawable.braille_keyboard_normal_style);
 //            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_normal_style));
-            if(MainMenu.user.getProficiency(randomSymbol) > minToShowHint){
-                return;
-            }else{
+            if(MainMenu.user.getProficiency(randomSymbol) <= minToShowHint){
                 if (brailleSymbol.charAt(index) == '1') {
 //                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.braille_keyboard_hint_style));
                     button.setBackgroundResource(R.drawable.braille_keyboard_hint_style);
                 }
                 index += 1;
             }
+
 
         }
     }
