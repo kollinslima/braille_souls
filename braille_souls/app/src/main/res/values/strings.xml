@@ -51,5 +51,22 @@
     <string name="tab_from_braille">From Braille</string>
     <string name="tab_to_braille">To Braille</string>
     <string name="translator_title">Translator</string>
+    
+    <string name="skip_tutorial">Skip Tutorial</string>
+    <string name="tutorial_learn_title">LEARN MODE</string>
+    <string name="tutorial_learn_content1">
+        In learning mode, you will learn the Braille codes of the alphabet, numbers, and some special characters.
+    </string>
+    <string name="tutorial_learn_content2">
+        Touch the dots to select it and then click the CHECK button to evaluate.
+    </string>
+    <string name="tutorial_learn_content3">
+        The more hits you get, the faster your progress...
+    </string>
+    <string name="tutorial_learn_content4">
+        ...the higher your progress, the harder it\'s gonna be.
+    </string>
+    <string name="finish_tutorial">Ok, let\'s play</string>
+
 </resources>
 

@@ -19,11 +19,16 @@ public class UserProfile {
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
     private final String ALL_USER_PROGRESS = "LearnProgress";
 
+    private final String TUTORIAL_LEARN = "TutorialLearn";
+    private final String TUTORIAL_SINGLEPLAYER = "TutorialSinglePlayer";
+    private final String TUTORIAL_MULTIPLAYER = "TutorialMultiPlayer";
+
     private SharedPreferences preferences;
 
     private long allHits, allMiss, progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
     private int singleModeRecord, minToHide;
+    private boolean tutorialLearn, tutorialSinglePlayer,tutorialMultiPlayer;
 
     private int consecutiveHitsCount, consecutiveMissCount;
     private HashMap<String, Integer> proficiencyMap;
@@ -38,6 +43,10 @@ public class UserProfile {
         maxConsecutiveHits = preferences.getLong(ALL_CONSECUTIVE_HITS_KEY, 0);
         maxConsecutiveMiss = preferences.getLong(ALL_CONSECUTIVE_MISS_KEY, 0);
         progress = preferences.getLong(ALL_USER_PROGRESS, 0);
+
+        tutorialLearn = preferences.getBoolean(TUTORIAL_LEARN, true);
+        tutorialSinglePlayer = preferences.getBoolean(TUTORIAL_SINGLEPLAYER, true);
+        tutorialMultiPlayer = preferences.getBoolean(TUTORIAL_MULTIPLAYER, true);
 
         consecutiveHitsCount = 0;
         consecutiveMissCount = 0;
@@ -54,7 +63,20 @@ public class UserProfile {
         editor.putLong(ALL_CONSECUTIVE_HITS_KEY, maxConsecutiveHits);
         editor.putLong(ALL_CONSECUTIVE_MISS_KEY, maxConsecutiveMiss);
         editor.putLong(ALL_USER_PROGRESS, progress); //progress to measure difficulty
+
+        editor.putBoolean(TUTORIAL_LEARN, tutorialLearn);
+        editor.putBoolean(TUTORIAL_SINGLEPLAYER, tutorialSinglePlayer);
+        editor.putBoolean(TUTORIAL_MULTIPLAYER, tutorialMultiPlayer);
+
         editor.apply();
+    }
+
+    public boolean isFirstTimeLearnMode(){
+        return tutorialLearn;
+    }
+
+    public void setTutorialLearnDone(){
+        tutorialLearn = false;
     }
 
     public void addMiss() {

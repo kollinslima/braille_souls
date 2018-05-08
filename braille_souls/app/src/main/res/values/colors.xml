@@ -20,4 +20,7 @@
     <color name="wrong_answer">#FF0000</color>
 
     <color name="end_of_line_single_player">#FF0000</color>
+
+    <color name="tutorial_dot_default">#000000</color>
+    <color name="tutorial_dot_selected">#0ebdf2</color>
 </resources>

@@ -33,6 +33,9 @@
             android:name=".game.LearnGame"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".tutorial.LearnGameTutorial"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".game.MultiplayerGame"
             android:screenOrientation="portrait" />
         <activity
