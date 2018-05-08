@@ -12,9 +12,12 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.sumi.brailler.MainMenu;
 import com.example.sumi.brailler.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TabToBraille extends Fragment{
 
@@ -24,7 +27,7 @@ public class TabToBraille extends Fragment{
     private GridView gridView;
     private View view;
     private ArrayList<String> brailleCodes;
-    private String[] brailleDots;
+    private ArrayList<String> brailleDots;
 
     @Nullable
     @Override
@@ -43,49 +46,88 @@ public class TabToBraille extends Fragment{
         buttonTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                income = input.getText().toString();    //working
-                income = income.toUpperCase();          //
 
-                //inputAsBraille(income);
-                Toast.makeText(view.getContext(), income,Toast.LENGTH_SHORT).show();
-//                setBrailleCodesOnGrid(brailleCodes);
-//                GridBrailleAdapter mAdapter = new GridBrailleAdapter(view.getContext(), brailleDots);
-//                gridView.setAdapter(mAdapter);
-
+                brailleCodes = new ArrayList<String>();
+                brailleDots = new ArrayList<String>();
+                income = input.getText().toString();
+                income = income.toUpperCase();
+                putOnBrailleCodes();
+                putOnBrailleDots();
+                GridBrailleAdapter mAdapter = new GridBrailleAdapter(view.getContext(), brailleDots);
+                gridView.setAdapter(mAdapter);
             }
         });
     }
 
-    private int inputAsBraille(String aux){
-        return aux.length();
-
-    }
-
-    private void setBrailleCodesOnGrid(String[] brailleCodes){
-        int size = brailleCodes.length;
-        brailleDots = new String[size];
-        for(int i = 0; i < size; i++){
-            String aux = brailleCodes[i];
-            brailleDots[i] = "";
-            for(int ii = 0; ii < 6; ii++){
-                if(aux.charAt(ii) == 1 && ii < 2){
-                    brailleDots[i] = brailleDots[i] + "◉ ";
-                }else if(aux.charAt(ii) == 0 && ii < 2){
-                    brailleDots[i] = brailleDots[i] + "  ";
-                }else if(aux.charAt(ii) == 1 && ii < 4){
-                    if(ii == 2)  brailleDots[i] = brailleDots[i] + "\n";
-                    brailleDots[i] = brailleDots[i] + "◉ ";
-                }else if(aux.charAt(ii) == 0 && ii < 4){
-                    if(ii == 2)  brailleDots[i] = brailleDots[i] + "\n";
-                    brailleDots[i] = brailleDots[i] + "  ";
-                }else if(aux.charAt(ii) == 1 && ii < 6){
-                    if(ii == 4)  brailleDots[i] = brailleDots[i] + "\n";
-                    brailleDots[i] = brailleDots[i] + "◉ ";
-                }else if(aux.charAt(ii) == 0 && ii < 6){
-                    if(ii == 4)  brailleDots[i] = brailleDots[i] + "\n";
-                    brailleDots[i] = brailleDots[i] + "  ";
+    private void putOnBrailleDots() {
+        String aux = "";
+        if(brailleCodes.isEmpty()) return;
+        for(int i = 0; i < brailleCodes.size(); i ++){
+            int it;
+            String Bcode = brailleCodes.get(i);
+            //Toast.makeText(view.getContext(), Bcode, Toast.LENGTH_SHORT).show();
+            for(it = 0; it < 6; it++){
+                aux = aux + addDotNDot(Bcode.charAt(it));
+                if(it%2 != 0){
+                    aux = aux + "\n";
                 }
             }
+            //Toast.makeText(view.getContext(), aux, Toast.LENGTH_SHORT).show();
+            brailleDots.add(aux);
+            aux = "";
+//            for(int ii = 0; ii < 6; ii++){
+//                if(Bcode.charAt(ii) == '1' && ii < 2){
+//                    aux += "◉ ";
+//                    if(ii == 1) aux += "\n";
+//                }else if (Bcode.charAt(ii) == '0' && ii < 2){
+//                    aux += "  ";
+//                    if(ii == 1) aux += "\n";
+//                }else if (Bcode.charAt(ii) == '1' && ii < 4){
+//                    aux += "◉ ";
+//                    if(ii == 3) aux += "\n";
+//                }else if (Bcode.charAt(ii) == '0' && ii < 4){
+//                    aux += "◉ ";
+//                    if(ii == 3) aux += "\n";
+//                }else if (Bcode.charAt(ii) == '1' && ii < 6){
+//                    aux += "◉ ";
+//                    if(ii == 5) aux += "\n";
+//                }else if (Bcode.charAt(ii) == '0' && ii < 6){
+//                    aux += "◉ ";
+//                    if(ii == 5) aux += "\n";
+//                }
+//            }
         }
     }
+
+    private void putOnBrailleCodes() {
+        int size = income.length();
+        if(size == 0){
+            Toast.makeText(view.getContext(), getResources().getString(R.string.toast_empty), Toast.LENGTH_SHORT).show();
+        }
+        for(int i = 0; i < size; i++){
+            if(MainMenu.text_to_braille.containsKey(""+ income.charAt(i))){
+                brailleCodes.add(MainMenu.text_to_braille.get(""+ income.charAt(i)));
+            }else if(income.charAt(i) == ' '){
+                brailleCodes.add("      ");
+            }else{
+                brailleCodes.add("???????");
+            }
+
+            //Toast.makeText(view.getContext(), MainMenu.text_to_braille.get(""+ income.charAt(i)), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String addDotNDot(char binCode){
+        if(binCode == '1'){
+            return "◉ ";
+        }else if(binCode == '?'){
+            return "? ";
+        }else{
+            return "  ";
+        }
+    }
+
+
+
+
 }

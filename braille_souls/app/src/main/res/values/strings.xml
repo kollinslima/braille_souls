@@ -54,5 +54,6 @@
     <string name="translator_to_braille_hint">Type here</string>
     <string name="translator_button">Translate</string>
     <string name="not_implemented_yet">Not impremented yet</string>
+    <string name="toast_empty">Empty Input</string>
 </resources>
 

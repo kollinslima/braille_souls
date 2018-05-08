@@ -36,14 +36,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:columnWidth="50dp"
+        android:columnWidth="30dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="2dp"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="0dp"
         android:stretchMode="spacingWidthUniform"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@+id/translateButton"></GridView>
+        android:layout_below="@+id/translateButton"/>
 
 
 
