@@ -28,6 +28,8 @@ public class UserProfile {
     private int consecutiveHitsCount, consecutiveMissCount;
     private HashMap<String, Integer> proficiencyMap;
     private Random random;
+    private int lvlHolder;
+    private boolean[] wasOnlvl;
 
     public UserProfile(Context mainMenuContext) {
         preferences = mainMenuContext.getSharedPreferences("user", MODE_PRIVATE);
@@ -43,6 +45,9 @@ public class UserProfile {
         consecutiveMissCount = 0;
         
         proficiencyMap = new HashMap<String, Integer>();
+        lvlHolder = 1;
+        wasOnlvl = new boolean[6];
+        wasOnlvl[1] = wasOnlvl[2] = wasOnlvl[3] = wasOnlvl[4] = wasOnlvl[5] =false;
     }
 
     public void saveData(){
@@ -129,47 +134,47 @@ public class UserProfile {
     public boolean checkProgress(){
         if(progress < 21){
             if (consecutiveMissCount > 4){
-                progress--;
+                getLesserProgress( 1);
                 return false;
             }
             if (consecutiveHitsCount > 0) {
-                progress++;
+                getMoreProgress(1);
                 return true;
             }
         }else if (progress < 41){
             if (consecutiveMissCount > 3){
-                progress--;
+                getLesserProgress( 2);
                 return false;
             }
             if (consecutiveHitsCount > 1){
-                progress++;
+                getMoreProgress(2);
                 return true;
             }
         }else if (progress < 61){
             if (consecutiveMissCount > 2){
-                progress--;
+                getLesserProgress( 3);
                 return false;
             }
             if (consecutiveHitsCount > 2) {
-                progress++;
+                getMoreProgress(3);
                 return true;
             }
         }else if (progress < 81){
             if (consecutiveMissCount > 1) {
-                progress--;
+                getLesserProgress( 4);
                 return false;
             }
             if (consecutiveHitsCount > 3) {
-                progress++;
+                getMoreProgress(4);
                 return true;
             }
         }else if (progress < 101){
             if (consecutiveMissCount > 0){
-                progress--;
+                getLesserProgress( 5);
                 return false;
             }
             if (consecutiveHitsCount > 4) {
-                progress++;
+                getMoreProgress(5);
                 return true;
             }
         }else if (progress > 100){
@@ -177,6 +182,35 @@ public class UserProfile {
             return true;
         }
         return false;
+    }
+
+    private void getMoreProgress(int level) {
+        if(wasOnlvl[level]){
+            if (lvlHolder == 0 ){
+                progress++;
+                wasOnlvl[1] = wasOnlvl[2] = wasOnlvl[3] = wasOnlvl[4] = wasOnlvl[5] =false;
+            }else {
+                lvlHolder--;
+            }
+        }else{
+            wasOnlvl[level] = true;
+            lvlHolder = level - 1;
+        }
+    }
+
+    private void getLesserProgress(int level) {
+        if(wasOnlvl[level]){
+            if (lvlHolder == 0 ){
+                progress--;
+                wasOnlvl[1] = wasOnlvl[2] = wasOnlvl[3] = wasOnlvl[4] = wasOnlvl[5] =false;
+            }else {
+                lvlHolder--;
+            }
+        }else{
+            wasOnlvl[level] = true;
+            lvlHolder = level - 1;
+        }
+
     }
 
     public Long getProgress(){

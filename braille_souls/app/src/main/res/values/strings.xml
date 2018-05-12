@@ -51,5 +51,9 @@
     <string name="tab_from_braille">From Braille</string>
     <string name="tab_to_braille">To Braille</string>
     <string name="translator_title">Translator</string>
+    <string name="translator_to_braille_hint">Type here</string>
+    <string name="translator_button">Translate</string>
+    <string name="not_implemented_yet">Not impremented yet</string>
+    <string name="toast_empty">Empty Input</string>
 </resources>
 

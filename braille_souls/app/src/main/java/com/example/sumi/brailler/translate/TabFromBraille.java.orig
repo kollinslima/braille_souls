@@ -60,7 +60,11 @@ public class TabFromBraille extends Fragment{
                     button.setChecked(false);
                 }
                 if(!MainMenu.braille_to_text.containsKey(answer)){
+<<<<<<< HEAD
+                    Toast.makeText(getActivity(), getResources().getString(R.string.toast_unknown), Toast.LENGTH_SHORT).show();
+=======
                     Toast.makeText(view.getContext(), getResources().getString(R.string.toast_unknown), Toast.LENGTH_SHORT).show();
+>>>>>>> translator
                     return;
                 }
                 size = MainMenu.braille_to_text.get(answer).size();

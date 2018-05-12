@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.sumi.brailler.MainMenu;
@@ -60,7 +59,6 @@ public class TabFromBraille extends Fragment{
                     button.setChecked(false);
                 }
                 if(!MainMenu.braille_to_text.containsKey(answer)){
-                    Toast.makeText(view.getContext(), getResources().getString(R.string.toast_unknown), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 size = MainMenu.braille_to_text.get(answer).size();

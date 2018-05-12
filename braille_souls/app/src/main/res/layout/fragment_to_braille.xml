@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
-</LinearLayout>
+    <Space
+        android:id="@+id/tradutorParaBrailleEspaco1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+    <EditText
+        android:id="@+id/translatorTextFieldInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tradutorParaBrailleEspaco1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:hint="@string/translator_to_braille_hint"
+        android:textSize="30sp"
+        android:background="#e9e9e9"
+        android:textCursorDrawable="@drawable/mypipe"/>
+
+    <Button
+        android:id="@+id/translateButton"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/translatorTextFieldInput"
+        android:text="@string/translator_button" />
+    <GridView
+        android:id="@+id/gridviewToBraille"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:columnWidth="30dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="spacingWidthUniform"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/translateButton"/>
+
+
+
+
+</RelativeLayout>
