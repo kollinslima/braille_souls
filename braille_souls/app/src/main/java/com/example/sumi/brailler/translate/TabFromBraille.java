@@ -1,8 +1,10 @@
 package com.example.sumi.brailler.translate;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,14 +78,24 @@ public class TabFromBraille extends Fragment{
                     }
 
                 }
-                result.setText(result.getText() + answer);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    result.setText(Html.fromHtml(result.getText() + answer, Html.FROM_HTML_MODE_COMPACT));
+                } else{
+                    result.setText(Html.fromHtml(result.getText() + answer));
+
+                }
             }
         });
 
         spaceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.setText(result.getText() + " ");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    result.setText(Html.fromHtml(result.getText() + " ", Html.FROM_HTML_MODE_COMPACT));
+                } else{
+                    result.setText(Html.fromHtml(result.getText() + " "));
+
+                }
             }
         });
     }

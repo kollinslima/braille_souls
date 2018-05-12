@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/braille_translator_tittle"
             android:textColor="@android:color/background_dark"
-            android:background="#d5d6d6"
+            android:background="#e7e7e7"
             android:textSize="30sp"
             android:textAlignment="center"/>
 
