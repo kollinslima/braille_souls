@@ -1,3 +1,21 @@
+/*
+ * Copyright 2018
+ * Kollins Lima (kollins.lima@gmail.com)
+ * Otávio Sumi (otaviosumi@hotmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.example.sumi.brailler.user_profile;
 
 import android.content.Context;
@@ -19,11 +37,16 @@ public class UserProfile {
     private final String ALL_CONSECUTIVE_MISS_KEY = "AllConsecutiveMiss";
     private final String ALL_USER_PROGRESS = "LearnProgress";
 
+    private final String TUTORIAL_LEARN = "TutorialLearn";
+    private final String TUTORIAL_SINGLEPLAYER = "TutorialSinglePlayer";
+    private final String TUTORIAL_MULTIPLAYER = "TutorialMultiPlayer";
+
     private SharedPreferences preferences;
 
     private long allHits, allMiss, progress;
     private long maxConsecutiveHits, maxConsecutiveMiss;
     private int singleModeRecord, minToHide;
+    private boolean tutorialLearn, tutorialSinglePlayer,tutorialMultiPlayer;
 
     private int consecutiveHitsCount, consecutiveMissCount;
     private HashMap<String, Integer> proficiencyMap;
@@ -40,6 +63,10 @@ public class UserProfile {
         maxConsecutiveHits = preferences.getLong(ALL_CONSECUTIVE_HITS_KEY, 0);
         maxConsecutiveMiss = preferences.getLong(ALL_CONSECUTIVE_MISS_KEY, 0);
         progress = preferences.getLong(ALL_USER_PROGRESS, 0);
+
+        tutorialLearn = preferences.getBoolean(TUTORIAL_LEARN, true);
+        tutorialSinglePlayer = preferences.getBoolean(TUTORIAL_SINGLEPLAYER, true);
+        tutorialMultiPlayer = preferences.getBoolean(TUTORIAL_MULTIPLAYER, true);
 
         consecutiveHitsCount = 0;
         consecutiveMissCount = 0;
@@ -59,7 +86,20 @@ public class UserProfile {
         editor.putLong(ALL_CONSECUTIVE_HITS_KEY, maxConsecutiveHits);
         editor.putLong(ALL_CONSECUTIVE_MISS_KEY, maxConsecutiveMiss);
         editor.putLong(ALL_USER_PROGRESS, progress); //progress to measure difficulty
+
+        editor.putBoolean(TUTORIAL_LEARN, tutorialLearn);
+        editor.putBoolean(TUTORIAL_SINGLEPLAYER, tutorialSinglePlayer);
+        editor.putBoolean(TUTORIAL_MULTIPLAYER, tutorialMultiPlayer);
+
         editor.apply();
+    }
+
+    public boolean isFirstTimeLearnMode(){
+        return tutorialLearn;
+    }
+
+    public void setTutorialLearnDone(){
+        tutorialLearn = false;
     }
 
     public void addMiss() {

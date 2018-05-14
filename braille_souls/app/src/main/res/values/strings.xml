@@ -1,3 +1,21 @@
+<!--
+  ~ Copyright 2018
+  ~ Kollins Lima (kollins.lima@gmail.com)
+  ~ Otávio Sumi (otaviosumi@hotmail.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <resources>
     <string name="app_name">Braille Souls</string>
 
@@ -51,9 +69,27 @@
     <string name="tab_from_braille">From Braille</string>
     <string name="tab_to_braille">To Braille</string>
     <string name="translator_title">Translator</string>
+
     <string name="translator_to_braille_hint">Type here</string>
     <string name="translator_button">Translate</string>
     <string name="not_implemented_yet">Not impremented yet</string>
     <string name="toast_empty">Empty Input</string>
+    
+    <string name="skip_tutorial">Skip Tutorial</string>
+    <string name="tutorial_learn_title">LEARN MODE</string>
+    <string name="tutorial_learn_content1">
+        In learning mode, you will learn the Braille codes of the alphabet, numbers, and some special characters.
+    </string>
+    <string name="tutorial_learn_content2">
+        Touch the dots to select it and then click the CHECK button to evaluate.
+    </string>
+    <string name="tutorial_learn_content3">
+        The more hits you get, the faster your progress...
+    </string>
+    <string name="tutorial_learn_content4">
+        ...the higher your progress, the harder it\'s gonna be.
+    </string>
+    <string name="finish_tutorial">Ok, let\'s play</string>
+
 </resources>
 
