@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -79,6 +80,10 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         user = new UserProfile(this);
+
+        //Remove Dictionary and Profile button
+        ((Button) findViewById(R.id.btnDictionaty)).setVisibility(View.GONE);
+        ((Button) findViewById(R.id.btnProfile)).setVisibility(View.GONE);
 
         loadDataBase();
 
