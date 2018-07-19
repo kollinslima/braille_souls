@@ -22,7 +22,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sumi.brailler.translate.TranslatorActivity$PlaceholderFragment">
+    tools:context="com.braille.souls.brailler.translate.TranslatorActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
