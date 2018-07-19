@@ -18,14 +18,14 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.braille.souls.brailler">
+    package="com.braille.souls.braille_souls">
 
-    <uses-permission
-        android:name="android.permission.GET_ACCOUNTS"
-        android:maxSdkVersion="22" />
+    <!--<uses-permission-->
+        <!--android:name="android.permission.GET_ACCOUNTS"-->
+        <!--android:maxSdkVersion="22" />-->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!--<uses-permission android:name="android.permission.READ_PROFILE"/>-->
+    <!--<uses-permission android:name="android.permission.READ_CONTACTS"/>-->
 
     <application
         android:allowBackup="true"
