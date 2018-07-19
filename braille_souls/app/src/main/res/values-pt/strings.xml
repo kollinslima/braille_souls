@@ -23,52 +23,55 @@
     <!--<string name="dummy_button">Dummy Button</string>-->
     <!--<string name="dummy_content">DUMMY\nCONTENT</string>-->
 
-    <string name="start">Play</string>
-    <string name="exit">Exit</string>
-    <string name="dictionaty">Dictionary</string>
+    <string name="start">Jogar</string>
+    <string name="exit">Sair</string>
+    <string name="dictionaty">Dicionário</string>
 
     <string name="pause_menu">Pause</string>
-    <string name="continue_game">Continue</string>
-    <string name="main_menu">Main Menu</string>
+    <string name="continue_game">Continuar</string>
+    <string name="main_menu">Menu Principal</string>
 
-    <string name="game_over">Game Over</string>
+    <string name="game_over">Fim de Jogo</string>
 
-    <string name="hit">Hits: </string>
-    <string name="miss">Miss: </string>
+    <string name="hit">Acertos: </string>
+    <string name="miss">Erros: </string>
 
-    <string name="play_again">Play Again</string>
+    <string name="play_again">Jogar Novamente</string>
 
-    <string name="profile">Profile</string>
+    <string name="profile">Perfil</string>
 
     <!--Strings do dicionario -->
-    <string name="result">Result:</string>
-    <string name="space">Space</string>
+    <string name="result">Resultado:</string>
+    <string name="space">Espaço</string>
     <string name="add_key">Add</string>
-    <string name="toast_unknown">Unknow</string>
+    <string name="toast_unknown">Desconhecido</string>
     <string name="title_activity_tabbed_translator">TabbedTranslator</string>
+
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="action_settings">Configuração</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="profile_name_hint">Your name</string>
     <string name="completed_achievements">Completed Achievements</string>
     <string name="achievements_to_get">Achievements Missing</string>
-    <string name="number_of_players">Number of Players</string>
-    <string name="learn">Learn</string>
-    <string name="play">Play</string>
 
-    <string name="single_player">Single Player</string>
-    <string name="record">Record: </string>
+    <string name="number_of_players">Número de Jogadores</string>
+    <string name="learn">Aprender</string>
+    <string name="play">Jogar</string>
+    <string name="single_player">Um jogador</string>
+    <string name="record">Recorde: </string>
+    <string name="multiplayer">Multijogador</string>
+    <string name="table_of_points">Tabela de pontos</string>
+    <string name="player_turn">Jogador %d</string>
+    <string name="player">Jogador</string>
 
-    <string name="multiplayer">multiplayer</string>
-    <string name="table_of_points">Table of Points</string>
-    <string name="player_turn">Player %d</string>
-    <string name="player">Player</string>
+    <string name="close_button">Próxima Rodada</string>
+    <string name="close_button_end">Jogar Novamente</string>
+    <string name="start_player">Começar</string>
 
-    <string name="close_button">Next Turn</string>
-    <string name="close_button_end">Play Again</string>
-    <string name="start_player">Start</string>
+
     <string name="user_profile_your_progress">Progress at</string>
     <string name="title_activity_translator">TranslatorActivity</string>
     <string name="tab_from_braille">From Braille</string>
@@ -79,23 +82,23 @@
     <string name="translator_button">Translate</string>
     <string name="not_implemented_yet">Not impremented yet</string>
     <string name="toast_empty">Empty Input</string>
-    
-    <string name="skip_tutorial">Skip Tutorial</string>
-    <string name="tutorial_learn_title">LEARN MODE</string>
+
+    <string name="skip_tutorial">Pular Tutorial</string>
+    <string name="tutorial_learn_title">Modo Aprender</string>
     <string name="tutorial_learn_content1">
-        In learning mode, you will learn the Braille codes of the alphabet, numbers and some special characters.
+        No modo Aprender, você aprenderá o código em Braile do alfabeto, números e alguns caracteres especiais.
     </string>
     <string name="tutorial_learn_content2">
-        Touch the dots to select it and then click the CHECK button to evaluate.
+        Toque nos pontos para selecioná-los, então toque no botão CHECK para avaliar a resposta.
     </string>
     <string name="tutorial_learn_content3">
-        The more hits you get, the faster your progress...
+        Quanto mais você acertar, mais rápido será seu progresso...
     </string>
     <string name="tutorial_learn_content4">
-        ...the higher your progress, the harder it\'s gonna be.
+        ...quanto maior seu progresso, mais difícil fica.
     </string>
-    <string name="finish_tutorial">Ok, let\'s play</string>
-    <string name="back_to_main_menu">Back to main menu</string>
+    <string name="finish_tutorial">Vamos Começar</string>
+    <string name="back_to_main_menu">Voltar</string>
 
 </resources>
 

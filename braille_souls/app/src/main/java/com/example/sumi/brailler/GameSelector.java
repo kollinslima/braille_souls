@@ -134,4 +134,7 @@ public class GameSelector extends AppCompatActivity {
         return this;
     }
 
+    public void onClickBack(View view) {
+        finish();
+    }
 }

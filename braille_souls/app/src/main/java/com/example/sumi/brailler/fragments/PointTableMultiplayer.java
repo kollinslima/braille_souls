@@ -70,7 +70,7 @@ public class PointTableMultiplayer extends DialogFragment {
                 }
             }
 
-            pointString.add("Player " + (points.indexOf(greater_value) + 1) + ": " + greater_value);
+            pointString.add(getResources().getString(R.string.player) + " " + (points.indexOf(greater_value) + 1) + ": " + greater_value);
             points.set(points.indexOf(greater_value), Integer.MIN_VALUE);
         }
 

@@ -65,6 +65,15 @@
                 android:text="@string/multiplayer"
                 android:textColor="@android:color/black" />
 
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_button"
+                android:onClick="onClickBack"
+                android:text="@string/back_to_main_menu"
+                android:textColor="@android:color/black" />
+
         </LinearLayout>
 
     </LinearLayout>

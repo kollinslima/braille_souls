@@ -138,7 +138,7 @@ public class SinglePlayerGame extends AppCompatActivity
 
         hitCount = 0;
         hitView.setText(String.valueOf(totalHits));
-        hitRecord.setText("Record: " + MainMenu.user.getSingleModeRecord());
+        hitRecord.setText(getResources().getString(R.string.record) + MainMenu.user.getSingleModeRecord());
 
         for (int i = 0; i < TRACKS; i++) {
             textBox[i] = new ArrayList<>();
@@ -254,17 +254,17 @@ public class SinglePlayerGame extends AppCompatActivity
 
     @Override
     public void continueGameFragment() {
+        if (!gameOverFlag) {
+            for (int i = 0; i < TRACKS; i++) {
+                imageAnimator[i].resume();
+                timerAddSymbol[i] = new Timer();
+            }
 
-        for (int i = 0; i < TRACKS; i++) {
-            imageAnimator[i].resume();
-            timerAddSymbol[i] = new Timer();
+            timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), timerInterval, timerInterval);
+            timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), timerInterval, timerInterval);
+            timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), timerInterval, timerInterval);
+            timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), timerInterval, timerInterval);
         }
-
-        timerAddSymbol[0].scheduleAtFixedRate(new AddNewSymbol0(), timerInterval, timerInterval);
-        timerAddSymbol[1].scheduleAtFixedRate(new AddNewSymbol1(), timerInterval, timerInterval);
-        timerAddSymbol[2].scheduleAtFixedRate(new AddNewSymbol2(), timerInterval, timerInterval);
-        timerAddSymbol[3].scheduleAtFixedRate(new AddNewSymbol3(), timerInterval, timerInterval);
-
     }
 
     @Override
